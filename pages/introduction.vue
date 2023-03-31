@@ -20,9 +20,10 @@
             </h2>
             <div class="flex space-x-3 justify-start h-12 w-full">
               <input placeholder="Enter email" type="email" name="email" id="emal"
-                class="bg-[#06113C] border-2 flex-grow border-[#EEEEEE] rounded-lg text-[#EEEEEE] text-opacity-30 pl-2 focus:outline-none" />
+                class="bg-[#06113C] border-2 flex-grow border-[#EEEEEE] rounded-lg text-[#fefefe]  pl-2 focus:outline-none" />
               <button class="bg-[#FF8C32] text-[#06113c] px-3 py-2 rounded-lg">
                 Get Started
+                <Spinner/>
               </button>
             </div>
           </div>

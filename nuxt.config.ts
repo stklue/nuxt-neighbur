@@ -2,5 +2,5 @@
 import {resolve } from "path"
 
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/tailwindcss']
+  modules: ['@nuxtjs/supabase','@nuxtjs/tailwindcss'],
 })
