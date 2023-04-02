@@ -1,13 +1,10 @@
 <script setup lang="ts">
-const user = useSupabaseUser()
-const router = useRouter()
 
-watchEffect(() => {
-    if (!user.value) {
-        router.push("/introduction")
-    }
-    router.push("/")
+definePageMeta({
+    middleware: "auth",
+    layout:"default"
 })
+
 </script>
 
 <template>
