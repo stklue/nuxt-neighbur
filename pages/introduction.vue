@@ -6,14 +6,12 @@ definePageMeta({
 })
 
 const store = useGetStartedStore()
-const { email } = store
+const {  updateEmail } = store
 const em = ref('')
-const router = useRouter()
 
-function handleSubmit  () {
-  console.log("Hello World");
-  
-  alert("Hello World")
+function handleSubmit() {
+  updateEmail(em.value)
+  navigateTo('/signup/regform')
 }
 </script>
 
@@ -26,19 +24,19 @@ function handleSubmit  () {
           <h2 class="text-4xl font-semibold text-[#FFFFFF]">
             neighbur is a place where you can rely on your fellow students
           </h2>
-          <div  class="flex space-x-3 justify-start h-12 w-full">
-            <div class="flex-grow">
-              <input placeholder="Enter email" type="email" name="email" id="emal" :value="em"
-              
-                class="bg-[#06113C] border-2 w-full border-[#EEEEEE] rounded-lg text-[#fefefe]  p-5  focus:outline-none" />
-            </div>
-            {{ em }}
           <div>
-            <button @click="handleSubmit" class="bg-[#FF8C32] text-[#06113c] p-5 rounded-lg">
-              Get Started
-            </button>
-          </div>
-        
+            <form @submit.prevent="handleSubmit" class="flex space-x-3 justify-start h-12 w-full">
+              <div class="flex-grow">
+                <input placeholder="Enter email" type="email" name="email" id="emal" v-model="em"
+                  class="bg-[#06113C] border-2 w-full border-[#EEEEEE] rounded-lg text-[#fefefe]  p-5  focus:outline-none" />
+              </div>
+              <div>
+                <button class="bg-[#FF8C32] text-[#06113c] p-5 rounded-lg">
+                  Get Started
+                </button>
+              </div>
+            </form>
+
           </div>
         </div>
         <div class="w-full h-full ">
