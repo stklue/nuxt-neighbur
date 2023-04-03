@@ -11,10 +11,10 @@ export const useGetStartedStore = defineStore("get-started", () => {
 });
 
 export const usePaymentStore = defineStore("payment", () => {
-  const pay = ref(false);
+  const pay = ref(true);
   function payed() {
     pay.value = true;
   }
-  const getPay = () => pay;
+  const getPay = () => pay.value;
   return {pay, payed, getPay };
 });

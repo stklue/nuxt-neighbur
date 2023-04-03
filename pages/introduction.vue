@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useGetStartedStore } from '~~/stores/getStarted';
+import { useGetStartedStore, usePaymentStore } from '~~/stores/getStarted';
 
 definePageMeta({
   layout: "default"
@@ -8,6 +8,9 @@ definePageMeta({
 const store = useGetStartedStore()
 const {  updateEmail } = store
 const em = ref('')
+
+
+
 
 function handleSubmit() {
   updateEmail(em.value)
