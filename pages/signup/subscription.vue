@@ -25,7 +25,7 @@ const checkSelection = () => {
     <div class="flex flex-col  items-center  min-h-screen ">
         <div class="flex flex-col bg-[#eeeeee] space-y-5 m-5 px-5 py-3 rounded-lg">
             <div class="p-5">
-                <p class="text-[#06113C] text-xs">STEP 2 OF 3</p>
+                <p class="text-[#06113C]  text-base">STEP 2 OF 3</p>
             </div>
             <div class="flex flex-col lg:flex-row md:flex-row space-x-5  text-[#eeeeee] w-full justify-center ">
                 <div
