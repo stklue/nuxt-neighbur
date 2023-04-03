@@ -29,9 +29,8 @@ const onSubSelect = (i: number) => {
                 <div class="p-8">
                     <div class="flex space-x-1  ">
                         <span class="text-xs font-light">R</span>
-                        <h2 class="text-3xl">FREE</h2><span class="flex  text-xs items-end pl-1 font-light">/per
-                            month</span>
-                    </div>
+                        <h2 class="text-3xl">FREE</h2>
+                                            </div>
                     <hr class="w-48 h-1 mx-auto my-2 bg-gray-100 border-0 rounded md:my-5 dark:bg-gray-700">
                     <div>
                         <li class="text-[10px] tracking-tight">Only get access to for locations within 1km</li>

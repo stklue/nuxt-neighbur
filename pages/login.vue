@@ -3,17 +3,17 @@ definePageMeta({
     layout: "signup"
 })
 
-const user = useSupabaseUser()
-const client = useSupabaseAuthClient()
+// const user = useSupabaseUser()
+// const client = useSupabaseAuthClient()
 const router = useRouter()
 
 // Login method using providers
 const login = async (provider: 'github' | 'google' | 'gitlab' | 'bitbucket') => {
-    const { error } = await client.auth.signInWithOAuth({ provider })
-    if (error) {
-        return alert('Something went wrong !')
-    }
-    router.push('/')
+    // const { error } = await client.auth.signInWithOAuth({ provider })
+    // if (error) {
+    //     return alert('Something went wrong !')
+    // }
+    navigateTo('/')
 }
 </script>
 <template>
@@ -34,7 +34,7 @@ const login = async (provider: 'github' | 'google' | 'gitlab' | 'bitbucket') => 
                 <label class="block text-[#06113C] text-sm  mb-2" for="password">
                     Password
                 </label>
-                <input placeholder="Enter password" type="password" name="password" id="password"
+                <input placeholder="Enter password" type="password" name="password" id="password" autocomplete="on"
                     class="bg-[#EEEEEE]  border-b-2  flex-grow border-[#06113C]  text-[#06113C]  pl-2 focus:outline-none" />
 
             </div>

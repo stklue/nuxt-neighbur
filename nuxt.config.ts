@@ -1,8 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import {resolve } from "path"
+
 
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/supabase','@nuxtjs/tailwindcss', 'nuxt-icon', '@nuxt/image-edge'],
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt',],
   image: {
     screens: {
       xs: 320,
