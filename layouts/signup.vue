@@ -14,8 +14,7 @@
         </NuxtLink>
     </nav>
     </header>
-    <!-- <slot /> -->
-    <slot />
+    <slot/>
     <Footer />
 </template>
 

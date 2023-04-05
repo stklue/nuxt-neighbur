@@ -3,7 +3,7 @@
 
 definePageMeta({
     middleware: "auth",
-    layout:"default"
+    layout:"index"
 })
 
 
@@ -11,8 +11,7 @@ definePageMeta({
 </script>
 
 <template>
-    <Navbar/>
-    <div>
-        This is the index
+    <div class="min-h-screen ">
+        <HomeRecentVisit/>
     </div>
 </template>
