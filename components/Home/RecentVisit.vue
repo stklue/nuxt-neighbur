@@ -1,40 +1,23 @@
 <script lang="ts" setup>
-interface User {
-    avatar: string,
-    name: string,
+import { useProductsStore } from '~~/stores/orderItemDetail';
+import { Product } from '~~/stores/orderItemDetail';
+const { data } = await useFetch('/api/order/products')
+
+const products: Ref<Product[]> = ref([]);
+const {  setProducts } = useProductsStore()
+if (Array.isArray(data.value)) {
+    products.value = data.value as Product[];
+    setProducts(products.value)
 }
 
-interface Short { s: string }
-interface Food { }
-
-type ProductType = Short | Food
-
-interface Product {
-    id: number,
-    owner: User,
-    price: number,
-    type: ProductType,
-    rating: number,
-    description: string,
-    recurring? : boolean
-}
-
-
-const data: Product[] = [
-    { id: 1, owner: { avatar: "", name: "test me" }, price: 20, type: { s: "name" }, rating: 4, description: "Biryani" },
-    { id: 2, owner: { avatar: "", name: "test me" }, price: 20, type: { s: "name" }, rating: 4, description: "Biryani" },
-    { id: 3, owner: { avatar: "", name: "something else" }, price: 20, type: { s: "name" }, rating: 4, description: "Biryani" },
-    { id: 4, owner: { avatar: "", name: "another one" }, price: 20, type: { s: "name" }, rating: 4, description: "Biryani" },
-    { id: 5, owner: { avatar: "", name: "just dj khalid" }, price: 20, type: { s: "name" }, rating: 4, description: "Biryani" },
-]
 </script>
 
 
 <template>
     <section class="flex flex-col w-full pt-16 px-12 space-x-4 bg-[#eeeeee] ">
-        <h1 class="ml-4 mt-4 text-2xl font-semibold">Visit again</h1>
+        <h1 class="ml-4 mt-4 text-2xl font-semibold">Order again</h1>
         <div class="flex mb-6">
-            <div class="w-full  h-1/3 m-4" v-for="product in data" :id="String(product.id)">
+            <div class="w-full  h-1/3 m-4" v-for="product in products" :id="String(product.id)">
                 <div
                     class="bg-[#fefefe]  flex flex-col w-full h-full p-4 rounded-lg hover:scale-110 hover:shadow-lg  transition-all ease-in-out duration-500 cursor-pointer">
                     <div class="flex space-x-2">

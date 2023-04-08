@@ -1,0 +1,61 @@
+import { Product } from "~~/stores/orderItemDetail";
+
+export default defineEventHandler(() => {
+  return [
+    {
+      id: 1,
+      owner: { avatar: "", name: "test me" },
+      price: 20,
+      type: { s: "name" },
+      rating: 4,
+      description: "2 Minute Noodles",
+      foodType: "fresh",
+      portion: 1,
+      available: 3,
+    },
+    {
+      id: 2,
+      owner: { avatar: "", name: "test me" },
+      price: 30,
+      type: { s: "name" },
+      rating: 4,
+      description: "Biryani",
+      foodType: "fresh",
+      portion: 1,
+      available: 4,
+    },
+    {
+      id: 3,
+      owner: { avatar: "", name: "something else" },
+      price: 25,
+      type: { s: "name" },
+      rating: 4,
+      description: "Pasta",
+      foodType: "left overs",
+      portion: 2,
+      available: 1,
+    },
+    {
+      id: 4,
+      owner: { avatar: "", name: "another one" },
+      price: 10,
+      type: { s: "name" },
+      rating: 4,
+      description: "Eggs",
+      foodType: "fresh",
+      portion: 0.5,
+      available: 1,
+    },
+    {
+      id: 5,
+      owner: { avatar: "", name: "just dj khalid" },
+      price: 20,
+      type: { s: "name" },
+      rating: 4,
+      description: "Curry",
+      foodType: "left overs",
+      portion: 2,
+      available: 3,
+    },
+  ] as Product[];
+});

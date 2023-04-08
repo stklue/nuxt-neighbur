@@ -3,15 +3,20 @@
 
 definePageMeta({
     middleware: "auth",
-    layout:"index"
+    layout: "index"
 })
 
+
+useHead({
+    title: 'neighbur | Home',
+    meta: [{ name: 'description', content: 'neighbur food' }]
+})
 
 
 </script>
 
 <template>
     <div class="min-h-screen ">
-        <HomeRecentVisit/>
+        <HomeRecentVisit />
     </div>
 </template>
