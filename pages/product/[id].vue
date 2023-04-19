@@ -20,7 +20,7 @@ watch(() => route.params.id, async _id => {
     console.log("Wathced: ", product.value);
 }, { deep: true, immediate: true })
 
-const router = useRouter()
+const addNotification = ref(false)
 
 useHead({
     title: 'Product',
@@ -29,8 +29,14 @@ useHead({
 
 const addProduct = () => {
     add(product.value);
-    router.push("/cart")
+    addNotification.value = true
 }
+
+watch(addNotification, () => {
+    setTimeout(() => {
+        addNotification.value = false
+    }, 1000)
+})
 
 </script>
 
@@ -73,6 +79,8 @@ const addProduct = () => {
                     class="w-full bg-[#06113C] text-white p-4 rounded-lg hover:bg-gray-200 hover:text-[#06113C] transition-all ease-out duration-300">Order
                     Now</button>
             </div>
+            <div v-if="addNotification === true" class="w-full p-4 bg-green-500 my-3 text-white font-semibold rounded-lg">Added to cart</div>
+
         </section>
     </div>
 </template>
