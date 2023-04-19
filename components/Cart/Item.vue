@@ -28,7 +28,6 @@ const props = defineProps<Props>();
                 <!-- </router-link> -->
                 <div class="flex space-x-5 lg:justify-start">
                     <span class="text-center font-semibold text-xs text-gray-400">R{{ props.orderItem.product.price }}</span>
-                    <!-- <span class="text-red-500 text-xs">{{ item.data.size }}</span> -->
                 </div>
             </div>
 
@@ -40,7 +39,7 @@ const props = defineProps<Props>();
                 </div>
                 <div>
                     <a @click="remove(orderItem)"
-                        class="delete font-semibold hover:text-red-500 text-gray-500 text-xs">Remove</a>
+                        class="delete font-semibold hover:text-red-500 text-gray-500 text-xs cursor-pointer">Remove</a>
                 </div>
             </div>
         </div>

@@ -35,7 +35,7 @@ const promoCodeMessage = ref("");
           <slot name="total" />
         </span>
       </div>
-      <NuxtLink to="/">
+      <NuxtLink to="/checkout">
         <button
           class="rounded-lg bg-[#06113C] font-semibold hover:bg-white hover:text-[#06113C] border hover:border-[#06113C] py-3 text-sm text-white uppercase w-full">
           Checkout
