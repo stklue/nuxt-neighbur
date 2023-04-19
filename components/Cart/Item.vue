@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { ref } from "@vue/reactivity";
 import { Product } from '~~/data/types';
+import { useCart } from "~~/stores/cart"
 
+
+const { remove } = useCart() 
 
 interface Props {
     product: Product;
 }
 const props = defineProps<Props>();
 
-const item = { id: 1, image: "/src/assets/images/fur-1.jpg", cat: "Firniture", name: "Chair", price: 300, quantity: 2 };
 
 </script>
 
@@ -47,7 +48,7 @@ const item = { id: 1, image: "/src/assets/images/fur-1.jpg", cat: "Firniture", n
                     </svg>
                 </div>
                 <div>
-                    <a class="delete font-semibold hover:text-red-500 text-gray-500 text-xs">Remove</a>
+                    <a @click="remove(product)"  class="delete font-semibold hover:text-red-500 text-gray-500 text-xs">Remove</a>
                 </div>
             </div>
         </div>
