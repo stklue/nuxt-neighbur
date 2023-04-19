@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useSelectedProductStore } from '~~/stores/selectedProduct';
 import { useProductsStore } from '~~/stores/orderItemDetail';
-import { Product } from '~~/stores/orderItemDetail';
+import { Product } from '~~/data/types';
 
 const { products, setProducts } = useProductsStore()
 
@@ -18,31 +18,52 @@ getProduct().value = products[0]
 
 
 <template>
-    <section class="bg-gray-300 min-h-full w-full px-10 py-5  flex flex-col space-y-4">
+    <section class="bg-gray-300 min-h-full w-full px-10 py-5 rounded-tl-lg rounded-bl-lg  flex flex-col space-y-4">
         <div class=" w-full h-2/3" :id="String(getProduct().value.id)">
             <div
-                class="bg-[#fefefe]  flex flex-col w-full h-full p-4 rounded-lg hover:scale-105 hover:shadow-lg  transition-all ease-in-out duration-500 cursor-pointer">
+                class="bg-[#fefefe]  flex flex-col w-full h-full p-5 space-y-2 rounded-lg hover:scale-105 hover:shadow-lg  transition-all ease-in-out duration-500 cursor-pointer">
                 <div class="flex justify-between space-x-2">
                     <div class="flex space-x-2">
                         <div class="rounded-full bg-slate-400 opacity-70 w-8 h-8"></div>
-                        <h2>{{ getProduct().value.owner.name }}</h2>
+                        <h2 class="font-semibold text-2xl">{{ getProduct().value.user.name }}</h2>
                     </div>
                     <OrderOnlineGlow />
                 </div>
-                <div class="p-2">
-                    <div class="w-full h-full rounded-lg bg-slate-300 p-2">{{ getProduct().value.description }}</div>
-                </div>
-                <p class="p-5">R{{ getProduct().value.price.toFixed(2) }}</p>
-                <div class="flex" v-if="getProduct().value.portion === 0.5"> Portion(1/2): <OrderHalfPortion/> (plates)</div>
-                <div class="flex space-x-2" v-else>
-                    Portion({{ getProduct().value.portion }}):
-                    <div class="flex" v-for="_ in getProduct().value.portion">
-                        <Icon class="text-[#FF8C32] w-8 h-8" name="material-symbols:fishfood" />
+
+                <div class="w-full h-full rounded-lg bg-slate-300 p-3">{{ getProduct().value.description }}</div>
+
+                <p class="text-lg font-medium">R{{ getProduct().value.price.toFixed(2) }}</p>
+                <div class="flex justify-between items-center text-center h-7" v-if="getProduct().value.portion === 0.5">
+                    <p class=" text-lg">Portion(1/2)</p>
+                    <div class="flex">
+                        <OrderHalfPortion />
+                        <p class="self-center">(plates) </p>
                     </div>
-                    <p>(plates)</p>
                 </div>
-                <div>Available: {{ getProduct().value.available }} (plates)</div>
-                <HomeRating />
+                <div class=" h-7 flex justify-between items-center text-center " v-else>
+                    <p class=" text-lg">Portion({{ getProduct().value.portion }})</p>
+                    <p>
+                        <Icon class="text-[#FF8C32] w-14 h-14" name="material-symbols:fishfood">show portion sizes</Icon>
+                    </p>
+                    <div class="flex">
+                        <div class="flex" v-for="_ in getProduct().value.portion">
+                            <Icon class="text-[#FF8C32] w-14 h-14" name="material-symbols:fishfood" />
+                        </div>
+                        <p class="self-center">(plates) </p>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center text-center ">
+                    <p class=" text-lg"> Available</p>
+                    <div class="flex space-x-2">
+                        <p class="text-lg font-medium">{{ getProduct().value.available }}</p>
+                        <p> (plates) </p>
+                    </div>
+                </div>
+                <div class="flex justify-between">
+                    <p class=" text-lg"> Rating</p>
+                    <HomeRating />
+                </div>
             </div>
         </div>
     </section>

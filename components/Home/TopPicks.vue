@@ -4,7 +4,7 @@ import { Product } from '~~/data/types';
 const { data } = await useFetch('/api/order/products')
 
 const products: Ref<Product[]> = ref([]);
-const {  setProducts } = useProductsStore()
+const { setProducts } = useProductsStore()
 if (Array.isArray(data.value)) {
     products.value = data.value as unknown as Product[];
     setProducts(products.value)
@@ -12,10 +12,9 @@ if (Array.isArray(data.value)) {
 
 </script>
 
-
 <template>
-    <section class="flex flex-col w-full pt-20 px-12 space-x-4 bg-[#eeeeee] ">
-        <h1 class="ml-4 mt-4 text-2xl font-semibold">Order again</h1>
+    <section class="flex flex-col w-full pt-10 px-12 space-x-4  ">
+        <h1 class="ml-4 mt-4 text-2xl font-semibold">Top Picks</h1>
         <div class="flex mb-6">
             <div class="w-full  h-1/3 m-4" v-for="product in products" :id="String(product.id)">
                 <div

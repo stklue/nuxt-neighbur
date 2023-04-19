@@ -1,13 +1,18 @@
 <script lang="ts" setup>
 import { useGetStartedStore, usePaymentStore } from '~~/stores/getStarted';
+import { useUserStore } from '~~/stores/user';
 
 definePageMeta({
   layout: "default"
 })
 
 const store = useGetStartedStore()
-const {  updateEmail } = store
-const em = ref('')
+const {getEmail, updateEmail} = useUserStore()
+// const {  updateEmail } = store
+const em = ref(getEmail().value)
+
+
+
 
 
 

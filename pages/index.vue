@@ -18,5 +18,6 @@ useHead({
 <template>
     <div class="min-h-screen ">
         <HomeRecentVisit />
+        <HomeOnlineNearYou />
     </div>
 </template>

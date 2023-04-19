@@ -19,7 +19,11 @@
   "dependencies": {
     "@pinia/nuxt": "^0.4.7",
     "@prisma/client": "^4.12.0",
-    "pinia": "^2.0.33"
+    "@trpc/client": "^10.19.1",
+    "@trpc/server": "^10.19.1",
+    "pinia": "^2.0.33",
+    "trpc-nuxt": "^0.8.0",
+    "zod": "^3.21.4"
   },
   "overrides": {
     "vue": "latest"
