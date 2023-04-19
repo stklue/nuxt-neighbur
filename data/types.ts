@@ -73,11 +73,22 @@ export const emptyProduct: Product = {
 
 
 export interface Cart {
-  products: Product[];
+  products: OrderItem[];
+  total: number;
+} 
+
+export interface OrderItem {
+  id: number;
+  product: Product;
+  quantity: number;
   total: number;
 } 
 
 export const emptyCart: Cart = {
   products: [],
   total: 0
+}
+
+export default function createRandId() {
+  return Math.floor(Math.random() * 100_000_000);
 }
