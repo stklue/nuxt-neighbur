@@ -3,7 +3,14 @@ import { Product, RequestMeal, UserRequest } from "~~/data/types";
 export const products: Product[] = [
   {
     id: 1,
-    user: { avatar: "", name: "Jack",  online: true },
+    user: {
+      avatar: "",
+      name: "Jack",
+      online: true,
+      location: "Tugwell Hall",
+      email: "",
+      password: "",
+    },
     price: 20,
     type: { s: "name" },
     rating: 4,
@@ -18,7 +25,14 @@ export const products: Product[] = [
   },
   {
     id: 2,
-    user: { avatar: "", name: "Jackie",  online: true },
+    user: {
+      avatar: "",
+      name: "Jackie",
+      online: true,
+      location: "Tugwell Hall",
+      email: "",
+      password: "",
+    },
     price: 30,
     type: { s: "name" },
     rating: 4,
@@ -32,7 +46,14 @@ export const products: Product[] = [
   },
   {
     id: 3,
-    user: { avatar: "", name: "Jak",  online: false },
+    user: {
+      avatar: "",
+      name: "Jak",
+      online: false,
+      location: "Obz Square",
+      email: "",
+      password: "",
+    },
     price: 25,
     type: { s: "name" },
     rating: 5,
@@ -46,7 +67,14 @@ export const products: Product[] = [
   },
   {
     id: 4,
-    user: { avatar: "", name: "Jakie" ,   online: true},
+    user: {
+      avatar: "",
+      name: "Jakie",
+      online: true,
+      location: "Tugwell Hall",
+      email: "",
+      password: "",
+    },
     price: 10,
     type: { s: "name" },
     rating: 3.5,
@@ -65,6 +93,9 @@ export const products: Product[] = [
       avatar: "",
       name: "Gordon",
       online: true,
+      location: "Obz Square",
+      email: "",
+      password: "",
       requests: [
         {
           meal: {

@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import { Product, emptyProduct } from '~~/data/types';
 import { useCart } from "~~/stores/cart"
+import { useSelectedProductStore } from '~~/stores/selectedProduct';
+
+const { changeProduct } = useSelectedProductStore()
+
 
 
 definePageMeta({

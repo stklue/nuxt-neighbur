@@ -11,7 +11,10 @@ export interface UserRequest {
 
 export interface User {
   avatar: string;
+  email: string;
   name: string;
+  location: string;
+  password: string;
   make?: UserRequest;
   online: boolean;
   requests?: UserRequest[];
@@ -50,16 +53,21 @@ export interface Product {
   image: string;
   created: string;
   orders?: Order[];
-  expire: string
+  expire: string;
 }
+
+export const emptyUser = {
+  avatar: "",
+  location: "",
+  email: "",
+  password: "",
+  name: "",
+  online: false,
+};
 
 export const emptyProduct: Product = {
   id: -1,
-  user: {
-    avatar: "",
-    name: "",
-    online: false
-  },
+  user: emptyUser,
   price: 0.0,
   type: {},
   rating: 0,
@@ -70,26 +78,25 @@ export const emptyProduct: Product = {
   available: 0,
   image: "string",
   created: new Date().toLocaleString(),
-  expire: ""
+  expire: "",
 };
-
 
 export interface Cart {
   products: OrderItem[];
   total: number;
-} 
+}
 
 export interface OrderItem {
   id: number;
   product: Product;
   quantity: number;
   total: number;
-} 
+}
 
 export const emptyCart: Cart = {
   products: [],
-  total: 0
-}
+  total: 0,
+};
 
 export default function createRandId() {
   return Math.floor(Math.random() * 100_000_000);

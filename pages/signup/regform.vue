@@ -1,25 +1,29 @@
 <script lang="ts" setup>
+import { residences } from '~~/data/res';
+import { User } from '~~/data/types';
 import { useGetStartedStore } from '~~/stores/getStarted';
-import { useUserStore } from '~~/stores/user';
+import { useUserStore, useUserrStore } from '~~/stores/user';
 
 
 definePageMeta({
     layout: "signup"
 })
 
-// const store = useGetStartedStore()
-const { email, password, getEmail, getPass } = useUserStore()
-// const email = ref(getEmail().value)
-const pass = ref(getPass().value)
-
+const { user, newUser } = useUserrStore()
+const password = ref("")
+const conPassword = ref("")
+const email = ref("")
+const username = ref("")
+const residence = ref("Choose your residence")
 
 const signUpWithEmailAndPassword = () => {
-    if (getEmail().value && pass.value.length > 0) {
+    if (email.value && password.value.length > 0 && password.value === conPassword.value) {
+        newUser({ avatar: "", online: true, email: email.value, password: password.value, name: username.value, location: residence.value } as User)
         navigateTo('/signup/subscription')
-
         // localStorage.setItem("user", JSON.stringify({ email: getEmail().value, password: getPass().value }));
+
     } else {
-        alert("Input fields cannot be empty.")
+        alert("Error: Fields are either empty or passwords does not match.")
     }
 }
 
@@ -33,18 +37,46 @@ const signUpWithEmailAndPassword = () => {
         <form @submit.prevent="signUpWithEmailAndPassword"
             class="bg-[#EEEEEE] shadow-md rounded px-8 pt-6 pb-8 mb-4 w-2/3 mx-auto">
             <div class="mb-4">
+                <p class="text-black">
+
+                    Hello:{{ user }}
+                </p>
                 <label class="block text-[#06113C] text-sm  mb-2" for="email">
                     Email
                 </label>
-                <input placeholder="Enter email" type="email" name="email" id="emal" :value="getEmail().value"
+                <input placeholder="Enter email" type="email" name="email" id="email" v-model="email"
                     class="bg-[#EEEEEE]   border-b-2 flex-grow border-[#06113C]  text-[#06113C]   pl-2 focus:outline-none w-full" />
+            </div>
+            <div class="mb-4">
+                <label class="block text-[#06113C] text-sm  mb-2" for="name">
+                    Name
+                </label>
+                <input placeholder="Enter name" name="name" id="name" v-model="username"
+                    class="bg-[#EEEEEE]   border-b-2 flex-grow border-[#06113C]  text-[#06113C]   pl-2 focus:outline-none w-full" />
+            </div>
+            <div class="mb-4">
+                <label for="countries" class="block mb-2 text-sm font-medium text-[#06113C] ">Select your residence</label>
+                <select id="countries" v-model="residence"
+                    class="bg-gray-50 border border-gray-300 text-[#06113C] text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option disabled selected>{{ residence }}</option>
+                    <option :key="res" v-for="res in residences">{{ res }}</option>
+                </select>
             </div>
             <div class="mb-6">
                 <label class="block text-[#06113C] text-sm  mb-2" for="password">
                     Password
                 </label>
-                <input placeholder="Enter password" type="password" name="password" id="password" v-model="pass"
+                <input placeholder="Enter password" type="password" name="password" id="password" v-model="password"
                     autocomplete="on"
+                    class="bg-[#EEEEEE]  border-b-2  flex-grow border-[#06113C]  text-[#06113C]  pl-2 focus:outline-none w-full" />
+
+            </div>
+            <div class="mb-6">
+                <label class="block text-[#06113C] text-sm  mb-2" for="confpassword">
+                    Confirm Password
+                </label>
+                <input placeholder="Confirm password" type="password" name="confpassword" id="confpassword"
+                    v-model="conPassword" autocomplete="on"
                     class="bg-[#EEEEEE]  border-b-2  flex-grow border-[#06113C]  text-[#06113C]  pl-2 focus:outline-none w-full" />
 
             </div>

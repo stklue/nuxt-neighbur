@@ -19,12 +19,11 @@ const { getCartItems } = useCart()
                         order
                     </span>
                 </NuxtLink>
-                <NuxtLink to="/cart" class='flex items-center bg-gray-200 rounded-3xl px-2 py-1 '>
-
-                    <Icon name="ic:baseline-shopping-cart" size="30px"
-                        class='mx-2 cursor-pointer text-base font-semibold bg-left-bottom '>
-                    </Icon>
-                    <p class="text-lg font-semibold">{{ getCartItems() }}</p>
+                <NuxtLink to="/cart">
+                    <div class="flex items-center bg-gray-200 rounded-3xl px-2 py-1 ">
+                        <CartIcon />
+                        <p class="text-lg font-semibold">{{ getCartItems() }}</p>
+                    </div>
                 </NuxtLink>
             </div>
 

@@ -1,0 +1,120 @@
+[
+  {
+    "id": 1,
+    "user": {
+      "avatar": "",
+      "name": "Jack",
+      "online": true,
+      "location": "Tugwell Hall",
+      "email": "",
+      "password": ""
+    },
+    "price": 20,
+    "type": { "s": "name" },
+    "rating": 4,
+    "description": "2 Minute Noodles",
+    "foodType": "fresh",
+    "portion": 1,
+    "available": 3,
+    "image": "/food/noodles.jpg",
+    "created": "",
+    "recurring": true,
+    "expire": ""
+  },
+  {
+    "id": 2,
+    "user": {
+      "avatar": "",
+      "name": "Jackie",
+      "online": true,
+      "location": "Tugwell Hall",
+      "email": "",
+      "password": ""
+    },
+    "price": 30,
+    "type": { "s": "name" },
+    "rating": 4,
+    "description": "Biryani",
+    "foodType": "fresh",
+    "portion": 1,
+    "available": 4,
+    "image": "/food/biryani.jpg",
+    "created": "",
+    "expire": ""
+  },
+  {
+    "id": 3,
+    "user": {
+      "avatar": "",
+      "name": "Jak",
+      "online": false,
+      "location": "Obz Square",
+      "email": "",
+      "password": ""
+    },
+    "price": 25,
+    "type": { "s": "name" },
+    "rating": 5,
+    "description": "Pasta",
+    "foodType": "left overs",
+    "portion": 2,
+    "available": 1,
+    "image": "/food/pasta.jpg",
+    "created": "",
+    "expire": ""
+  },
+  {
+    "id": 4,
+    "user": {
+      "avatar": "",
+      "name": "Jakie",
+      "online": true,
+      "location": "Tugwell Hall",
+      "email": "",
+      "password": ""
+    },
+    "price": 10,
+    "type": { "s": "name" },
+    "rating": 3.5,
+    "description": "Eggs",
+    "foodType": "fresh",
+    "portion": 0.5,
+    "available": 1,
+    "image": "/food/eggs.jpg",
+    "created": "",
+    "recurring": true,
+    "expire": ""
+  },
+  {
+    "id": 5,
+    "user": {
+      "avatar": "",
+      "name": "Gordon",
+      "online": true,
+      "location": "Obz Square",
+      "email": "",
+      "password": "",
+      "requests": [
+        {
+          "meal": {
+            "requestVal": 35,
+            "request": "Can you make chicken curry",
+            "accepted": false,
+            "counter": 0
+          },
+          "limit": 3
+        }
+      ]
+    },
+    "price": 20,
+    "type": { "s": "name" },
+    "rating": 4,
+    "description": "Curry",
+    "foodType": "left overs",
+    "portion": 2,
+    "available": 3,
+    "image": "/food/curry.jpg",
+    "created": "",
+    "expire": ""
+  }
+]

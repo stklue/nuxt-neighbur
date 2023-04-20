@@ -7,19 +7,20 @@ definePageMeta({
 })
 
 const store = useGetStartedStore()
-const {getEmail, updateEmail} = useUserStore()
+const { getEmail, updateEmail } = useUserStore()
 // const {  updateEmail } = store
 const em = ref(getEmail().value)
 
 
 
-
-
-
-
 function handleSubmit() {
-  updateEmail(em.value)
-  navigateTo('/signup/regform')
+  if (em.value.length > 0) {
+    updateEmail(em.value)
+    navigateTo('/signup/regform')
+  } else {
+    alert("Email field cannot be empty");
+  }
+
 }
 </script>
 

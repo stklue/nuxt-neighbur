@@ -1,0 +1,53 @@
+[
+  {
+    "avatar": "",
+    "name": "Jack",
+    "online": true,
+    "location": "Tugwell Hall",
+    "email": "",
+    "password": ""
+  },
+  {
+    "avatar": "",
+    "name": "Jackie",
+    "online": true,
+    "location": "Tugwell Hall",
+    "email": "",
+    "password": ""
+  },
+  {
+    "avatar": "",
+    "name": "Jak",
+    "online": false,
+    "location": "Obz Square",
+    "email": "",
+    "password": ""
+  },
+  {
+    "avatar": "",
+    "name": "Jakie",
+    "online": true,
+    "location": "Tugwell Hall",
+    "email": "",
+    "password": ""
+  },
+  {
+    "avatar": "",
+    "name": "Gordon",
+    "online": true,
+    "location": "Obz Square",
+    "email": "",
+    "password": "",
+    "requests": [
+      {
+        "meal": {
+          "requestVal": 35,
+          "request": "Can you make chicken curry",
+          "accepted": false,
+          "counter": 0
+        },
+        "limit": 3
+      }
+    ]
+  }
+]

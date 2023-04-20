@@ -20,7 +20,6 @@ useHead({
         <HomeRecentVisit />
         <div class="flex flex-col lg:flex-row ">
             <HomeOnlineNearYou />
-            <OrderFakeMap/>
         </div>
     </div>
 </template>
