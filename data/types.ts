@@ -13,6 +13,7 @@ export interface User {
   avatar: string;
   name: string;
   make?: UserRequest;
+  online: boolean;
   requests?: UserRequest[];
 }
 
@@ -57,6 +58,7 @@ export const emptyProduct: Product = {
   user: {
     avatar: "",
     name: "",
+    online: false
   },
   price: 0.0,
   type: {},

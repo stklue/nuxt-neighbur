@@ -18,6 +18,9 @@ useHead({
 <template>
     <div class="min-h-screen ">
         <HomeRecentVisit />
-        <HomeOnlineNearYou />
+        <div class="flex flex-col lg:flex-row ">
+            <HomeOnlineNearYou />
+            <OrderFakeMap/>
+        </div>
     </div>
 </template>

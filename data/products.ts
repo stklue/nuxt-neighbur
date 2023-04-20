@@ -3,7 +3,7 @@ import { Product, RequestMeal, UserRequest } from "~~/data/types";
 export const products: Product[] = [
   {
     id: 1,
-    user: { avatar: "", name: "Jack" },
+    user: { avatar: "", name: "Jack",  online: true },
     price: 20,
     type: { s: "name" },
     rating: 4,
@@ -18,7 +18,7 @@ export const products: Product[] = [
   },
   {
     id: 2,
-    user: { avatar: "", name: "Jackie" },
+    user: { avatar: "", name: "Jackie",  online: true },
     price: 30,
     type: { s: "name" },
     rating: 4,
@@ -32,7 +32,7 @@ export const products: Product[] = [
   },
   {
     id: 3,
-    user: { avatar: "", name: "Jak" },
+    user: { avatar: "", name: "Jak",  online: false },
     price: 25,
     type: { s: "name" },
     rating: 5,
@@ -46,7 +46,7 @@ export const products: Product[] = [
   },
   {
     id: 4,
-    user: { avatar: "", name: "Jakie" },
+    user: { avatar: "", name: "Jakie" ,   online: true},
     price: 10,
     type: { s: "name" },
     rating: 3.5,
@@ -64,6 +64,7 @@ export const products: Product[] = [
     user: {
       avatar: "",
       name: "Gordon",
+      online: true,
       requests: [
         {
           meal: {

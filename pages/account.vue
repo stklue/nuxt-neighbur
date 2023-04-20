@@ -24,6 +24,12 @@ definePageMeta({
                         <div>Profit</div>
                         <div>R120.00</div>
                     </div>
+                    <div class="flex justify-between py-5">
+                        <div class="cursor-pointer border-2 text-[#FF8C32] border-[#FF8C32] rounded-lg p-4 hover:bg-white">Change subscription</div>
+                    </div>
+                    <div class="flex justify-between">
+                        <div class="text-red-500 font-semibold hover:text-red-600 cursor-pointer border-2 border-red-600 rounded-lg p-4 hover:bg-white">Cancel subscription</div>
+                    </div>
                 </div>
             </div>
             <div class="rounded-lg bg-gray-200 w-full p-5">

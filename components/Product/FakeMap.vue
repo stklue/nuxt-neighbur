@@ -3,14 +3,16 @@ import { useProductsStore } from '~~/stores/orderItemDetail';
 import { Product } from '~~/data/types';
 import { useSelectedProductStore } from '~~/stores/selectedProduct';
 
-const { changeProduct } = useSelectedProductStore()
+const { changeProduct, selectedProduct } = useSelectedProductStore()
 const { products, setProducts } = useProductsStore()
 
-if (products.length === 0) {
-    const { data } = await useFetch('/api/order/products')
-    if (Array.isArray(data.value)) {
-        setProducts(data.value as Product[])
-    }
+
+const id = selectedProduct.id;
+
+const router = useRouter()
+
+const getProduct = async () => {
+    const { data } = await useFetch(`/api/order/product/${id}`)
 }
 
 
@@ -18,8 +20,8 @@ if (products.length === 0) {
 
 
 <template>
-    <section class="min-h-full w-full ">
-        <div class=" flex py-4 pr-10 bg-gray-300 rounded-tr-lg rounded-br-lg min-h-full w-full">
+    <section class="min-h-full w-full pt-5 ">
+        <div class=" flex py-4 pr-10  rounded-tr-lg rounded-br-lg min-h-full w-full">
             <div class="bg-gray-200 rounded-lg p-10 grid grid-cols-3 flex-wrap gap-x-12 gap-y-20 w-full h-1/2">
                 <div class=" bg-zinc-300 max-h-14 w-14 p-2 cursor-pointer" v-for="product in products">
                     <Icon @click="changeProduct(product)" name="material-symbols:location-on"
