@@ -1,13 +1,15 @@
 [
   {
+    "id": 1,
     "avatar": "",
     "name": "Jack",
-    "online": true,
+    "online": false,
     "location": "Tugwell Hall",
     "email": "",
     "password": ""
   },
   {
+    "id": 2,
     "avatar": "",
     "name": "Jackie",
     "online": true,
@@ -16,6 +18,7 @@
     "password": ""
   },
   {
+    "id": 3,
     "avatar": "",
     "name": "Jak",
     "online": false,
@@ -24,6 +27,7 @@
     "password": ""
   },
   {
+    "id": 4,
     "avatar": "",
     "name": "Jakie",
     "online": true,
@@ -32,6 +36,7 @@
     "password": ""
   },
   {
+    "id": 5,
     "avatar": "",
     "name": "Gordon",
     "online": true,

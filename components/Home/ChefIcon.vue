@@ -1,7 +1,7 @@
 
 <template>
-    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-        <g fill="currentColor">
+    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24">
+        <g fill="#06113C">
             <path fillRule="evenodd"
                 d="M2 10a5 5 0 0 1 5.737-4.946a4.502 4.502 0 0 1 8.526 0A5 5 0 0 1 19 14.584v2.666H5v-2.666A5.001 5.001 0 0 1 2 10Zm9.043 3.67C10.165 13.024 9 11.984 9 11c0-1.673 1.65-2.297 3-1.005c1.35-1.292 3-.668 3 1.005c0 .985-1.165 2.025-2.043 2.67c-.42.307-.63.461-.957.461c-.328 0-.537-.154-.957-.462Z"
                 clipRule="evenodd"></path>

@@ -18,8 +18,9 @@ useHead({
 <template>
     <div class="min-h-screen ">
         <HomeRecentVisit />
-        <div class="flex flex-col lg:flex-row ">
+        <div class="flex flex-col ">
             <HomeOnlineNearYou />
+            <HomeAllNearYou/>
         </div>
     </div>
 </template>

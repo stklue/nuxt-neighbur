@@ -4,6 +4,7 @@ export const products: Product[] = [
   {
     id: 1,
     user: {
+      id: 1,
       avatar: "",
       name: "Jack",
       online: true,
@@ -26,6 +27,7 @@ export const products: Product[] = [
   {
     id: 2,
     user: {
+      id: 1,
       avatar: "",
       name: "Jackie",
       online: true,
@@ -47,6 +49,7 @@ export const products: Product[] = [
   {
     id: 3,
     user: {
+      id: 3,
       avatar: "",
       name: "Jak",
       online: false,
@@ -68,6 +71,7 @@ export const products: Product[] = [
   {
     id: 4,
     user: {
+      id: 4,
       avatar: "",
       name: "Jakie",
       online: true,
@@ -90,6 +94,7 @@ export const products: Product[] = [
   {
     id: 5,
     user: {
+      id: 5,
       avatar: "",
       name: "Gordon",
       online: true,

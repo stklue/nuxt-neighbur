@@ -10,6 +10,7 @@ export interface UserRequest {
 }
 
 export interface User {
+  id: number;
   avatar: string;
   email: string;
   name: string;
@@ -57,6 +58,7 @@ export interface Product {
 }
 
 export const emptyUser = {
+  id: -1,
   avatar: "",
   location: "",
   email: "",

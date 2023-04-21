@@ -1,21 +1,20 @@
 <script lang="ts" setup>
-import { useGetStartedStore, usePaymentStore } from '~~/stores/getStarted';
+
 import { useUserStore } from '~~/stores/user';
 
 definePageMeta({
   layout: "default"
 })
 
-const store = useGetStartedStore()
-const { getEmail, updateEmail } = useUserStore()
-// const {  updateEmail } = store
-const em = ref(getEmail().value)
+const { updateEmail } = useUserStore()
+const email = ref("")
 
 
 
 function handleSubmit() {
-  if (em.value.length > 0) {
-    updateEmail(em.value)
+  if (email.value.length > 0) {
+    updateEmail(email.value)
+   
     navigateTo('/signup/regform')
   } else {
     alert("Email field cannot be empty");
@@ -36,7 +35,7 @@ function handleSubmit() {
           <div>
             <form @submit.prevent="handleSubmit" class="flex space-x-3 justify-start h-12 w-full">
               <div class="flex-grow">
-                <input placeholder="Enter email" type="email" name="email" id="emal" v-model="em"
+                <input placeholder="Enter email" type="email" name="email" id="emal" v-model="email"
                   class="bg-[#06113C] border-2 w-full border-[#EEEEEE] rounded-lg text-[#fefefe]  p-5  focus:outline-none" />
               </div>
               <div>

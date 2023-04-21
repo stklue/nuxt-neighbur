@@ -22,6 +22,9 @@ if (Array.isArray(data.value)) {
                     <div
                         class="bg-orange-200 flex flex-wrap flex-col w-full h-full p-4 rounded-lg hover:scale-110 hover:shadow-lg  transition-all ease-in-out duration-500 cursor-pointer">
                         <div class="flex space-x-2 mb-2">
+                            <div class="h-10 w-10 rounded-md">
+                                <HomeChefIcon/>
+                            </div>
                             <div class="inline-flex justify-between w-full space-x-4">
                                 <h2>{{ product.user.name }}</h2>
                                 <OrderOnlineGlow />
