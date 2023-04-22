@@ -9,11 +9,52 @@ definePageMeta({
 });
 
 const { user, newUser } = useUserStore();
-const password = ref("");
+const password: Ref<string> = ref("");
 const conPassword = ref("");
-const email = ref(user.email);
+const email: Ref<string> = ref(user.email);
 const username = ref("");
 const residence = ref("Choose your residence");
+const authClient = useSupabaseAuthClient();
+const userS = useSupabaseUser();
+const client = useSupabaseClient();
+
+const signUp = async () => {
+  const { error } = await authClient.auth.signUp({
+    email: email.value,
+    password: password.value,
+  });
+
+  if (error) {
+    console.log(error);
+
+    return alert("Something went wrong !");
+  } else if (
+    email.value &&
+    password.value.length > 0 &&
+    password.value === conPassword.value &&
+    residence.value !== "Choose your residence"
+  ) {
+    newUser({
+      avatar: "",
+      online: true,
+      email: email.value,
+      password: password.value,
+      name: username.value,
+      location: residence.value,
+    } as User);
+
+    const u = { name: username.value, online: true };
+
+    const { data } = await useAsyncData("users", async () => {
+      const { data, error } = await client.from("User").upsert([u]);
+    });
+
+    console.log("This is the data: ", data.value);
+
+    alert("An email confirmation link has been send to you.");
+    // navigateTo("/signup/subscription");
+  }
+};
 
 const signUpWithEmailAndPassword = () => {
   if (
@@ -47,7 +88,7 @@ const signUpWithEmailAndPassword = () => {
       <h3 class="text-[#06113C] text-lg">STEP 1 OF 3</h3>
     </div>
     <form
-      @submit.prevent="signUpWithEmailAndPassword"
+      @submit.prevent="signUp"
       class="bg-[#EEEEEE] shadow-md rounded px-8 pt-6 pb-8 mb-4 w-2/3 mx-auto"
     >
       <div class="mb-4">
