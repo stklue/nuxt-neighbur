@@ -1,4 +1,3 @@
-import { products } from "~~/data/products";
 import { User } from "~~/data/types";
 import usersJson from "~~/data/users.json";
 

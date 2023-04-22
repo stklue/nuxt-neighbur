@@ -34,8 +34,8 @@ const props = defineProps<Props>();
             <!-- Incr and Decr and Trash/Remove -->
             <div class="flex justify-between pr-5">
                 <div class="flex space-x-4 w-full ">
-                    <p class="text-center w-8">Portion:</p>
-                    <p class="text-center w-8">{{ props.orderItem.product.portion }}</p>
+                    <p class="text-center w-8">Plate:</p>
+                    <p class="text-center w-8">{{ props.orderItem.product.plate }}</p>
                 </div>
                 <div>
                     <a @click="remove(orderItem)"

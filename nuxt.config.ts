@@ -6,7 +6,6 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
     "@vueuse/nuxt",
-    "nuxt-mapbox",
     "nuxt-icon",
   ],
   ssr:false,

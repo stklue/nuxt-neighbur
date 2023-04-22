@@ -2,97 +2,99 @@
   {
     "id": 1,
     "user": {
+      "id": 1,
       "avatar": "",
       "name": "Jack",
-      "online": true,
+      "online": false,
       "location": "Tugwell Hall",
-      "email": "",
+      "email": "jack@gmail.com",
       "password": ""
     },
     "price": 20,
-    "type": { "s": "name" },
     "rating": 4,
     "description": "2 Minute Noodles",
     "foodType": "fresh",
-    "portion": 1,
+    "plate": 0.5,
     "available": 3,
     "image": "/food/noodles.jpg",
-    "created": "",
+    "created": "4/22/2023, 11:21:52 AM",
     "recurring": true,
     "expire": ""
   },
   {
     "id": 2,
-    "user": {
+    "user":  {
+      "id": 2,
       "avatar": "",
       "name": "Jackie",
-      "online": true,
+      "online": false,
       "location": "Tugwell Hall",
-      "email": "",
+      "email": "jackie@gmail.com",
       "password": ""
     },
     "price": 30,
-    "type": { "s": "name" },
     "rating": 4,
     "description": "Biryani",
     "foodType": "fresh",
-    "portion": 1,
+    "plate": 1,
     "available": 4,
     "image": "/food/biryani.jpg",
-    "created": "",
+    "created": "4/22/2023, 11:21:52 AM",
     "expire": ""
   },
   {
     "id": 3,
-    "user": {
+    "user":  {
+      "id": 3,
       "avatar": "",
-      "name": "Jak",
+      "name": "Max",
       "online": false,
       "location": "Obz Square",
-      "email": "",
+      "email": "max@gmail.com",
       "password": ""
     },
     "price": 25,
-    "type": { "s": "name" },
+    
     "rating": 5,
     "description": "Pasta",
     "foodType": "left overs",
-    "portion": 2,
+    "plate": 2,
     "available": 1,
     "image": "/food/pasta.jpg",
-    "created": "",
+    "created": "4/22/2023, 11:21:52 AM",
     "expire": ""
   },
   {
     "id": 4,
-    "user": {
+    "user":{
+      "id": 4,
       "avatar": "",
-      "name": "Jakie",
+      "name": "maxine",
       "online": true,
       "location": "Tugwell Hall",
-      "email": "",
+      "email": "maxine@gmail.com",
       "password": ""
     },
     "price": 10,
-    "type": { "s": "name" },
     "rating": 3.5,
     "description": "Eggs",
     "foodType": "fresh",
-    "portion": 0.5,
+    "plate": 0.25,
     "available": 1,
     "image": "/food/eggs.jpg",
-    "created": "",
+    "created": "4/22/2023, 11:21:52 AM",
     "recurring": true,
     "expire": ""
   },
   {
     "id": 5,
-    "user": {
+    "user":  {
+      "id": 5,
       "avatar": "",
       "name": "Gordon",
       "online": true,
       "location": "Obz Square",
-      "email": "",
+      "email": "gordon@gmail.com",
       "password": "",
       "requests": [
         {
@@ -107,14 +109,13 @@
       ]
     },
     "price": 20,
-    "type": { "s": "name" },
     "rating": 4,
     "description": "Curry",
     "foodType": "left overs",
-    "portion": 2,
+    "plate": 0.25,
     "available": 3,
     "image": "/food/curry.jpg",
-    "created": "",
+    "created": "4/22/2023, 11:21:52 AM",
     "expire": ""
   }
 ]

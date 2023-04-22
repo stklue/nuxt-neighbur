@@ -28,7 +28,7 @@ interface Food {}
 
 export type ProductType = Short | Food;
 export type FoodType = "left overs" | "fresh";
-export type Portion = 0.5 | 1 | 2;
+export type Plate = 0.25 | 0.5 | 1 | 2 | 3;
 export type Confirmed = "confirmed" | "rejected";
 export type RejectedReason =
   | "someone else was before you"
@@ -44,12 +44,11 @@ export interface Product {
   id: number;
   user: User;
   price: number;
-  type: ProductType;
   rating: number;
   description: string;
   recurring?: boolean;
-  foodType: FoodType;
-  portion: Portion;
+  foodType: FoodType | string;
+  plate: Plate | number; 
   available: number;
   image: string;
   created: string;
@@ -71,12 +70,11 @@ export const emptyProduct: Product = {
   id: -1,
   user: emptyUser,
   price: 0.0,
-  type: {},
   rating: 0,
   description: "",
   recurring: false,
   foodType: "fresh",
-  portion: 1,
+  plate: 1,
   available: 0,
   image: "string",
   created: new Date().toLocaleString(),

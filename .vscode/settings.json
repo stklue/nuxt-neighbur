@@ -1,3 +1,3 @@
 {
-    "typescript.tsdk": "node_modules/typescript/lib"
+    "typescript.tsdk": "/home/netklue/.vscode-server/extensions/ms-vscode.vscode-typescript-next-5.1.20230419/node_modules/typescript/lib"
 }

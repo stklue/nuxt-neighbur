@@ -33,20 +33,20 @@ getProduct().value = products[0]
                 <div class="w-full h-full rounded-lg bg-slate-300 p-3">{{ getProduct().value.description }}</div>
 
                 <p class="text-lg font-medium">R{{ getProduct().value.price.toFixed(2) }}</p>
-                <div class="flex justify-between items-center text-center h-7" v-if="getProduct().value.portion === 0.5">
-                    <p class=" text-lg">Portion(1/2)</p>
+                <div class="flex justify-between items-center text-center h-7" v-if="getProduct().value.plate === 0.5">
+                    <p class=" text-lg">Plate(1/2)</p>
                     <div class="flex">
                         <Icon class="text-[#FF8C32] w-14 h-14" name="mdi:circle-halff" />
                         <p class="self-center">(plates) </p>
                     </div>
                 </div>
                 <div class=" h-7 flex justify-between items-center text-center " v-else>
-                    <p class=" text-lg">Portion({{ getProduct().value.portion }})</p>
+                    <p class=" text-lg">Plate({{ getProduct().value.plate }})</p>
                     <p>
-                        <Icon class="text-[#FF8C32] w-14 h-14" name="ic:round-circle">show portion sizes</Icon>
+                        <Icon class="text-[#FF8C32] w-14 h-14" name="ic:round-circle">show plate sizes</Icon>
                     </p>
                     <div class="flex">
-                        <div class="flex" v-for="_ in getProduct().value.portion">
+                        <div class="flex" v-for="_ in getProduct().value.plate">
                             <Icon class="text-[#FF8C32] w-14 h-14" name="ic:round-circle" />
                         </div>
                         <p class="self-center">(plates) </p>

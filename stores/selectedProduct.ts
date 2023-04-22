@@ -15,7 +15,7 @@ export const useSelectedProductStore = defineStore("selected-product", () => {
     expire: new Date().toLocaleTimeString(),
     foodType: "fresh",
     image: "",
-    portion: 1,
+    plate: 1,
   };
   const selectedProduct: Ref<Product> = ref(emptyProduct);
 

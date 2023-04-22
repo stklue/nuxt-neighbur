@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<!-- <script lang="ts" setup>
 import { MarkerOptions } from 'mapbox-gl';
 import { ref, watch } from 'vue';
 import { defineMapboxMarker } from '#imports';
@@ -21,4 +21,8 @@ const marker = defineMapboxMarker(props.markerId, props.options, markerRef, (m) 
               height: 40px;
               backgroundSize: 100%;
             " />
+</template> -->
+
+<template>
+    Marker
 </template>

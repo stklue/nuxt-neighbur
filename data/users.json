@@ -5,34 +5,34 @@
     "name": "Jack",
     "online": false,
     "location": "Tugwell Hall",
-    "email": "",
+    "email": "jack@gmail.com",
     "password": ""
   },
   {
     "id": 2,
     "avatar": "",
     "name": "Jackie",
-    "online": true,
+    "online": false,
     "location": "Tugwell Hall",
-    "email": "",
+    "email": "jackie@gmail.com",
     "password": ""
   },
   {
     "id": 3,
     "avatar": "",
-    "name": "Jak",
+    "name": "Max",
     "online": false,
     "location": "Obz Square",
-    "email": "",
+    "email": "max@gmail.com",
     "password": ""
   },
   {
     "id": 4,
     "avatar": "",
-    "name": "Jakie",
+    "name": "Maxine",
     "online": true,
     "location": "Tugwell Hall",
-    "email": "",
+    "email": "maxine@gmail.com",
     "password": ""
   },
   {
@@ -41,7 +41,7 @@
     "name": "Gordon",
     "online": true,
     "location": "Obz Square",
-    "email": "",
+    "email": "gordon@gmail.com",
     "password": "",
     "requests": [
       {

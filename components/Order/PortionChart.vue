@@ -1,3 +1,3 @@
 <template>
-    This is the portion chart
+    This is the plate chart
 </template>
