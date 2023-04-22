@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { residences } from "~~/data/res";
 import { User } from "~~/data/types";
-import { useGetStartedStore } from "~~/stores/getStarted";
 import { useUserStore } from "~~/stores/user";
+import { Database } from "~~/types/supabase";
 
 definePageMeta({
   layout: "signup",
@@ -15,8 +15,7 @@ const email: Ref<string> = ref(user.email);
 const username = ref("");
 const residence = ref("Choose your residence");
 const authClient = useSupabaseAuthClient();
-const userS = useSupabaseUser();
-const client = useSupabaseClient();
+const client = useSupabaseClient<Database>();
 
 const signUp = async () => {
   const { error } = await authClient.auth.signUp({
@@ -26,37 +25,9 @@ const signUp = async () => {
 
   if (error) {
     console.log(error);
-
     return alert("Something went wrong !");
-  } else if (
-    email.value &&
-    password.value.length > 0 &&
-    password.value === conPassword.value &&
-    residence.value !== "Choose your residence"
-  ) {
-    newUser({
-      avatar: "",
-      online: true,
-      email: email.value,
-      password: password.value,
-      name: username.value,
-      location: residence.value,
-    } as User);
-
-    const u = { name: username.value, online: true };
-
-    const { data } = await useAsyncData("users", async () => {
-      const { data, error } = await client.from("User").upsert([u]);
-    });
-
-    console.log("This is the data: ", data.value);
-
-    alert("An email confirmation link has been send to you.");
-    // navigateTo("/signup/subscription");
   }
-};
 
-const signUpWithEmailAndPassword = () => {
   if (
     email.value &&
     password.value.length > 0 &&
@@ -71,15 +42,29 @@ const signUpWithEmailAndPassword = () => {
       name: username.value,
       location: residence.value,
     } as User);
-    useCookie("currentUser", {
-      default: () => user,
-    });
-    navigateTo("/signup/subscription");
-    // localStorage.setItem("user", JSON.stringify({ email: getEmail().value, password: getPass().value }));
+
+    const userResponse = await authClient.auth.getUser();
+
+    if (userResponse.data.user) {
+      const u = {
+        id: userResponse.data.user.id,
+        name: username.value,
+        online: true,
+      };
+      await useAsyncData("User", async () => {
+        const { error } = await client.from("User").insert(u);
+        if (error === null) {
+          navigateTo("/signup/subscription");
+        }
+        console.log("Error, Inserting", error);
+      });
+    }
   } else {
     alert("Error: Fields are either empty or passwords does not match.");
   }
 };
+
+
 </script>
 
 <template>
