@@ -1,21 +1,25 @@
 <script lang="ts" setup>
-import { Product, emptyProduct } from "~~/data/types";
+import { User } from "@prisma/client";
+import { Product, emptyProduct, emptyUser } from "~~/data/types";
+import { AggData } from "~~/server/api/order/[userId]";
 import { useCart } from "~~/stores/cart";
-
-definePageMeta({
-  middleware: "auth",
-  layout: "index",
-});
 
 const { add } = useCart();
 const product: Ref<Product> = ref(emptyProduct);
+const user: Ref<User> = ref(emptyUser);
+const aggData: Ref<AggData<Product, User, User>> = ref({
+  o: product.value,
+  p: user.value,
+});
 const route = useRoute();
 
 watch(
   () => route.params.id,
   async (_id) => {
     const { data } = await useFetch(`/api/product/${_id}`);
-    product.value = data.value as unknown as Product;
+    aggData.value = data.value as unknown as AggData<Product, User, User>;
+    user.value = aggData.value.p;
+    product.value = aggData.value.o;
   },
   { deep: true, immediate: true }
 );
@@ -43,17 +47,16 @@ watch(addNotification, () => {
   <section
     class="min-h-full w-full px-10 pt-10 rounded-tl-lg rounded-bl-lg flex flex-col space-y-4"
   >
-  {{ product}}
     <div class="w-full" :id="String(product.id)">
       <div
-        class="bg-[#fefefe] flex flex-col w-full h-full p-5 space-y-2 rounded-lg hover:scale-105 hover:shadow-lg transition-all ease-in-out duration-500 cursor-pointer"
+        class="bg-[#fefefe] flex flex-col w-full h-full p-5 space-y-2 rounded-lg"
       >
         <div class="flex justify-between space-x-2">
           <div class="flex space-x-2">
             <div class="rounded-ful w-10 h-10">
               <HomeChefIcon />
             </div>
-            <h2 class="font-semibold text-2xl">{{ product.user.name }}</h2>
+            <h2 class="font-semibold text-2xl">{{ user.name }}</h2>
           </div>
           <OrderOnlineGlow />
         </div>
@@ -109,10 +112,7 @@ watch(addNotification, () => {
           <p v-else>Once-off</p>
           <p>dish</p>
         </div>
-        <div class="flex justify-between pb-5">
-          <p class="text-lg">Rating</p>
-          <HomeRating />
-        </div>
+
         <button
           @click="addProduct"
           class="w-full bg-[#06113C] text-white p-4 rounded-lg hover:bg-gray-200 hover:text-[#06113C] transition-all ease-out duration-300"
