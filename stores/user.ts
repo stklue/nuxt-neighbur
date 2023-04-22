@@ -11,8 +11,7 @@ export const useUserStore = defineStore("user", () => {
   );
 
   const newUser = (u: User) => {
-    user.value.avatar = u.avatar;
-    user.value.password = u.password;
+    user.value.id = u.id;
     user.value.location = u.location;
     user.value.online = u.online;
     user.value.name = u.name;
@@ -21,7 +20,7 @@ export const useUserStore = defineStore("user", () => {
 
   const updateEmail = (email: string) => {
     user.value.email = email;
-    user.value.id = createRandId();
+
   };
   return { user, newUser, updateEmail };
 });

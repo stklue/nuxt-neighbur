@@ -34,21 +34,23 @@ const signUp = async () => {
     password.value === conPassword.value &&
     residence.value !== "Choose your residence"
   ) {
-    newUser({
-      avatar: "",
-      online: true,
-      email: email.value,
-      password: password.value,
-      name: username.value,
-      location: residence.value,
-    } as User);
+
 
     const userResponse = await authClient.auth.getUser();
-
+ 
     if (userResponse.data.user) {
+      newUser({
+      id: userResponse.data.user.id,
+      online: true,
+      email: email.value,
+      name: username.value,
+      subscription: "",
+      location: residence.value,
+    } as User);
       const u = {
         id: userResponse.data.user.id,
         name: username.value,
+        location: residence.value,
         online: true,
       };
       await useAsyncData("User", async () => {

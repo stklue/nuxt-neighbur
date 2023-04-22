@@ -5,20 +5,19 @@ export interface RequestMeal {
   counter: number;
 }
 export interface UserRequest {
-  id: number;
+  id: string | number;
   meal: RequestMeal;
   limit: number;
 }
 
 export interface User {
-  id: number;
-  avatar: string;
+  id: string;
   email: string;
   name: string;
   location: string;
-  password: string;
   make?: UserRequest;
   online: boolean;
+  subscription: string;
   requests?: UserRequest[];
 }
 
@@ -42,7 +41,7 @@ export interface Order {
 }
 
 export interface Product {
-  id: number;
+  id: string | number;
   userId: number;
   price: number;
   rating: number;
@@ -87,7 +86,7 @@ export interface Cart {
 }
 
 export interface OrderItem {
-  id: number;
+  id: string | number;
   userId: number;
   productId: number;
   chefId: number;
@@ -98,7 +97,7 @@ export interface OrderItem {
   reason: RejectedReason | string;
 }
 export interface OrderItemData {
-  id: number;
+  id: string | number;
   userId: number;
   product: Product;
   chefId: number;
