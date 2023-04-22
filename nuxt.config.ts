@@ -3,12 +3,13 @@
 export default defineNuxtConfig({
   modules: [
     "@nuxtjs/tailwindcss",
-    '@pinia/nuxt',
-    '@pinia-plugin-persistedstate/nuxt',
+    "@pinia/nuxt",
+    "@pinia-plugin-persistedstate/nuxt",
     "@vueuse/nuxt",
     "nuxt-icon",
+    "@nuxtjs/supabase",
   ],
-  ssr:false,
+  ssr: false,
   runtimeConfig: {
     public: {
       mapbox: {

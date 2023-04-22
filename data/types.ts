@@ -82,7 +82,7 @@ export const emptyProduct: Product = {
 };
 
 export interface Cart {
-  products: OrderItem[];
+  products: OrderItemData[];
   total: number;
 }
 
@@ -97,6 +97,31 @@ export interface OrderItem {
   confirmed: Confirmed | string;
   reason: RejectedReason | string;
 }
+export interface OrderItemData {
+  id: number;
+  userId: number;
+  product: Product;
+  chefId: number;
+  quantity: number;
+  total: number;
+  rating: number;
+  confirmed: Confirmed | string;
+  reason: RejectedReason | string;
+}
+
+export const toProductDatabase = (o: OrderItemData) => {
+  return {
+    id: o.id,
+    userId: o.userId,
+    chefId: o.chefId,
+    quantity: o.quantity,
+    total: o.total,
+    rating: o.rating,
+    confirmed: o.confirmed,
+    reason: o.reason,
+    productId: o.product.id,
+  } as OrderItem;
+};
 
 export const emptyCart: Cart = {
   products: [],

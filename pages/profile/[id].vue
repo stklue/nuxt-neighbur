@@ -72,11 +72,7 @@ useHead({
           <!-- Profile Card -->
           <div class="bg-white p-3 border-t-4 border-[#06113c]">
             <div class="image overflow-hidden">
-              <img
-                class="h-auto w-full mx-auto"
-                src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg"
-                alt=""
-              />
+             
             </div>
             <h1 class="text-[#06113c] font-bold text-xl leading-8 my-1">
               {{ user.name }}
@@ -114,13 +110,7 @@ useHead({
           <!-- End of profile card -->
           <div class="my-4"></div>
           <div class="bg-white p-3 border-t-4 border-[#06113c]">
-            <div class="image overflow-hidden">
-              <img
-                class="h-auto w-full mx-auto"
-                src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg"
-                alt=""
-              />
-            </div>
+           
             <h1 class="text-[#06113c] font-bold text-xl leading-8 my-1">
               History
             </h1>

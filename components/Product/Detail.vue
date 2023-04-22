@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import { User } from "@prisma/client";
-import { Product, emptyProduct, emptyUser } from "~~/data/types";
+import { Product, emptyProduct, emptyUser, User } from "~~/data/types";
 import { AggData } from "~~/server/api/order/[userId]";
 import { useCart } from "~~/stores/cart";
 
@@ -26,13 +25,9 @@ watch(
 
 const addNotification = ref(false);
 
-useHead({
-  title: "Product",
-  meta: [{ name: "product", content: "neighbur food" }],
-});
 
 const addProduct = () => {
-  add(product.value);
+  add(product.value, user.value);
   addNotification.value = true;
 };
 
@@ -45,11 +40,11 @@ watch(addNotification, () => {
 
 <template>
   <section
-    class="min-h-full w-full px-10 pt-10 rounded-tl-lg rounded-bl-lg flex flex-col space-y-4"
+    class="min-h-full w-full lg:w-1/2 mx-auto px-10 pt-10 rounded-tl-lg rounded-bl-lg flex flex-col space-y-4 text-[#06113C]"
   >
     <div class="w-full" :id="String(product.id)">
       <div
-        class="bg-[#fefefe] flex flex-col w-full h-full p-5 space-y-2 rounded-lg"
+        class="bg-[#fefefe] flex flex-col w-full h-full p-5 space-y-4 rounded-lg"
       >
         <div class="flex justify-between space-x-2">
           <div class="flex space-x-2">
@@ -58,14 +53,14 @@ watch(addNotification, () => {
             </div>
             <h2 class="font-semibold text-2xl">{{ user.name }}</h2>
           </div>
-          <OrderOnlineGlow />
+          <OrderOnlineGlow :online="user.online" />
         </div>
+        <p class="text-2xl font-medium">R{{ product.price.toFixed(2) }}</p>
 
-        <div class="w-full h-full rounded-lg bg-slate-300 p-3">
+        <div class="w-full h-full rounded-lg bg-slate-200 p-3 mb-5">
           {{ product.description }}
         </div>
 
-        <p class="text-lg font-medium">R{{ product.price.toFixed(2) }}</p>
         <div
           class="flex justify-between items-center text-center h-7"
           v-if="product.plate === 0.5"
@@ -77,7 +72,7 @@ watch(addNotification, () => {
           </div>
         </div>
         <div
-          class="flex justify-between items-center text-center h-7"
+          class="flex justify-between items-center text-center h-7 pt-2"
           v-if="product.plate === 0.25"
         >
           <p class="text-lg">Plate(1/4)</p>
@@ -96,7 +91,7 @@ watch(addNotification, () => {
             <p class="self-center">(plates)</p>
           </div>
         </div>
-        <div class="inline-flex pt-5 space-x-3">
+        <div class="inline-flex justify-between pt-5 space-x-3">
           <p>Prepared</p>
           <p>{{ product.created }}</p>
         </div>
