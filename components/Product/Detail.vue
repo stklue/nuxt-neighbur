@@ -14,7 +14,7 @@ const route = useRoute();
 watch(
   () => route.params.id,
   async (_id) => {
-    const { data } = await useFetch(`/api/order/product/${_id}`);
+    const { data } = await useFetch(`/api/product/${_id}`);
     product.value = data.value as unknown as Product;
   },
   { deep: true, immediate: true }

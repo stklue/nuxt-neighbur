@@ -12,7 +12,7 @@
     "id": 2,
     "avatar": "",
     "name": "Jackie",
-    "online": false,
+    "online": true,
     "location": "Tugwell Hall",
     "email": "jackie@gmail.com",
     "password": ""
@@ -45,6 +45,7 @@
     "password": "",
     "requests": [
       {
+        "id": 324242,
         "meal": {
           "requestVal": 35,
           "request": "Can you make chicken curry",

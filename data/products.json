@@ -1,15 +1,7 @@
 [
   {
     "id": 1,
-    "user": {
-      "id": 1,
-      "avatar": "",
-      "name": "Jack",
-      "online": false,
-      "location": "Tugwell Hall",
-      "email": "jack@gmail.com",
-      "password": ""
-    },
+    "userId": 1,
     "price": 20,
     "rating": 4,
     "description": "2 Minute Noodles",
@@ -23,15 +15,7 @@
   },
   {
     "id": 2,
-    "user":  {
-      "id": 2,
-      "avatar": "",
-      "name": "Jackie",
-      "online": false,
-      "location": "Tugwell Hall",
-      "email": "jackie@gmail.com",
-      "password": ""
-    },
+    "userId": 2,
     "price": 30,
     "rating": 4,
     "description": "Biryani",
@@ -44,17 +28,8 @@
   },
   {
     "id": 3,
-    "user":  {
-      "id": 3,
-      "avatar": "",
-      "name": "Max",
-      "online": false,
-      "location": "Obz Square",
-      "email": "max@gmail.com",
-      "password": ""
-    },
+    "userId": 3,
     "price": 25,
-    
     "rating": 5,
     "description": "Pasta",
     "foodType": "left overs",
@@ -66,15 +41,7 @@
   },
   {
     "id": 4,
-    "user":{
-      "id": 4,
-      "avatar": "",
-      "name": "maxine",
-      "online": true,
-      "location": "Tugwell Hall",
-      "email": "maxine@gmail.com",
-      "password": ""
-    },
+    "userId": 4,
     "price": 10,
     "rating": 3.5,
     "description": "Eggs",
@@ -88,26 +55,7 @@
   },
   {
     "id": 5,
-    "user":  {
-      "id": 5,
-      "avatar": "",
-      "name": "Gordon",
-      "online": true,
-      "location": "Obz Square",
-      "email": "gordon@gmail.com",
-      "password": "",
-      "requests": [
-        {
-          "meal": {
-            "requestVal": 35,
-            "request": "Can you make chicken curry",
-            "accepted": false,
-            "counter": 0
-          },
-          "limit": 3
-        }
-      ]
-    },
+    "userId": 5,
     "price": 20,
     "rating": 4,
     "description": "Curry",

@@ -1,5 +1,3 @@
-import { products } from "~~/data/products";
-import { Product, RequestMeal, UserRequest } from "~~/data/types";
 import { User } from "~~/data/types";
 import usersJson from "~~/data/users.json";
 

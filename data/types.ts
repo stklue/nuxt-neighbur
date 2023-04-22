@@ -5,6 +5,7 @@ export interface RequestMeal {
   counter: number;
 }
 export interface UserRequest {
+  id: number;
   meal: RequestMeal;
   limit: number;
 }
@@ -34,7 +35,7 @@ export type RejectedReason =
   | "someone else was before you"
   | "order was canceled by chef";
 export interface Order {
-  product: Product;
+  item: OrderItem[];
   total: number;
   confirmed: Confirmed;
   reason: RejectedReason;
@@ -42,17 +43,16 @@ export interface Order {
 
 export interface Product {
   id: number;
-  user: User;
+  userId: number;
   price: number;
   rating: number;
   description: string;
   recurring?: boolean;
   foodType: FoodType | string;
-  plate: Plate | number; 
+  plate: Plate | number;
   available: number;
   image: string;
   created: string;
-  orders?: Order[];
   expire: string;
 }
 
@@ -68,7 +68,7 @@ export const emptyUser = {
 
 export const emptyProduct: Product = {
   id: -1,
-  user: emptyUser,
+  userId: emptyUser.id,
   price: 0.0,
   rating: 0,
   description: "",
@@ -88,9 +88,14 @@ export interface Cart {
 
 export interface OrderItem {
   id: number;
-  product: Product;
+  userId: number;
+  productId: number;
+  chefId: number;
   quantity: number;
   total: number;
+  rating: number;
+  confirmed: Confirmed | string;
+  reason: RejectedReason | string;
 }
 
 export const emptyCart: Cart = {

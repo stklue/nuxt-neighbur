@@ -1,14 +1,22 @@
 <script lang="ts" setup>
-import { Product } from "~~/data/types";
+import { Product, User } from "~~/data/types";
+import { AggData } from "~~/server/api/order/[userId]";
 import { useUserStore } from "~~/stores/user";
 
 const { user } = useUserStore();
-const { data } = await useFetch(`/api/order/online?location=${user.location}`);
+const { data } = await useFetch(`/api/product/online?location=${user.location}`);
 
 const products: Ref<Product[]> = ref([]);
+const users: Ref<User[]> = ref([]);
+const aggData: Ref<AggData<Product, User, User>[]> = ref([]);
 
 if (Array.isArray(data.value)) {
-  products.value = data.value as unknown as Product[];
+  aggData.value = data.value as unknown as AggData<Product, User, User>[];
+}
+
+for (let i = 0; i < aggData.value.length; i++) {
+  products.value.push(aggData.value[i].o);
+  users.value.push(aggData.value[i].p);
 }
 </script>
 
@@ -21,8 +29,8 @@ if (Array.isArray(data.value)) {
     <div class="flex mb-6">
       <div
         class="w-52 m-4 flex-wrap"
-        v-for="product in products"
-        :id="String(product.id)"
+        v-for="(product, i) in products"
+        :id="String(user.id)"
       >
         <NuxtLink :to="'product/' + product.id">
           <div
@@ -33,15 +41,15 @@ if (Array.isArray(data.value)) {
                 <HomeChefIcon />
               </div>
               <div class="inline-flex justify-between w-full space-x-4">
-                <h2>{{ product.user.name }}</h2>
-                <OrderOnlineGlow :online="product.user.online"/>
+                <h2>{{ users[i].name }}</h2>
+                <OrderOnlineGlow :online="users[i].online" />
               </div>
             </div>
             <div>
               <h2 class="font-semibold">R{{ product.price }}</h2>
             </div>
             <div>
-              <h2 class="font-light">{{ product.user.location }}</h2>
+              <h2 class="font-light">{{ users[i].location }}</h2>
             </div>
             <div>
               <h2 class="font-normal text-sm">{{ product.created }}</h2>
