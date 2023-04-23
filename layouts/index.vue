@@ -4,13 +4,21 @@ import { useCart } from "~~/stores/cart";
 import { Database } from "~~/types/supabase";
 
 const authClient = useSupabaseAuthClient<Database>();
-const userS = useSupabaseUser();
-const _id = userS.value?.id;
+
 const user: Ref<User> = ref(emptyUser);
 const { getCartItems } = useCart();
 
-const { data } = await useFetch(`/api/users/${_id}`);
-user.value = data.value as unknown as User;
+const userS = useSupabaseUser();
+const _id = userS.value?.id;
+watch(
+  () => useRoute(),
+  async () => {
+    const { data } = await useFetch(`/api/users/${_id}`);
+    user.value = data.value as unknown as User;
+  },
+  { deep: true, immediate: true }
+);
+onMounted(async () => {});
 
 const logout = async () => {
   const { error } = await authClient.auth.signOut();
@@ -34,8 +42,12 @@ const logout = async () => {
         >
       </div>
 
-      <div class="flex justify-center self-center h-full items-center">
-        welcome {{ user.name }}
+      <div
+        class="flex space-x-2 justify-center self-center h-full items-center"
+      >
+        <p>welcome</p>
+        <p></p>
+        {{ user.name }}
       </div>
 
       <div
@@ -72,7 +84,7 @@ const logout = async () => {
           </span>
         </NuxtLink>
         <NuxtLink to="/cart">
-          <div class="flex items-center bg-gray-200 rounded-3xl px-2 py-1">
+          <div class="flex items-center bg-gray-200 rounded-3xl px-2 mx-2 py-1">
             <CartIcon />
             <p class="text-lg font-semibold">{{ getCartItems() }}</p>
           </div>
