@@ -3,6 +3,28 @@ definePageMeta({
   middleware: "auth",
   layout: "index",
 });
+const dropzoneFile: Ref<File | undefined | null> = ref();
+
+const drop = (e: DragEvent) => {
+  dropzoneFile.value = e.dataTransfer?.files[0];
+};
+const selectedFile = () => {
+  const element = document.querySelector<HTMLInputElement>(".dropzoneFile");
+  if (element !== null) {
+    if (element.files !== null) {
+      dropzoneFile.value = element.files[0];
+    }
+  }
+};
+
+/* Frorm Data */
+const productName = ref("");
+const price = ref(0);
+const description = ref("");
+const recur = ref(false);
+const image = ref("");
+const plate = ref(0);
+const available = ref(0);
 </script>
 
 <template>
@@ -70,8 +92,11 @@ definePageMeta({
             </div>
             <div class="sm:col-span-4">
               <label for="price" class="block text-sm font-medium leading-6"
-                >Plate</label>
-                <span class="block text-sm  leading-6">A number representing a full plate or a portion of it</span>
+                >Plate</label
+              >
+              <span class="block text-sm leading-6"
+                >A number representing a full plate or a portion of it</span
+              >
               <div
                 class="mt-2 flex rounded-md shadow-sm ring-gray-300 sm:max-w-md"
               >
@@ -87,8 +112,11 @@ definePageMeta({
             </div>
             <div class="sm:col-span-4">
               <label for="price" class="block text-sm font-medium leading-6"
-                >Available</label>
-                <span class="block text-sm  leading-6">How many (in plates) will you make?</span>
+                >Available</label
+              >
+              <span class="block text-sm leading-6"
+                >How many (in plates) will you make?</span
+              >
               <div
                 class="mt-2 flex rounded-md shadow-sm ring-gray-300 sm:max-w-md"
               >
@@ -102,77 +130,14 @@ definePageMeta({
                 />
               </div>
             </div>
-            <div class="col-span-full">
-              <label
-                for="photo"
-                class="block text-sm font-medium leading-6 text-gray-900"
-                >Product Photo</label
-              >
-              <div class="mt-2 flex items-center gap-x-3">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="32"
-                  height="32"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="#888888"
-                    d="M18.06 22.99h1.66c.84 0 1.53-.64 1.63-1.46L23 5.05h-5V1h-1.97v4.05h-4.97l.3 2.34c1.71.47 3.31 1.32 4.27 2.26c1.44 1.42 2.43 2.89 2.43 5.29v8.05zM1 21.99V21h15.03v.99c0 .55-.45 1-1.01 1H2.01c-.56 0-1.01-.45-1.01-1zm15.03-7c0-8-15.03-8-15.03 0h15.03zM1.02 17h15v2h-15z"
-                  />
-                </svg>
-                <button
-                  type="button"
-                  class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                >
-                  Change
-                </button>
-              </div>
-            </div>
-
-            <div class="col-span-full">
-              <div
-                class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10"
-              >
-                <div class="text-center">
-                  <svg
-                    class="mx-auto h-12 w-12 text-gray-300"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                  <div class="mt-4 flex text-sm leading-6 text-gray-600">
-                    <label
-                      for="file-upload"
-                      class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                    >
-                      <span>Upload a file</span>
-                      <input
-                        id="file-upload"
-                        name="file-upload"
-                        type="file"
-                        class="sr-only"
-                      />
-                    </label>
-                    <p class="pl-1">or drag and drop</p>
-                  </div>
-                  <p class="text-xs leading-5 text-gray-600">
-                    PNG, JPG, GIF up to 10MB
-                  </p>
-                </div>
-              </div>
-            </div>
+            <OrderDropZone @drop.prevent="drop" @change="selectedFile" />
+            <span>File: {{ dropzoneFile?.name }}</span>
           </div>
         </div>
 
         <div class="border-b border-gray-900/10 pb-12">
           <h2 class="text-base font-semibold leading-7 text-gray-900">
-            Recurring 
+            Recurring
           </h2>
           <p class="mt-1 text-sm leading-6 text-gray-600">
             Will this dish recur
@@ -201,7 +166,6 @@ definePageMeta({
                 </div>
               </div>
             </fieldset>
-    
           </div>
         </div>
       </div>
