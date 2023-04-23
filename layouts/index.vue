@@ -13,10 +13,10 @@ const { getCartItems } = useCart()
             </div>
 
             <div class="flex justify-center self-center h-full items-center">
-                <NuxtLink to="/order/view" class='group transition-all duration-300 ease-in-out'>
+                <NuxtLink to="/order/create" class='group transition-all duration-300 ease-in-out'>
                     <span
                         class='mx-2 cursor-pointer text-base font-semibold bg-left-bottom bg-gradient-to-r from-[#FF8C32] to-[#FF8C32] bg-[length:0%_3px] bg-no-repeat group-hover:bg-[length:100%_3px] transition-all duration-500 ease-out'>
-                        order
+                        create order
                     </span>
                 </NuxtLink>
                 <NuxtLink to="/cart">
