@@ -3,11 +3,10 @@ import createRandId, { User, emptyUser } from "~~/data/types";
 import { useStorage } from "@vueuse/core";
 
 export const useUserStore = defineStore("user", () => {
-  
   const user: Ref<User> = ref(
     // emptyUser
     // process.server ? '' : !!localStorage.getItem('userDetails')
-    JSON.parse(String(localStorage.getItem("currentUser"))) || emptyUser
+    emptyUser
   );
 
   const newUser = (u: User) => {
@@ -20,7 +19,6 @@ export const useUserStore = defineStore("user", () => {
 
   const updateEmail = (email: string) => {
     user.value.email = email;
-
   };
   return { user, newUser, updateEmail };
 });

@@ -11,7 +11,7 @@ export interface UserRequest {
 }
 
 export interface User {
-  id: string;
+  id: number | string;
   email: string;
   name: string;
   location: string;
@@ -57,18 +57,18 @@ export interface Product {
 }
 
 export const emptyUser = {
-  id: -1,
+  id: "-1",
   avatar: "",
   location: "",
   email: "",
   password: "",
+  subscription: "",
   name: "",
   online: false,
 };
 
 export const emptyProduct: Product = {
   id: -1,
-  userId: emptyUser.id,
   price: 0.0,
   rating: 0,
   description: "",

@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     "nuxt-icon",
     "@nuxtjs/supabase",
   ],
-  ssr: false,
+
   runtimeConfig: {
     public: {
       mapbox: {
