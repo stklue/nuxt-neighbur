@@ -6,18 +6,19 @@ const { add } = useCart();
 const product: Ref<Product> = ref(emptyProduct);
 const user: Ref<User> = ref(emptyUser);
 const userSup = useSupabaseUser();
-const userS = userSup.value
 const route = useRoute();
+const quantity = ref(0);
 
 watch(
   () => route.params.id,
   async (_id) => {
-    const { data:prod } = await useFetch(`/api/product/${_id}`);
-    
+    const { data: prod } = await useFetch(`/api/product/${_id}`);
+
     product.value = prod.value as unknown as Product;
-    const { data:us } = await useFetch(`/api/users/${product.value.user_product}`);
+    const { data: us } = await useFetch(
+      `/api/users/${product.value.user_product}`
+    );
     user.value = us.value as unknown as User;
- 
   },
   { deep: true, immediate: true }
 );
@@ -25,8 +26,12 @@ watch(
 const addNotification = ref(false);
 
 const addProduct = () => {
-  // add(product.value);
-  addNotification.value = true;
+  if (quantity.value > 0) {
+    add(product.value, userSup.value?.id!, quantity.value);
+    addNotification.value = true;
+  } else {
+    alert("You have to select how many you want. Can't be zero.");
+  }
 };
 
 watch(addNotification, () => {
@@ -56,7 +61,10 @@ watch(addNotification, () => {
         <p class="text-2xl font-medium">R{{ product.price?.toFixed(2) }}</p>
 
         <div class="w-full h-full rounded-lg bg-slate-200 p-3 mb-5">
-          {{ product.description }}
+          <p>
+            {{ product.pname }}
+          </p>
+          <p>Description: {{ product.description }}</p>
         </div>
 
         <div
@@ -104,6 +112,17 @@ watch(addNotification, () => {
           <p v-if="product.recurring == true">Recurring</p>
           <p v-else>Once-off</p>
           <p>dish</p>
+        </div>
+        <div class="inline-flex pt-5 space-x-3">
+          <p>I want</p>
+          <input
+            class="border-[#FF8C32] w-1/4"
+            type="number"
+            name="quantity"
+            id="quantity"
+            v-model="quantity"
+          />
+          <p>plate(s)</p>
         </div>
 
         <button

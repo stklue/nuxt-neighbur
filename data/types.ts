@@ -29,7 +29,7 @@ interface Food {}
 export type ProductType = Short | Food;
 export type FoodType = "left overs" | "fresh";
 export type Plate = 0.25 | 0.5 | 1 | 2 | 3;
-export type Confirmed = "confirmed" | "rejected";
+export type Confirmed = "confirmed" | "rejected" | "processing";
 export type RejectedReason =
   | "someone else was before you"
   | "order was canceled by chef";
@@ -85,9 +85,8 @@ export interface Cart {
 
 export interface OrderItem {
   id: string | number;
-  userId: number;
+  userId: string;
   productId: number;
-  chefId: number;
   quantity: number;
   total: number;
   rating: number;
@@ -96,9 +95,8 @@ export interface OrderItem {
 }
 export interface OrderItemData {
   id: string | number;
-  userId: number;
+  userId: string;
   product: Product;
-  chefId: number;
   quantity: number;
   total: number;
   rating: number;
@@ -110,8 +108,6 @@ export const toProductDatabase = (o: OrderItemData) => {
   return {
     id: o.id,
     userId: o.userId,
-    chefId: o.chefId,
-    quantity: o.quantity,
     total: o.total,
     rating: o.rating,
     confirmed: o.confirmed,
