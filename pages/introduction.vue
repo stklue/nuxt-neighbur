@@ -9,6 +9,10 @@ definePageMeta({
 const { updateEmail } = useUserStore()
 const email = ref("")
 
+useHead({
+    title: 'neighbur | Introduction',
+    meta: [{ name: 'description', content: 'neighbur food' }]
+})
 
 
 function handleSubmit() {
@@ -30,7 +34,7 @@ function handleSubmit() {
       <div class="flex w-4/5 min-h-screen  justify-center  mx-auto mt-10">
         <div class="flex flex-col  space-y-10 space-x-2 pt-20  px-10">
           <h2 class="text-4xl font-semibold text-[#FFFFFF]">
-            neighbur is a place where you can rely on your fellow students
+            neighbur is a place where you can rely on your fellow neighbours
           </h2>
           <div>
             <form @submit.prevent="handleSubmit" class="flex space-x-3 justify-start h-12 w-full">
@@ -66,20 +70,7 @@ function handleSubmit() {
         </div>
       </div>
     </section>
-    <section class="flex flex-col min-h-screen lg:min-h-screen bg-[#EEEEEE]">
-      <div class="flex flex-col w-4/5 mx-auto">
-        <div class="flex justify-center space-x-4 px-5">
-          <div class="flex justify-center  items-center w-1/2 pl-10">
-            <h2 class="text-3xl text-[#06113C]">
-              Catchup with quick summary videos your peers made😎
-            </h2>
-          </div>
-          <div class="w-1/2 h-1/3">
-            <img src=/intro/video-intro.png alt="student cooking" />
-          </div>
-        </div>
-      </div>
-    </section>
+
     <Footer />
   </div>
 </template>
