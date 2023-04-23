@@ -19,6 +19,7 @@ export interface Database {
           reason: string | null
           total: number | null
           user_id: number | null
+          uid: string | null
         }
         Insert: {
           confirmed?: string | null
@@ -29,6 +30,7 @@ export interface Database {
           reason?: string | null
           total?: number | null
           user_id?: number | null
+          uid?: string | null
         }
         Update: {
           confirmed?: string | null
@@ -147,32 +149,7 @@ export interface Database {
           user_requests?: number | null
         }
       }
-      Useree: {
-        Row: {
-          email: string
-          id: number
-          location: string | null
-          name: string | null
-          online: boolean | null
-          uuid: string | null
-        }
-        Insert: {
-          email: string
-          id?: number
-          location?: string | null
-          name?: string | null
-          online?: boolean | null
-          uuid?: string | null
-        }
-        Update: {
-          email?: string
-          id?: number
-          location?: string | null
-          name?: string | null
-          online?: boolean | null
-          uuid?: string | null
-        }
-      }
+     
     }
     Views: {
       [_ in never]: never
