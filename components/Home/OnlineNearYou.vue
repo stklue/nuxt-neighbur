@@ -3,21 +3,20 @@ import { Product, User } from "~~/data/types";
 import { AggData } from "~~/server/api/order/[userId]";
 import { useUserStore } from "~~/stores/user";
 
-const { user } = useUserStore();
-const { data } = await useFetch(`/api/product/online?location=${user.location}`);
+const { data } = await useFetch(`/api/product/online`);
 
-const products: Ref<Product[]> = ref([]);
-const users: Ref<User[]> = ref([]);
-const aggData: Ref<AggData<Product, User, User>[]> = ref([]);
+// const products: Ref<Product[]> = ref([]);
+// const users: Ref<User[]> = ref([]);
+// const aggData: Ref<AggData<Product, User, User>[]> = ref([]);
 
-if (Array.isArray(data.value)) {
-  aggData.value = data.value as unknown as AggData<Product, User, User>[];
-}
+// if (Array.isArray(data.value)) {
+//   aggData.value = data.value as unknown as AggData<Product, User, User>[];
+// }
 
-for (let i = 0; i < aggData.value.length; i++) {
-  products.value.push(aggData.value[i].o);
-  users.value.push(aggData.value[i].p);
-}
+// for (let i = 0; i < aggData.value.length; i++) {
+//   products.value.push(aggData.value[i].o);
+//   users.value.push(aggData.value[i].p);
+// }
 </script>
 
 <template>
@@ -26,7 +25,7 @@ for (let i = 0; i < aggData.value.length; i++) {
       <h1 class="text-2xl font-semibold">Currently cooking near you</h1>
       <img class="w-10 h-10" src="~~/cooking.gif" />
     </div>
-    <div class="flex mb-6">
+    <!-- <div class="flex mb-6">
       <div
         class="w-52 m-4 flex-wrap"
         v-for="(product, i) in products"
@@ -62,6 +61,6 @@ for (let i = 0; i < aggData.value.length; i++) {
           </div>
         </NuxtLink>
       </div>
-    </div>
+    </div> -->
   </section>
 </template>
