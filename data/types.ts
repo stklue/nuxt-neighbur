@@ -92,6 +92,7 @@ export interface OrderItem {
   rating: number;
   confirmed: string;
   reason: string;
+  order_user: string | null;
 }
 export interface OrderItemData {
   id: string | number;
@@ -103,6 +104,7 @@ export interface OrderItemData {
   rating: number;
   confirmed: string | null;
   reason: string;
+  order_user: string | null;
 }
 
 export const toProductDatabase = (o: OrderItemData) => {
@@ -116,6 +118,7 @@ export const toProductDatabase = (o: OrderItemData) => {
     reason: o.reason,
     productId: o.product.id,
     quantity: o.quantity,
+    order_user: o.order_user,
   } as OrderItem;
 };
 
@@ -132,6 +135,7 @@ export const emptyOrderItem: OrderItem = {
   rating: 0,
   confirmed: "",
   reason: "",
+  order_user: "",
 };
 export default function createRandId() {
   return Math.floor(Math.random() * 100_000_000);
