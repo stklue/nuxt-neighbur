@@ -24,5 +24,12 @@ export default defineEventHandler(async (event) => {
     .select("*")
     .in("user_product", ids!);
 
-  return products;
+  const prodIds = products?.map((o) => o.user_product);
+
+  const { data: users } = await client
+    .from("User")
+    .select("*")
+    .in("id", prodIds!);
+
+  return { u: users, p: products };
 });

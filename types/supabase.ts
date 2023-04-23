@@ -49,11 +49,12 @@ export interface Database {
           expire_at: string | null
           id: number
           image: string | null
-          name: string | null
+          pname: string | null
           plate: number | null
           price: number | null
           recurring: boolean | null
           type: string | null
+          user_product: string | null
         }
         Insert: {
           available?: number | null

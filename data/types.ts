@@ -12,7 +12,7 @@ export interface UserRequest {
 
 export interface User {
   id: number | string;
-  email: string;
+  email?: string;
   name: string;
   location: string;
   make?: UserRequest;

@@ -20,7 +20,7 @@ useHead({
         <HomeRecentVisit />
         <div class="flex flex-col ">
             <HomeOnlineNearYou />
-            <HomeAllNearYou/>
+            <!-- <HomeAllNearYou/> -->
         </div>
     </div>
 </template>

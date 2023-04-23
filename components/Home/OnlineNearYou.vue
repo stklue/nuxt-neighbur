@@ -1,22 +1,14 @@
 <script lang="ts" setup>
 import { Product, User } from "~~/data/types";
-import { AggData } from "~~/server/api/order/[userId]";
-import { useUserStore } from "~~/stores/user";
 
-const { data } = await useFetch(`/api/product/online`);
+const { data, pending } = await useFetch(`/api/product/online`);
 
-// const products: Ref<Product[]> = ref([]);
-// const users: Ref<User[]> = ref([]);
-// const aggData: Ref<AggData<Product, User, User>[]> = ref([]);
-
-// if (Array.isArray(data.value)) {
-//   aggData.value = data.value as unknown as AggData<Product, User, User>[];
-// }
-
-// for (let i = 0; i < aggData.value.length; i++) {
-//   products.value.push(aggData.value[i].o);
-//   users.value.push(aggData.value[i].p);
-// }
+const products: Ref<Product[]> = ref([]);
+const users: Ref<User[]> = ref([]);
+if (data.value !== null) {
+  products.value = data.value.p as Product[];
+  users.value = data.value.u as unknown as User[];
+}
 </script>
 
 <template>
@@ -25,11 +17,12 @@ const { data } = await useFetch(`/api/product/online`);
       <h1 class="text-2xl font-semibold">Currently cooking near you</h1>
       <img class="w-10 h-10" src="~~/cooking.gif" />
     </div>
-    <!-- <div class="flex mb-6">
+    <div v-if="pending">Loading</div>
+    <div v-else class="flex mb-6">
       <div
         class="w-52 m-4 flex-wrap"
         v-for="(product, i) in products"
-        :id="String(user.id)"
+        :id="String(users[i].id)"
       >
         <NuxtLink :to="'product/' + product.id">
           <div
@@ -61,6 +54,6 @@ const { data } = await useFetch(`/api/product/online`);
           </div>
         </NuxtLink>
       </div>
-    </div> -->
+    </div>
   </section>
 </template>
