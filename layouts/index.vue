@@ -47,6 +47,16 @@ const logout = async () => {
         class="flex divide-x-2 justify-center self-center h-full items-center"
       >
         <NuxtLink
+          to="/order/dashboard"
+          class="group transition-all duration-300 ease-in-out"
+        >
+          <span
+            class="mx-2 cursor-pointer text-base font-semibold bg-left-bottom bg-gradient-to-r from-[#FF8C32] to-[#FF8C32] bg-[length:0%_3px] bg-no-repeat group-hover:bg-[length:100%_3px] transition-all duration-500 ease-out"
+          >
+            dashboard
+          </span>
+        </NuxtLink>
+        <NuxtLink
           to="/account"
           class="group transition-all duration-300 ease-in-out"
         >
