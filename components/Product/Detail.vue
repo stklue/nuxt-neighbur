@@ -13,13 +13,11 @@ watch(
   () => route.params.id,
   async (_id) => {
     const { data:prod } = await useFetch(`/api/product/${_id}`);
-    const { data:us } = await useFetch(`/api/users/${userS?.id}`);
     
     product.value = prod.value as unknown as Product;
+    const { data:us } = await useFetch(`/api/users/${product.value.user_product}`);
     user.value = us.value as unknown as User;
-    console.log("User  data: ", user.value);
-    // if (data.value !== null) {
-    // }
+ 
   },
   { deep: true, immediate: true }
 );
