@@ -1,13 +1,15 @@
 <script lang="ts" setup>
 import { Product, emptyProduct, User, emptyUser } from "~~/data/types";
 import { useCart } from "~~/stores/cart";
+import { Database } from "~~/types/supabase";
 
-const { add } = useCart();
+const { add, getCurrentOrder } = useCart();
 const product: Ref<Product> = ref(emptyProduct);
 const user: Ref<User> = ref(emptyUser);
 const userSup = useSupabaseUser();
 const route = useRoute();
 const quantity = ref(0);
+const client = useSupabaseClient<Database>();
 
 watch(
   () => route.params.id,
@@ -22,22 +24,27 @@ watch(
   },
   { deep: true, immediate: true }
 );
-
-const addNotification = ref(false);
-const addProduct = () => {
+const addToOrder = async () => {
+  await useAsyncData("Order", async () => {
+    const { error } = await client.from("Order").insert(getCurrentOrder());
+    if (error !== null) {
+      return alert(error.message);
+    }
+    return;
+  });
+};
+type State = "loading" | "initial" | "done";
+const addNotification: Ref<State> = ref("initial");
+const addProduct = async () => {
   if (quantity.value > 0) {
     add(product.value, userSup.value?.id!, quantity.value);
-    addNotification.value = true;
+    addNotification.value = "loading";
+    await addToOrder();
+    addNotification.value = "done";
   } else {
     alert("You have to select how many you want. Can't be zero.");
   }
 };
-
-watch(addNotification, () => {
-  setTimeout(() => {
-    addNotification.value = false;
-  }, 1000);
-});
 </script>
 
 <template>
@@ -131,12 +138,16 @@ watch(addNotification, () => {
           Add to cart
         </button>
         <div
-          v-if="addNotification === true"
+          v-if="addNotification === 'done'"
           class="w-full p-4 bg-green-500 my-3 text-white font-semibold rounded-lg"
         >
-          Added to cart. {{ user.name }} just got the message. Check your
-          product status ontop to see if you got the order. Thank you.
+          Added to cart. {{ user.name }} just got the message. Click on your
+          cart to see the status of your order. Thank you.
         </div>
+        <div v-if="addNotification === 'loading'">
+          <Spinner />
+        </div>
+        <div v-else></div>
       </div>
     </div>
   </section>
