@@ -1,13 +1,11 @@
-import { defineStore } from "pinia";
-import createRandId, { User, emptyUser } from "~~/data/types";
-import { useStorage } from "@vueuse/core";
+import { defineStore, createPinia , Pinia } from "pinia";
+import { User, emptyUser } from "~~/data/types";
+
+
+
 
 export const useUserStore = defineStore("user", () => {
-  const user: Ref<User> = ref(
-    // emptyUser
-    // process.server ? '' : !!localStorage.getItem('userDetails')
-    emptyUser
-  );
+  const user: Ref<User> = ref(emptyUser);
 
   const newUser = (u: User) => {
     user.value.id = u.id;

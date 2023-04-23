@@ -7,7 +7,7 @@ definePageMeta({
   middleware: "auth",
   layout: "index",
 });
-const { user } = useUserStore();
+const user  = useSupabaseUser();
 
 const client = useSupabaseClient<Database>();
 
@@ -30,7 +30,7 @@ const selectedFile = () => {
 const saveImage = async () => {
   const { data: dataPath, error } = await client.storage
     .from("product")
-    .upload(`${user.id}/${dropzoneFile.value?.name}`, dropzoneFile.value!, {
+    .upload(`${user.value?.id}/${dropzoneFile.value?.name}`, dropzoneFile.value!, {
       cacheControl: "3600",
       upsert: true,
     });
@@ -69,6 +69,7 @@ const saveProduct = async () => {
         type: type.value,
         image: image.value,
         price: price.value,
+        user_product: user.value?.id
       };
       await useAsyncData("Product", async () => {
         const { error } = await client.from("Product").insert(product);
