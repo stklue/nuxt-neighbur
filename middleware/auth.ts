@@ -4,7 +4,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const isUser = await authClient.auth.getUser()
   console.log("User", isUser.data);
   
-  if (!isUser.data) {
+  if (isUser.data == null) {
     return navigateTo("/introduction");
   }
 });
