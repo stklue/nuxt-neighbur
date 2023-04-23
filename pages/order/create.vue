@@ -1,20 +1,87 @@
 <script setup lang="ts">
+import { Product } from "~~/data/types";
+import { useUserStore } from "~~/stores/user";
+import { Database } from "~~/types/supabase";
+
 definePageMeta({
   middleware: "auth",
   layout: "index",
 });
-const dropzoneFile: Ref<File | undefined | null> = ref();
+const { user } = useUserStore();
 
+const client = useSupabaseClient<Database>();
+
+const dropzoneFile: Ref<File | undefined | null> = ref();
+const uploaded = ref(false);
 const drop = (e: DragEvent) => {
   dropzoneFile.value = e.dataTransfer?.files[0];
+  uploaded.value = true;
 };
 const selectedFile = () => {
   const element = document.querySelector<HTMLInputElement>(".dropzoneFile");
   if (element !== null) {
     if (element.files !== null) {
       dropzoneFile.value = element.files[0];
+      uploaded.value = true;
     }
   }
+};
+
+const saveImage = async () => {
+  const { data: dataPath, error } = await client.storage
+    .from("product")
+    .upload(`${user.id}/${dropzoneFile.value?.name}`, dropzoneFile.value!, {
+      cacheControl: "3600",
+      upsert: true,
+    });
+
+  if (error) {
+    return alert("Storage upload: " + error.message);
+  }
+  const { data } = client.storage.from("product").getPublicUrl(dataPath.path);
+  return data.publicUrl;
+};
+
+const validateFields = (): boolean => {
+  if (
+    productName.value !== "" &&
+    dropzoneFile.value !== null &&
+    available.value > 0 &&
+    plate.value > 0 &&
+    description.value !== ""
+  ) {
+    return true;
+  }
+  return false;
+};
+
+const saveProduct = async () => {
+  if (validateFields()) {
+    const imagePath = await saveImage();
+    if (imagePath) {
+      image.value = imagePath;
+      const product = {
+        name: productName.value,
+        available: available.value,
+        plate: plate.value,
+        description: description.value,
+        recurring: recur.value,
+        type: type.value,
+        image: image.value,
+        price: price.value,
+      };
+      await useAsyncData("Product", async () => {
+        const { error } = await client.from("Product").insert(product);
+        if (error) {
+          return alert("DB insert: " + error.message);
+        }
+        alert("Product created successfully");
+        navigateTo("/order/dashboard");
+      });
+    }
+    return;
+  }
+  return alert("Make sure all the fields are filled in.");
 };
 
 /* Frorm Data */
@@ -25,11 +92,12 @@ const recur = ref(false);
 const image = ref("");
 const plate = ref(0);
 const available = ref(0);
+const type = ref("");
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col pt-20">
-    <form class="mx-auto py-5">
+  <div class="min-h-screen flex flex-col pt-20 text-[#06113C]">
+    <form @submit.prevent="saveProduct" class="mx-auto py-5">
       <div class="space-y-12">
         <div class="border-b border-gray-900/10 pb-12">
           <h2 class="text-2xl font-semibold leading-7">Create new order</h2>
@@ -40,9 +108,7 @@ const available = ref(0);
 
           <div class="flex flex-col mt-10 space-y-4">
             <div class="sm:col-span-4">
-              <label
-                for="username"
-                class="block text-sm font-medium leading-6 text-gray-900"
+              <label for="username" class="block text-sm font-medium leading-6"
                 >Name</label
               >
               <div class="mt-2 flex rounded-md shadow-sm sm:max-w-md">
@@ -77,7 +143,7 @@ const available = ref(0);
             <div class="col-span-full">
               <label
                 for="description"
-                class="block text-sm font-medium leading-6 text-gray-900"
+                class="block text-sm font-medium leading-6"
                 >Description</label
               >
               <div class="mt-2">
@@ -86,7 +152,7 @@ const available = ref(0);
                   id="description"
                   name="description"
                   rows="3"
-                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                  class="block w-full rounded-md border-0 py-1.5 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 ></textarea>
               </div>
             </div>
@@ -130,39 +196,74 @@ const available = ref(0);
                 />
               </div>
             </div>
-            <OrderDropZone @drop.prevent="drop" @change="selectedFile" />
-            <span>File: {{ dropzoneFile?.name }}</span>
+            <OrderDropZone
+              @drop.prevent="drop"
+              @change="selectedFile"
+              :uploaded="uploaded"
+            />
+            <span v-if="dropzoneFile">File: {{ dropzoneFile.name }}</span>
+            <span v-else>No file selected</span>
           </div>
         </div>
 
         <div class="border-b border-gray-900/10 pb-12">
-          <h2 class="text-base font-semibold leading-7 text-gray-900">
-            Recurring
-          </h2>
-          <p class="mt-1 text-sm leading-6 text-gray-600">
-            Will this dish recur
-          </p>
-
           <div class="mt-2 space-y-2">
             <fieldset>
               <div class="mt-6 space-y-6">
                 <div class="relative flex gap-x-3">
                   <div class="flex h-6 items-center">
                     <input
-                      id="comments"
-                      name="comments"
+                      v-model="recur"
+                      id="recur"
+                      name="recur"
                       type="checkbox"
-                      class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                      class="h-4 w-4 rounded border-gray-300"
                     />
                   </div>
                   <div class="text-sm leading-6">
-                    <label for="comments" class="font-medium text-gray-900"
-                      >Recurring</label
-                    >
+                    <label for="recur" class="font-medium">Recurring</label>
                     <p class="text-gray-500">
-                      Get notified when someones posts a comment on a posting.
+                      Is this a recurring dish/product
                     </p>
                   </div>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend class="text-sm font-semibold leading-6 text-gray-900">
+                Push Notifications
+              </legend>
+              <p class="mt-1 text-sm leading-6 text-gray-600">
+                These are delivered via SMS to your mobile phone.
+              </p>
+              <div class="mt-6 space-y-6">
+                <div class="flex items-center gap-x-3">
+                  <input
+                    value="fresh"
+                    v-model="type"
+                    id="fresh"
+                    name="fresh"
+                    type="radio"
+                    class="h-4 w-4 border-gray-300 focus:ring-indigo-600"
+                  />
+                  <label for="fresh" class="block text-sm font-medium leading-6"
+                    >Fresh</label
+                  >
+                </div>
+                <div class="flex items-center gap-x-3">
+                  <input
+                    value="leftovers"
+                    v-model="type"
+                    id="leftovers"
+                    name="leftovers"
+                    type="radio"
+                    class="h-4 w-4 border-gray-300 focus:ring-indigo-600"
+                  />
+                  <label
+                    for="leftovers"
+                    class="block text-sm font-medium leading-6"
+                    >Left Overs</label
+                  >
                 </div>
               </div>
             </fieldset>
@@ -171,17 +272,16 @@ const available = ref(0);
       </div>
 
       <div class="mt-6 flex items-center justify-end gap-x-6">
-        <button
-          type="button"
-          class="text-sm font-semibold leading-6 text-gray-900"
-        >
-          Cancel
-        </button>
+        <NuxtLink to="/">
+          <button type="button" class="text-sm font-semibold leading-6">
+            Cancel
+          </button>
+        </NuxtLink>
         <button
           type="submit"
-          class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          class="rounded-md px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
-          Save
+          Create Product
         </button>
       </div>
     </form>

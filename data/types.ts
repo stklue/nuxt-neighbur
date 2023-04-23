@@ -41,18 +41,19 @@ export interface Order {
 }
 
 export interface Product {
-  id: string | number;
-  userId: number;
+  id?: string | number;
+  name?: string; 
+  userId?: number;
   price: number;
-  rating: number;
+  rating?: number;
   description: string;
   recurring?: boolean;
-  foodType: FoodType | string;
+  type: FoodType | string;
   plate: Plate | number;
   available: number;
   image: string;
-  created: string;
-  expire: string;
+  created?: string;
+  expire?: string;
 }
 
 export const emptyUser = {
@@ -72,7 +73,7 @@ export const emptyProduct: Product = {
   rating: 0,
   description: "",
   recurring: false,
-  foodType: "fresh",
+  type: "fresh",
   plate: 1,
   available: 0,
   image: "string",

@@ -13,7 +13,7 @@ export const useSelectedProductStore = defineStore("selected-product", () => {
     available: 2,
     created: new Date().toLocaleTimeString(),
     expire: new Date().toLocaleTimeString(),
-    foodType: "fresh",
+    type: "fresh",
     image: "",
     plate: 1,
   };

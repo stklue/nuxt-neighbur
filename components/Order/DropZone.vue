@@ -4,14 +4,18 @@ const active = ref(false);
 const toggleActive = () => {
   active.value = !active.value;
 };
+
+interface Props {
+  uploaded:boolean;
+}
+
+const props = defineProps<Props>();
 </script>
 
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col text-[#06113C]l">
     <div class="col-span-full">
-      <label
-        for="photo"
-        class="block text-sm font-medium leading-6 text-gray-900"
+      <label for="photo" class="block text-sm font-medium leading-6"
         >Product Photo</label
       >
       <div class="mt-2 flex items-center gap-x-3">
@@ -26,16 +30,11 @@ const toggleActive = () => {
             d="M18.06 22.99h1.66c.84 0 1.53-.64 1.63-1.46L23 5.05h-5V1h-1.97v4.05h-4.97l.3 2.34c1.71.47 3.31 1.32 4.27 2.26c1.44 1.42 2.43 2.89 2.43 5.29v8.05zM1 21.99V21h15.03v.99c0 .55-.45 1-1.01 1H2.01c-.56 0-1.01-.45-1.01-1zm15.03-7c0-8-15.03-8-15.03 0h15.03zM1.02 17h15v2h-15z"
           />
         </svg>
-        <button
-          type="button"
-          class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-        >
-          Change
-        </button>
       </div>
     </div>
     <div class="col-span-full">
       <div
+        v-if="!uploaded"
         @dragenter.prevent="toggleActive"
         @dragleave.prevent="toggleActive"
         @dragover.prevent
@@ -66,8 +65,7 @@ const toggleActive = () => {
                 id="dropzoneFile"
                 name="dropzoneFile"
                 type="file"
-                
-                class="dropzoneFile  sr-only"
+                class="dropzoneFile sr-only"
               />
             </label>
             <p class="pl-1">or drag and drop</p>
@@ -77,6 +75,7 @@ const toggleActive = () => {
           </p>
         </div>
       </div>
+      <div v-else></div>
     </div>
   </div>
 </template>
