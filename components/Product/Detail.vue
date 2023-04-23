@@ -1,33 +1,33 @@
 <script lang="ts" setup>
-import { Product, emptyProduct, emptyUser, User } from "~~/data/types";
-import { AggData } from "~~/server/api/order/[userId]";
+import { Product, emptyProduct, User, emptyUser } from "~~/data/types";
 import { useCart } from "~~/stores/cart";
 
 const { add } = useCart();
 const product: Ref<Product> = ref(emptyProduct);
 const user: Ref<User> = ref(emptyUser);
-const aggData: Ref<AggData<Product, User, User>> = ref({
-  o: product.value,
-  p: user.value,
-});
+const userSup = useSupabaseUser();
+const userS = userSup.value
 const route = useRoute();
 
 watch(
   () => route.params.id,
   async (_id) => {
-    const { data } = await useFetch(`/api/product/${_id}`);
-    aggData.value = data.value as unknown as AggData<Product, User, User>;
-    user.value = aggData.value.p;
-    product.value = aggData.value.o;
+    const { data:prod } = await useFetch(`/api/product/${_id}`);
+    const { data:us } = await useFetch(`/api/users/${userS?.id}`);
+    
+    product.value = prod.value as unknown as Product;
+    user.value = us.value as unknown as User;
+    console.log("User  data: ", user.value);
+    // if (data.value !== null) {
+    // }
   },
   { deep: true, immediate: true }
 );
 
 const addNotification = ref(false);
 
-
 const addProduct = () => {
-  add(product.value, user.value);
+  // add(product.value);
   addNotification.value = true;
 };
 
@@ -55,7 +55,7 @@ watch(addNotification, () => {
           </div>
           <OrderOnlineGlow :online="user.online" />
         </div>
-        <p class="text-2xl font-medium">R{{ product.price.toFixed(2) }}</p>
+        <p class="text-2xl font-medium">R{{ product.price?.toFixed(2) }}</p>
 
         <div class="w-full h-full rounded-lg bg-slate-200 p-3 mb-5">
           {{ product.description }}
@@ -93,7 +93,7 @@ watch(addNotification, () => {
         </div>
         <div class="inline-flex justify-between pt-5 space-x-3">
           <p>Prepared</p>
-          <p>{{ product.created }}</p>
+          <p>{{ product.created_at }}</p>
         </div>
         <div class="flex justify-between items-center text-center">
           <p class="text-lg">Available</p>

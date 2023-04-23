@@ -11,7 +11,7 @@ definePageMeta({
 const { user, newUser } = useUserStore();
 const password: Ref<string> = ref("");
 const conPassword = ref("");
-const email: Ref<string> = ref(user.email);
+const email: Ref<string | undefined> = ref(user.email);
 const username = ref("");
 const residence = ref("Choose your residence");
 const authClient = useSupabaseAuthClient();
@@ -19,7 +19,7 @@ const client = useSupabaseClient<Database>();
 
 const signUp = async () => {
   const { error } = await authClient.auth.signUp({
-    email: email.value,
+    email: email.value!,
     password: password.value,
   });
 

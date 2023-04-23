@@ -41,19 +41,18 @@ export interface Order {
 }
 
 export interface Product {
-  id?: string | number;
-  name?: string; 
-  userId?: number;
-  price: number;
-  rating?: number;
-  description: string;
-  recurring?: boolean;
-  type: FoodType | string;
-  plate: Plate | number;
-  available: number;
-  image: string;
-  created?: string;
-  expire?: string;
+  available: number | null;
+  created_at?: string | null;
+  description: string | null;
+  expire_at?: string | null;
+  id: number;
+  image: string | null;
+  pname: string | null;
+  plate: number | null;
+  price: number | null;
+  recurring: boolean | null;
+  type: string | null;
+  user_product?: string | null;
 }
 
 export const emptyUser = {
@@ -70,15 +69,13 @@ export const emptyUser = {
 export const emptyProduct: Product = {
   id: -1,
   price: 0.0,
-  rating: 0,
   description: "",
   recurring: false,
   type: "fresh",
   plate: 1,
   available: 0,
-  image: "string",
-  created: new Date().toLocaleString(),
-  expire: "",
+  image: "",
+  pname:  "",
 };
 
 export interface Cart {

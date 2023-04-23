@@ -44,7 +44,7 @@ if (data.value !== null) {
               <h2 class="font-light">{{ users[i].location }}</h2>
             </div>
             <div>
-              <h2 class="font-normal text-sm">{{ product.created }}</h2>
+              <h2 class="font-normal text-sm">{{ product.created_at }}</h2>
             </div>
             <div class="py-2">
               <div class="w-full h-full rounded-lg bg-gray-100 p-2">

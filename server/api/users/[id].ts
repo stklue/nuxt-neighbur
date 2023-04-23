@@ -1,8 +1,16 @@
-import { User } from "~~/data/types";
-import usersJson from "~~/data/users.json";
+import { serverSupabaseClient } from "#supabase/server";
+import { Database } from "~~/types/supabase";
 
-export default defineEventHandler((event) => {
-  const allUsers: User[] = usersJson;
-  const id = parseInt(event.context.params!.id) as number;
-  return allUsers.find((user) => user.id === id);
+export default defineEventHandler(async (event) => {
+  const id = event.context.params!.id as string;
+
+  const client = serverSupabaseClient<Database>(event);
+
+  const { data: user } = await client
+    .from("User")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  return user;
 });
