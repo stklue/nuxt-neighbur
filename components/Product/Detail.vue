@@ -32,6 +32,7 @@ const addToOrder = async () => {
     }
     return;
   });
+  //column "user_id" of relation "Order" does not exist
 };
 type State = "loading" | "initial" | "done";
 const addNotification: Ref<State> = ref("initial");

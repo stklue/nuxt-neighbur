@@ -5,6 +5,8 @@ definePageMeta({
   layout: "index",
 });
 const { cart, getCartItems } = useCart();
+
+
 </script>
 
 <template>
@@ -23,7 +25,11 @@ const { cart, getCartItems } = useCart();
           <h2 class="font-semibold text-2xl">{{ getCartItems() }} Item(s)</h2>
         </div>
 
-        <CartItem v-for="item in cart.products" :key="item.id" :orderItem="item" />
+        <CartItem
+          v-for="item in cart.products"
+          :key="item.id"
+          :orderItem="item"
+        />
 
         <!-- Continue shopping routing -->
         <NuxtLink

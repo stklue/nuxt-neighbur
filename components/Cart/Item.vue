@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import {  OrderItemData, Product } from '~~/data/types';
+import {  OrderItem, Product } from '~~/data/types';
 import { useCart } from "~~/stores/cart"
 
 
 const { remove } = useCart()
 
 interface Props {
-    orderItem: OrderItemData;
+    orderItem: OrderItem;
 }
 const props = defineProps<Props>();
 
