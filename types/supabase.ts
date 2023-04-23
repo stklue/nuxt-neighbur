@@ -30,6 +30,7 @@ export interface Database {
           reason?: string | null
           total?: number | null
           user_id?: number | null
+          order_user: string | null
           uid?: string | null
         }
         Update: {
