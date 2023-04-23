@@ -24,7 +24,6 @@ watch(
 );
 
 const addNotification = ref(false);
-
 const addProduct = () => {
   if (quantity.value > 0) {
     add(product.value, userSup.value?.id!, quantity.value);
@@ -135,7 +134,8 @@ watch(addNotification, () => {
           v-if="addNotification === true"
           class="w-full p-4 bg-green-500 my-3 text-white font-semibold rounded-lg"
         >
-          Added to cart
+          Added to cart. {{ user.name }} just got the message. Check your
+          product status ontop to see if you got the order. Thank you.
         </div>
       </div>
     </div>
