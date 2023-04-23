@@ -75,44 +75,47 @@ export const emptyProduct: Product = {
   plate: 1,
   available: 0,
   image: "",
-  pname:  "",
+  pname: "",
 };
 
 export interface Cart {
-  products: OrderItemData[];
+  products: OrderItem[];
   total: number;
 }
 
 export interface OrderItem {
-  id: string | number;
-  userId: string;
-  productId: number;
+  id: number;
+  user_id: number;
+  uid: string;
   quantity: number;
   total: number;
   rating: number;
-  confirmed: Confirmed | string;
-  reason: RejectedReason | string;
+  confirmed: string;
+  reason: string;
 }
 export interface OrderItemData {
   id: string | number;
-  userId: string;
+  user_id: number;
+  uid: string;
   product: Product;
   quantity: number;
   total: number;
   rating: number;
-  confirmed: Confirmed | string;
-  reason: RejectedReason | string;
+  confirmed: string | null;
+  reason: string;
 }
 
 export const toProductDatabase = (o: OrderItemData) => {
   return {
     id: o.id,
-    userId: o.userId,
+    user_id: o.user_id,
+    uid: o.uid,
     total: o.total,
     rating: o.rating,
     confirmed: o.confirmed,
     reason: o.reason,
     productId: o.product.id,
+    quantity: o.quantity,
   } as OrderItem;
 };
 
@@ -120,7 +123,16 @@ export const emptyCart: Cart = {
   products: [],
   total: 0,
 };
-
+export const emptyOrderItem: OrderItem = {
+  id: -1,
+  user_id: -1,
+  uid: "",
+  quantity: 0,
+  total: 0,
+  rating: 0,
+  confirmed: "",
+  reason: "",
+};
 export default function createRandId() {
   return Math.floor(Math.random() * 100_000_000);
 }
