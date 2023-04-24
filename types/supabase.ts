@@ -18,8 +18,8 @@ export interface Database {
           rating: number | null;
           reason: string | null;
           total: number | null;
-          student_uid: string | null;
-          order_creator: string | null;
+          student_uid: number | null;
+          order_creator: number | null;
           order_product: number | null;
         };
         Insert: {
@@ -30,8 +30,8 @@ export interface Database {
           rating?: number | null;
           reason?: string | null;
           total?: number | null;
-          student_uid: string | null;
-          order_creator: string | null;
+          student_uid: number | null;
+          order_creator: number | null;
           order_product: number | null;
         };
         Update: {
@@ -42,8 +42,8 @@ export interface Database {
           rating?: number | null;
           reason?: string | null;
           total?: number | null;
-          student_uid?: string | null;
-          order_creator?: string | null;
+          student_uid?: number | null;
+          order_creator?: number | null;
           order_product?: number | null;
         };
       };
@@ -121,7 +121,7 @@ export interface Database {
       Student: {
         Row: {
           created_at: string | null;
-          id: string;
+          id: number;
           location: string | null;
           name: string | null;
           online: boolean | null;
@@ -129,7 +129,7 @@ export interface Database {
         };
         Insert: {
           created_at?: string | null;
-          id?: string;
+          id?: number;
           location?: string | null;
           name?: string | null;
           online?: boolean | null;
@@ -138,7 +138,7 @@ export interface Database {
         };
         Update: {
           created_at?: string | null;
-          id?: string;
+          id?: number;
           location?: string | null;
           name?: string | null;
           online?: boolean | null;
