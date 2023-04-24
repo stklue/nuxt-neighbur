@@ -29,19 +29,8 @@ export default defineEventHandler(async (event) => {
 
   const { data: products } = await client
     .from("Product")
-    .select("*")
+    .select("*, Student(*)")
     .in("creator", ids);
-
-
-    console.log(products);
-    
-
-  // const prodIds = products?.map((o) => o.creator);
-
-  // const { data: users } = await client
-  //   .from("Student")
-  //   .select("*")
-  //   .in("id", prodIds!);
 
   return products;
 });
