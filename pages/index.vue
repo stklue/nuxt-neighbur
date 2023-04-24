@@ -18,7 +18,7 @@ type OrderProduct = OrderItem & {
   Product: product;
 };
 const { user } = useUserStore();
-const { data: orders } = await useFetch(`/api/order/${user().id}`);
+const { data: orders } = await useFetch(`/api/order/confirmed/${user().id}`);
 updateOrderItems(orders.value as unknown as OrderProduct[]);
 </script>
 

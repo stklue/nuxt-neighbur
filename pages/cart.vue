@@ -21,7 +21,7 @@ type OrderProduct = OrderItem & {
 const orders: Ref<OrderProduct[]> = ref([]);
 
 cartState.value = "loading";
-const { data: orderData } = await useFetch(`/api/order/${user().id}`);
+const { data: orderData } = await useFetch(`/api/order/confirmed/${user().id}`);
 cartState.value = "done";
 
 orders.value = orderData.value as unknown as OrderProduct[];
