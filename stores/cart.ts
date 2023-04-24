@@ -56,13 +56,15 @@ export const useCart = defineStore("cart", () => {
   const getCurrentOrder = () => currentOrder.value;
   const getOrderWithProduct = () => currentOrderWithoutProduct.value;
 
-  const getCartItems = () => cart.value.products.length;
+  const getCartItems = () => cart.value.products.length ?? 0;
   const updateCart = (c: Cart<OrderProduct>) => {
     cart.value = c;
   };
 
   const updateOrderItems = (o: OrderItem[]) => {
-    cart.value.products = o;
+    if (o.length > 0) {
+      cart.value.products = o;
+    }
   };
 
   return {
@@ -74,6 +76,6 @@ export const useCart = defineStore("cart", () => {
     getCurrentOrder,
     updateCart,
     updateOrderItems,
-    getOrderWithProduct
+    getOrderWithProduct,
   };
 });

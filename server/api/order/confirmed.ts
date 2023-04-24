@@ -1,5 +1,10 @@
 import { serverSupabaseClient } from "#supabase/server";
+import { OrderItem, Product as product } from "~~/data/types";
 import { Database } from "~~/types/supabase";
+
+type OrderProduct = OrderItem & {
+  Product: product;
+};
 
 export default defineEventHandler(async (event) => {
   const client = serverSupabaseClient<Database>(event);
@@ -13,6 +18,7 @@ export default defineEventHandler(async (event) => {
     .eq("student_uid", id)
     .eq("confirmed", "confirmed")
     .order("created_at", { ascending: false });
+  const orders = ordersConfirmed as unknown as OrderProduct[];
 
-  return ordersConfirmed;
+  return orders;
 });

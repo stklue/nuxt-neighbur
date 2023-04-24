@@ -19,7 +19,10 @@ type OrderProduct = OrderItem & {
 };
 const { user } = useUserStore();
 const { data: orders } = await useFetch(`/api/order/confirmed/${user().id}`);
-updateOrderItems(orders.value as unknown as OrderProduct[]);
+orders.value = (orders.value as OrderProduct[]) ?? [];
+if (orders.value.length > 0) {
+  updateOrderItems(orders.value);
+}
 </script>
 
 <template>
