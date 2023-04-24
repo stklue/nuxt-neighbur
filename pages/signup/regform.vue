@@ -67,13 +67,13 @@ const signUp = async () => {
 </script>
 
 <template>
-  <div class="min-h-screen w-3/5 mx-auto my-5">
+  <div class="min-h-screen w-full md:w-3/5 mx-auto my-5">
     <div class="flex justify-center p-5">
       <h3 class="text-[#06113C] text-lg">STEP 1 OF 3</h3>
     </div>
     <form
       @submit.prevent="signUp"
-      class="bg-[#EEEEEE] shadow-md rounded px-8 pt-6 pb-8 mb-4 w-2/3 mx-auto"
+      class="bg-[#EEEEEE] shadow-md rounded px-8 pt-6 pb-8 mb-4 w-4/5 md:w-2/3 mx-auto"
     >
       <div class="mb-4">
         <p class="text-black"></p>
