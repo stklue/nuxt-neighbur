@@ -2,6 +2,7 @@
 import { OrderItem, Product as p } from "~~/data/types";
 import type { RealtimeChannel } from "@supabase/supabase-js";
 import { Database } from "~~/types/supabase";
+import { useUserStore } from "~~/stores/user";
 definePageMeta({
   middleware: "auth",
   layout: "index",
@@ -14,18 +15,20 @@ type OrderProduct = OrderItem & {
 const client = useSupabaseClient<Database>();
 
 const userS = useSupabaseUser();
+const { user } = useUserStore();
 
 const ordersPending: Ref<OrderProduct[]> = ref([]);
 
-const { data: orderData } = await useFetch(
-  `/api/order/me?id=${userS.value?.id}`
-);
+const { data: orderData } = await useFetch(`/api/order/all?id=${user().id}`);
+
+// console.log("Order Data: ");
+
 
 const success = ref(false);
 
 ordersPending.value = orderData.value as unknown as OrderProduct[];
 const reject = async (id: number, confirm: string) => {
-  if (confirm === "processing" || confirm === "PROCESSING" ){
+  if (confirm === "processing" || confirm === "PROCESSING") {
     const { error } = await client
       .from("Order")
       .update({ confirmed: "rejected" })
@@ -38,7 +41,7 @@ const reject = async (id: number, confirm: string) => {
 };
 
 const confirm = async (id: number, confirm: string) => {
-  if (confirm === "processing" || confirm === "PROCESSING" ) {
+  if (confirm === "processing" || confirm === "PROCESSING") {
     const { error } = await client
       .from("Order")
       .update({ confirmed: "confirmed" })

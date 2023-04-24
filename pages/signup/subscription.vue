@@ -26,9 +26,9 @@ const checkSelection = async () => {
       .update({ subscription: subscriptionChoice.value })
       .match({ user_id: user?.id });
     if (error === null) {
-      navigateTo("/signup/payment");
+       navigateTo("/signup/payment");
     }
-    console.log("Error, Updating", error);
+    return alert(error?.message)
   });
 };
 </script>
