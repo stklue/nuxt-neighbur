@@ -25,9 +25,7 @@ cartState.value = "done";
 
 orders.value = orderData.value as unknown as OrderProduct[];
 
-console.log(orders.value);
 
-updateOrderItems(orders.value);
 </script>
 
 <template>
