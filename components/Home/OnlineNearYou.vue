@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-import { Product, Student } from "~~/data/types";
+import { Product, Student as student } from "~~/data/types";
+
+type ProductUser = Product & {
+  Student: student;
+};
+
+const productUsers: Ref<ProductUser[]> = ref([]);
 
 const { data, pending } = await useFetch(`/api/product/online`);
-
-const products: Ref<Product[]> = ref([]);
-const users: Ref<Student[]> = ref([]);
-if (data.value !== null) {
-  products.value = data.value.p as Product[];
-  users.value = data.value.u as unknown as Student[];
-}
+productUsers.value = data.value as unknown as ProductUser[];
 </script>
 
 <template>
@@ -21,10 +21,10 @@ if (data.value !== null) {
     <div v-else class="flex mb-6">
       <div
         class="w-52 m-4 flex-wrap"
-        v-for="(product, i) in products"
-        :id="String(users[i].id)"
+        v-for="productUser in productUsers"
+        :id="String(productUser.Student.id)"
       >
-        <NuxtLink :to="'product/' + product.id">
+        <NuxtLink :to="'product/' + productUser.id">
           <div
             class="bg-orange-200 flex flex-wrap flex-col w-full h-full p-4 rounded-lg hover:scale-110 hover:shadow-lg transition-all ease-in-out duration-500 cursor-pointer"
           >
@@ -33,22 +33,22 @@ if (data.value !== null) {
                 <HomeChefIcon />
               </div>
               <div class="inline-flex justify-between w-full space-x-4">
-                <h2>{{ users[i].name }}</h2>
-                <OrderOnlineGlow :online="users[i].online" />
+                <h2>{{ productUser.Student.name }}</h2>
+                <OrderOnlineGlow :online="productUser.Student.online" />
               </div>
             </div>
             <div>
-              <h2 class="font-semibold">R{{ product.price }}</h2>
+              <h2 class="font-semibold">R{{ productUser.price }}</h2>
             </div>
             <div>
-              <h2 class="font-light">{{ users[i].location }}</h2>
+              <h2 class="font-light">{{ productUser.Student.location }}</h2>
             </div>
             <div>
-              <h2 class="font-normal text-sm">{{ product.created_at }}</h2>
+              <h2 class="font-normal text-sm">{{ productUser.created_at }}</h2>
             </div>
             <div class="py-2">
               <div class="w-full h-full rounded-lg bg-gray-100 p-2">
-                {{ product.description }}
+                {{ productUser.description }}
               </div>
             </div>
           </div>

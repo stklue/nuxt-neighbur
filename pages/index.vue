@@ -13,7 +13,7 @@ useHead({
 });
 
 const { updateUser } = useUserStore();
-const { data } = useFetch("/api/user");
+const { data } = await useFetch("/api/user");
 updateUser(data.value as unknown as Student);
 </script>
 
