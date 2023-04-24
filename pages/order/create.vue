@@ -108,7 +108,7 @@ const type = ref("");
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col pt-20 text-[#06113C]">
+  <div class="min-h-screen flex flex-col pt-20 text-[#06113C] px-5">
     <form @submit.prevent="saveProduct" class="mx-auto py-5">
       <div class="space-y-12">
         <div class="border-b border-gray-900/10 pb-12">
@@ -221,7 +221,7 @@ const type = ref("");
         <div class="border-b border-gray-900/10 pb-12">
           <div class="mt-2 space-y-2">
             <fieldset>
-              <div class="mt-6 space-y-6">
+              <div class="mt-2 space-y-4">
                 <div class="relative flex gap-x-3">
                   <div class="flex h-6 items-center">
                     <input
@@ -243,12 +243,12 @@ const type = ref("");
             </fieldset>
             <fieldset>
               <legend class="text-sm font-semibold leading-6 text-gray-900">
-                Push Notifications
+                Food type
               </legend>
               <p class="mt-1 text-sm leading-6 text-gray-600">
-                These are delivered via SMS to your mobile phone.
+                Freshly made or last night left overs.
               </p>
-              <div class="mt-6 space-y-6">
+              <div class="mt-2 space-y-2">
                 <div class="flex items-center gap-x-3">
                   <input
                     value="fresh"
@@ -284,14 +284,12 @@ const type = ref("");
       </div>
 
       <div class="mt-6 flex items-center justify-end gap-x-6">
-        <NuxtLink to="/">
-          <button type="button" class="text-sm font-semibold leading-6">
-            Cancel
-          </button>
-        </NuxtLink>
+        <!-- <button type="button" class="text-sm font-semibold leading-6">
+          Cancel
+        </button> -->
         <button
           type="submit"
-          class="rounded-md px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          class="rounded-lg px-3 py-2 bg-[#06113C] text-white text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Create Product
         </button>
