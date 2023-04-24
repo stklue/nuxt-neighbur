@@ -73,7 +73,6 @@ if (orders.value.length > 0) {
           </div>
 
           <CartOrderSummary>
-            <template v-slot:subtotal>R{{ getTotal() }}</template>
             <template v-slot:total>R{{ getTotal() }}</template>
           </CartOrderSummary>
         </div>
