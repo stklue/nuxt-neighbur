@@ -90,7 +90,7 @@ console.log("Width", windowSize.width.value);
             orders
           </span>
         </NuxtLink>
-        <NuxtLink
+        <!-- <NuxtLink
           to="/account"
           class="group transition-all duration-300 ease-in-out"
         >
@@ -99,7 +99,7 @@ console.log("Width", windowSize.width.value);
           >
             account
           </span>
-        </NuxtLink>
+        </NuxtLink> -->
         <NuxtLink to="/cart">
           <div class="flex items-center bg-gray-200 rounded-3xl px-2 mx-2 py-1">
             <CartIcon />
