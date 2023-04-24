@@ -37,7 +37,7 @@ updateOrderItems(orders.value);
       <div
         class="flex space-y-3 bg-gray-200 pr-5 py-3"
         v-for="orderItem in orders"
-        :key="order.id"
+        :key="orderItem.id"
       >
         <!-- Image -->
         <div class="flex h-full w-1/3 lg:w-1/6 p-2 rounded-lg">
