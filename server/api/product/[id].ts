@@ -8,9 +8,10 @@ export default defineEventHandler(async (event) => {
 
   const { data: product } = await client
     .from("Product")
-    .select("*")
+    .select("*, Student(*)")
     .eq("id", id)
     .single();
+
 
   return product;
 });
