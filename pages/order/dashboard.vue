@@ -34,6 +34,9 @@ const reject = async (id: number, confirm: string) => {
     }
 
     success.value = true;
+    setInterval(() => {
+      success.value = false;
+    }, 2000);
   }
 };
 
@@ -56,8 +59,10 @@ const confirm = async (id: number, confirm: string) => {
     if (err) {
       return alert(err.message);
     }
-
     success.value = true;
+    setInterval(() => {
+      success.value = false;
+    }, 2000);
   }
 };
 </script>
