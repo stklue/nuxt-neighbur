@@ -14,8 +14,7 @@ const route = useRoute();
 const quantity = ref(0);
 const client = useSupabaseClient<Database>();
 
-const { user  } = useUserStore()
-
+const { user } = useUserStore();
 
 type ProductUser = Product & {
   Student: student;
@@ -62,7 +61,7 @@ const addProduct = async () => {
 
 <template>
   <section
-    class="min-h-full w-full lg:w-1/2 mx-auto px-10 pt-10 rounded-tl-lg rounded-bl-lg flex flex-col space-y-4 text-[#06113C]"
+    class="min-h-full w-full lg:w-1/2 md:mx-auto px-10 pt-10 rounded-tl-lg rounded-bl-lg flex flex-col space-y-4 text-[#06113C]"
   >
     <div class="w-full" :id="String(productUser.id)">
       <div
@@ -89,7 +88,7 @@ const addProduct = async () => {
         </div>
 
         <div
-          class="flex justify-between items-center text-center h-7"
+          class="flex bg-green-400 flex-col md:flex-row md:justify-between items-center text-center h-7"
           v-if="productUser.plate === 0.5"
         >
           <p class="text-lg">Plate(1/2)</p>
@@ -108,7 +107,7 @@ const addProduct = async () => {
             <p class="self-center">(plates)</p>
           </div>
         </div>
-        <div class="h-7 flex justify-between items-center text-center" v-else>
+        <div class="flex justify-between items-center text-center" v-else>
           <p class="text-lg">Plate({{ productUser.plate }})</p>
 
           <div class="flex">
@@ -118,8 +117,10 @@ const addProduct = async () => {
             <p class="self-center">(plates)</p>
           </div>
         </div>
-        <div class="inline-flex justify-between pt-5 space-x-3">
-          <p>Prepared</p>
+        <div
+          class="flex flex-col   md:flex-row md:justify-between pt-5 space-x-3"
+        >
+          <p>Prepared at</p>
           <p>{{ productUser.created_at }}</p>
         </div>
         <div class="flex justify-between items-center text-center">
