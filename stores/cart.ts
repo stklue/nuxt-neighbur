@@ -2,15 +2,22 @@ import { defineStore } from "pinia";
 import createRandId, {
   Cart,
   OrderItem,
-  Product,
-  emptyCart,
-  emptyOrderItem,
+  Product as product,
+  emptyOrderItem
 } from "~~/data/types";
 
+type OrderProduct = OrderItem & {
+  Product?: product
+}
+export const emptyCart: Cart<OrderProduct> = {
+  products: [],
+  total: 0,
+};
+
 export const useCart = defineStore("cart", () => {
-  const cart = ref(emptyCart);
-  const currentOrder: Ref<OrderItem> = ref(emptyOrderItem);
-  function add(p: Product, id: number, q: number) {
+  const cart: Ref<Cart<OrderProduct>> = ref(emptyCart);
+  const currentOrder: Ref<OrderProduct> = ref(emptyOrderItem);
+  function add(p: product, id: number, q: number) {
     currentOrder.value = {
       id: createRandId(),
       student_uid: id,
@@ -21,6 +28,7 @@ export const useCart = defineStore("cart", () => {
       reason: "",
       order_creator: p.creator!,
       order_product: p.id!,
+      Product: p
     };
     cart.value.products.push(currentOrder.value);
     cart.value.total = cart.value.products.reduce(
@@ -37,9 +45,11 @@ export const useCart = defineStore("cart", () => {
 
 
   const getCartItems = () => cart.value.products.length;
-  const updateCart = (c: Cart) => {
+  const updateCart = (c: Cart<OrderProduct>) => {
     cart.value = c;
   };
+
+
   const updateOrderItems = (o: OrderItem[]) => {
     cart.value.products = o;
   };
@@ -52,6 +62,6 @@ export const useCart = defineStore("cart", () => {
     currentOrder,
     getCurrentOrder,
     updateCart,
-    updateOrderItems
+    updateOrderItems, 
   };
 });

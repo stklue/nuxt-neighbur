@@ -70,8 +70,8 @@ export const emptyProduct: Product = {
   creator: -1,
 };
 
-export interface Cart {
-  products: OrderItem[];
+export interface Cart<T> {
+  products: T[];
   total: number;
 }
 
@@ -87,10 +87,8 @@ export interface OrderItem {
   order_product: number | null;
 }
 
-export const emptyCart: Cart = {
-  products: [],
-  total: 0,
-};
+
+
 export const emptyOrderItem: OrderItem = {
   id: -1,
   student_uid: -1,

@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
 
   const { data: orders } = await client
     .from("Order")
-    .select("*")
+    .select("*, Product(*)")
     .eq("student_uid", id);
     
 
