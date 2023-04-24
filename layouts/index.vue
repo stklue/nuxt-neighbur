@@ -19,6 +19,11 @@ const logout = async () => {
   }
   navigateTo("/introduction");
 };
+
+// 763
+
+const windowSize = useWindowSize();
+console.log("Width", windowSize.width.value);
 </script>
 
 <template>
@@ -33,10 +38,19 @@ const logout = async () => {
           >neighbur</NuxtLink
         >
       </div>
+      <div class="flex space-x-2  items-center" v-if="windowSize.width.value < 764">
+        <NuxtLink to="/cart">
+          <div class="flex items-center bg-gray-200 rounded-3xl px-2 mx-2 py-1">
+            <CartIcon />
+            <p class="text-lg font-semibold">{{ getCartItems() }}</p>
+          </div>
+        </NuxtLink>
+        <HomeMenu />
+      </div>
 
       <div
         v-if="!pending"
-        class="flex space-x-2 justify-center self-center h-full items-center"
+        class="hidden md:flex space-x-2 justify-center self-center h-full items-center"
       >
         <p>welcome</p>
         <p></p>
@@ -44,7 +58,7 @@ const logout = async () => {
       </div>
 
       <div
-        class="flex divide-x-2 justify-center self-center h-full items-center"
+        class="hidden md:flex divide-x-2 justify-center self-center h-full items-center"
       >
         <NuxtLink
           to="/order/dashboard"
