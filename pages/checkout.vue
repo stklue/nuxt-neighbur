@@ -19,7 +19,7 @@ const pay = () => {
   <div class="flex justify-center items-center min-h-screen pt-20">
     <div class="flex flex-col justify-center items-center space-x-5 md:w-full">
       <div
-        class="bg-gray-100 space-y-3 p-4 flex flex-col w-1/3 h-40 font-semibold justify-between py-6 text-sm uppercase"
+        class="bg-gray-100 space-y-3 p-4 flex flex-col w-full md:w-1/3 h-full font-semibold justify-between py-6 text-sm uppercase"
       >
         <p v-if="showredirect" class="w-full p-6 bg-green-500 text-white">
           Payment made successfully.
