@@ -28,7 +28,6 @@ watch(
     const { data: product } = await useFetch(`/api/product/${_id}`);
 
     productUser.value = product.value as unknown as ProductUser;
-    
   },
   { deep: true, immediate: true }
 );
@@ -40,16 +39,17 @@ const addToOrder = async () => {
     }
     return;
   });
-  //column "user_id" of relation "Order" does not exist
 };
 type State = "loading" | "initial" | "done";
 const addNotification: Ref<State> = ref("initial");
 const addProduct = async () => {
-  if (quantity.value > 0) {
-    add(productUser.value, productUser.value.Student.user_id, quantity.value);
+  if (quantity.value > 0 && quantity.value <= productUser.value.available!) {
+    add(productUser.value, productUser.value.Student.id, quantity.value);
     addNotification.value = "loading";
     await addToOrder();
     addNotification.value = "done";
+  } else if (quantity.value > productUser.value.available!) {
+    alert(`Quantity can't be more than ${productUser.value.available!}`);
   } else {
     alert("You have to select how many you want. Can't be zero.");
   }
@@ -69,9 +69,11 @@ const addProduct = async () => {
             <div class="rounded-ful w-10 h-10">
               <HomeChefIcon />
             </div>
-            <h2 class="font-semibold text-2xl">{{ productUser.Student.name }}</h2>
+            <h2 class="font-semibold text-2xl">
+              {{ productUser.Student.name }}
+            </h2>
           </div>
-          <OrderOnlineGlow :online=" productUser.Student.online" />
+          <OrderOnlineGlow :online="productUser.Student.online" />
         </div>
         <p class="text-2xl font-medium">R{{ productUser.price?.toFixed(2) }}</p>
 
@@ -150,7 +152,7 @@ const addProduct = async () => {
           v-if="addNotification === 'done'"
           class="w-full p-4 bg-green-500 my-3 text-white font-semibold rounded-lg"
         >
-          Added to cart. {{ user.name }} just got the message. Click on your
+          Added to cart. {{ productUser.Student.name }} just got the message. Click on your
           cart to see the status of your order. Thank you.
         </div>
         <div v-if="addNotification === 'loading'">
