@@ -61,6 +61,13 @@ export const useCart = defineStore("cart", () => {
     cart.value = c;
   };
 
+  const getTotal = () => {
+    return cart.value.products.reduce(
+      (accumulator, product) => accumulator + (product.total * product.quantity),
+      0
+    );
+  };
+
   const updateOrderItems = (o: OrderItem[]) => {
     if (o.length > 0) {
       cart.value.products = o;
@@ -77,5 +84,6 @@ export const useCart = defineStore("cart", () => {
     updateCart,
     updateOrderItems,
     getOrderWithProduct,
+    getTotal
   };
 });

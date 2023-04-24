@@ -7,7 +7,7 @@ definePageMeta({
   middleware: "auth",
   layout: "index",
 });
-const { cart, getCartItems, updateOrderItems } = useCart();
+const { cart, getCartItems, updateOrderItems, getTotal } = useCart();
 
 type State = "initial" | "loading" | "done";
 const cartState: Ref<State> = ref("initial");
@@ -21,10 +21,11 @@ type OrderProduct = OrderItem & {
 const orders: Ref<OrderProduct[]> = ref([]);
 
 cartState.value = "loading";
-const { data: orderData } = await useFetch(`/api/order/confirmed?id=${user().id}`);
+const { data: orderData } = await useFetch(
+  `/api/order/confirmed?id=${user().id}`
+);
 cartState.value = "done";
 orders.value = (orderData.value as OrderProduct[]) ?? [];
-console.log("Orders data", orders.value);
 if (orders.value.length > 0) {
   updateOrderItems(orders.value);
 }
@@ -72,8 +73,8 @@ if (orders.value.length > 0) {
           </div>
 
           <CartOrderSummary>
-            <template v-slot:subtotal>R{{ cart.total }}</template>
-            <template v-slot:total>R{{ cart.total }}</template>
+            <template v-slot:subtotal>R{{ getTotal() }}</template>
+            <template v-slot:total>R{{ getTotal() }}</template>
           </CartOrderSummary>
         </div>
       </div>
