@@ -6,8 +6,12 @@ type ProductUser = Product & {
 };
 
 const productUsers: Ref<ProductUser[]> = ref([]);
+type State = "initial" | "loading" | "done";
+const dataState: Ref<State> = ref("initial");
 
+dataState.value = "loading";
 const { data, pending } = await useFetch(`/api/product/online`);
+dataState.value = "done";
 productUsers.value = data.value as unknown as ProductUser[];
 </script>
 
@@ -22,7 +26,7 @@ productUsers.value = data.value as unknown as ProductUser[];
       <img class="w-10 h-10" src="~~/cooking.gif" />
     </div>
     <div v-if="pending">Loading</div>
-    <div v-else class="flex flex-col lg:flex-row mb-6">
+    <div v-if="dataState === 'done'" class="flex flex-col lg:flex-row mb-6">
       <div
         class="w-52 m-4 flex-wrap"
         v-for="productUser in productUsers"

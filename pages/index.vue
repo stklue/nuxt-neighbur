@@ -27,10 +27,8 @@ if (orders.value.length > 0) {
 
 <template>
   <div class="min-h-screen">
-    <HomeRecentVisit />
     <div class="flex flex-col pt-20">
       <HomeOnlineNearYou />
-      <!-- <HomeAllNearYou/> -->
     </div>
   </div>
 </template>
