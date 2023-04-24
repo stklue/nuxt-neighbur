@@ -23,7 +23,7 @@ const logout = async () => {
 // 763
 
 const windowSize = useWindowSize();
-console.log("Width", windowSize.width.value);
+
 </script>
 
 <template>
