@@ -34,7 +34,7 @@ const successB = () => {
 <template>
   <div class="flex flex-col w-full items-center min-h-screen text-[#06113C]">
     <div
-      class="flex flex-col w-2/5 text-center bg-[#fbfbfb] space-y-5 m-5 px-5 py-3 rounded-lg"
+      class="flex flex-col  w-full md:3/5 lg:w-2/5 text-center bg-[#fbfbfb] space-y-5 m-5 px-5 py-3 rounded-lg"
     >
       <div class="p-5">
         <p class="text-base">STEP 3 OF 3</p>
