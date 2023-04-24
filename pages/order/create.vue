@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Product } from "~~/data/types";
+import { Product, Student, emptyUser } from "~~/data/types";
 import { useUserStore } from "~~/stores/user";
 import { Database } from "~~/types/supabase";
 
@@ -7,9 +7,12 @@ definePageMeta({
   middleware: "auth",
   layout: "index",
 });
-const { user } = useUserStore();
+const { data: userData } = await useFetch("/api/user");
+const user: Ref<Student> = ref(emptyUser);
 
+user.value = userData.value as unknown as Student;
 const client = useSupabaseClient<Database>();
+const supaUser = useSupabaseUser();
 
 const dropzoneFile: Ref<File | undefined | null> = ref();
 const uploaded = ref(false);
@@ -31,7 +34,7 @@ const saveImage = async () => {
   const { data: dataPath, error } = await client.storage
     .from("product")
     .upload(
-      `${user().id}/${dropzoneFile.value?.name}`,
+      `${supaUser.value?.id}/${dropzoneFile.value?.name}`,
       dropzoneFile.value!,
       {
         cacheControl: "3600",
@@ -84,7 +87,7 @@ const saveProduct = async () => {
         type: type.value,
         image: image.value,
         price: price.value,
-        creator: user().id,
+        creator: user.value.id,
       };
       await insert(product);
     }
