@@ -65,10 +65,12 @@ const confirm = async (id: number, confirm: string) => {
     }, 2000);
   }
 };
+
+const windowSize = useWindowSize();
 </script>
 
 <template>
-  <div class="lg:pt-28 min-h-screen w-full bg-light-grey text-[#06113C] px-5">
+  <div class="pt-28 min-h-screen w-full bg-light-grey text-[#06113C] px-5">
     <div class="flex flex-col bg-gray-100 w-full h-1/3 p-5">
       <h1 class="text-2xl font-semibold">Accepted Products</h1>
       <div v-if="success" class="p-3 w-full bg-green-500 text-white">
@@ -76,35 +78,44 @@ const confirm = async (id: number, confirm: string) => {
       </div>
       <div v-for="order in ordersPending">
         <div class="flex flex-col p-3 hover:bg-gray-200">
-          <div class="grid grid-cols-7 font-semibold">
-            <p>Order ID</p>
-            <p>Total cost</p>
-            <p>Quantity</p>
-            <p>Total</p>
-            <p>Product name</p>
-            <p>Status</p>
-            <p>Actions</p>
-          </div>
-          <div class="grid grid-cols-7">
-            <p>{{ order.id }}</p>
-            <p>{{ order.total }}</p>
-            <p>{{ order.quantity }}</p>
-            <p>{{ order.total }}</p>
-            <p>{{ order.Product.pname }}</p>
-            <p>{{ order.confirmed.toUpperCase() }}</p>
-            <div class="flex space-x-2 divide-x-2 divide-gray-300">
-              <p
-                @click="reject(order.id, order.confirmed)"
-                class="pr-2 cursor-pointer hover:text-red-500 hover:font-semibold"
-              >
-                REJECT
-              </p>
-              <p
-                @click="confirm(order.id, order.confirmed)"
-                class="pl-2 cursor-pointer hover:text-green-500 hover:font-semibold"
-              >
-                CONFIRM
-              </p>
+          <div class="grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 gap-y-3">
+            <div>
+              <p class="text-base font-bold">Order ID</p>
+              <p>{{ order.id }}</p>
+            </div>
+            <div>
+              <p class="text-base font-bold">Total cost</p>
+              <p>R{{ order.total.toFixed(2) }}</p>
+            </div>
+            <div>
+              <p class="text-base font-bold">Quantity</p>
+              <p>{{ order.quantity }}</p>
+            </div>
+
+            <div>
+              <p class="text-base font-bold">Product name</p>
+              <p>{{ order.Product.pname }}</p>
+            </div>
+            <div>
+              <p class="text-base font-bold">Status</p>
+              <p>{{ order.confirmed.toUpperCase() }}</p>
+            </div>
+            <div>
+              <p class="text-base font-bold">Actions</p>
+              <div class="flex space-x-2 divide-x-2 divide-gray-300">
+                <p
+                  @click="reject(order.id, order.confirmed)"
+                  class="pr-2 cursor-pointer hover:text-red-500 hover:font-semibold"
+                >
+                  REJECT
+                </p>
+                <p
+                  @click="confirm(order.id, order.confirmed)"
+                  class="pl-2 cursor-pointer hover:text-green-500 hover:font-semibold"
+                >
+                  CONFIRM
+                </p>
+              </div>
             </div>
           </div>
         </div>
