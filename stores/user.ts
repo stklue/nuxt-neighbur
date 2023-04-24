@@ -1,14 +1,14 @@
 import { defineStore, createPinia , Pinia } from "pinia";
-import { User, emptyUser } from "~~/data/types";
+import { Student, emptyUser } from "~~/data/types";
 
 
 
 
 export const useUserStore = defineStore("user", () => {
-  const user: Ref<User> = ref(emptyUser);
+  const user: Ref<Student> = ref(emptyUser);
 
-  const newUser = (u: User) => {
-    user.value.id = u.id;
+  const newUser = (u: Student) => {
+    user.value.user_id = u.id;
     user.value.location = u.location;
     user.value.online = u.online;
     user.value.name = u.name;

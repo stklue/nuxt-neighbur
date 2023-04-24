@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import { Product, User } from "~~/data/types";
+import { Product, Student } from "~~/data/types";
 
 const { data, pending } = await useFetch(`/api/product/online`);
 
 const products: Ref<Product[]> = ref([]);
-const users: Ref<User[]> = ref([]);
+const users: Ref<Student[]> = ref([]);
 if (data.value !== null) {
   products.value = data.value.p as Product[];
-  users.value = data.value.u as unknown as User[];
+  users.value = data.value.u as unknown as Student[];
 }
 </script>
 

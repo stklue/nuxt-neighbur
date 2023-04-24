@@ -3,7 +3,7 @@ import createRandId, {
   Cart,
   OrderItem,
   Product,
-  User,
+  Student,
   emptyCart,
   emptyOrderItem,
 } from "~~/data/types";
@@ -14,13 +14,13 @@ export const useCart = defineStore("cart", () => {
   function add(p: Product, id: string, q: number) {
     currentOrder.value = {
       id: createRandId(),
-      uid: id,
+      student_uid: id,
       quantity: q,
       total: q * p.price!,
       rating: 4,
       confirmed: "processing",
       reason: "",
-      order_user: p.user_product!,
+      creator: p.creator!,
       order_product: p.id,
     };
     cart.value.products.push(currentOrder.value);

@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { Product, emptyProduct, User, emptyUser } from "~~/data/types";
+import { Product, emptyProduct, Student, emptyUser } from "~~/data/types";
 import { useCart } from "~~/stores/cart";
 import { Database } from "~~/types/supabase";
 
 const { add, getCurrentOrder } = useCart();
 const product: Ref<Product> = ref(emptyProduct);
-const user: Ref<User> = ref(emptyUser);
+const user: Ref<Student> = ref(emptyUser);
 const userSup = useSupabaseUser();
 const route = useRoute();
 const quantity = ref(0);
@@ -18,9 +18,9 @@ watch(
 
     product.value = prod.value as unknown as Product;
     const { data: us } = await useFetch(
-      `/api/users/${product.value.user_product}`
+      `/api/users/${product.value.creator}`
     );
-    user.value = us.value as unknown as User;
+    user.value = us.value as unknown as Student;
   },
   { deep: true, immediate: true }
 );

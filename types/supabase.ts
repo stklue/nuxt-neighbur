@@ -18,7 +18,8 @@ export interface Database {
           rating: number | null;
           reason: string | null;
           total: number | null;
-          uid: string | null;
+          student_uid: string | null;
+          order_creator: string | null;
           order_product: number | null;
         };
         Insert: {
@@ -29,8 +30,8 @@ export interface Database {
           rating?: number | null;
           reason?: string | null;
           total?: number | null;
-          order_user: string | null;
-          uid?: string | null;
+          student_uid: string | null;
+          order_creator: string | null;
           order_product: number | null;
         };
         Update: {
@@ -41,6 +42,8 @@ export interface Database {
           rating?: number | null;
           reason?: string | null;
           total?: number | null;
+          student_uid?: string | null;
+          order_creator?: string | null;
           order_product?: number | null;
         };
       };
@@ -57,7 +60,7 @@ export interface Database {
           price: number | null;
           recurring: boolean | null;
           type: string | null;
-          user_product: string | null;
+          creator: string | null;
         };
         Insert: {
           available?: number | null;
@@ -115,28 +118,23 @@ export interface Database {
           req?: string | null;
         };
       };
-      User: {
+      Student: {
         Row: {
           created_at: string | null;
           id: string;
           location: string | null;
           name: string | null;
           online: boolean | null;
-          subscription: number | null;
-          user_orders: number | null;
-          user_product: number | null;
-          user_requests: number | null;
+          user_id: string;
         };
         Insert: {
           created_at?: string | null;
-          id: string;
+          id?: string;
           location?: string | null;
           name?: string | null;
           online?: boolean | null;
           subscription?: number | null;
-          user_orders?: number | null;
-          user_product?: number | null;
-          user_requests?: number | null;
+          user_id: string;
         };
         Update: {
           created_at?: string | null;
@@ -145,9 +143,7 @@ export interface Database {
           name?: string | null;
           online?: boolean | null;
           subscription?: number | null;
-          user_orders?: number | null;
-          user_product?: number | null;
-          user_requests?: number | null;
+          user_id?: string;
         };
       };
     };

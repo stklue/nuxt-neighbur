@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { residences } from "~~/data/res";
-import { User } from "~~/data/types";
+import { Student } from "~~/data/types";
 import { useUserStore } from "~~/stores/user";
 import { Database } from "~~/types/supabase";
 
@@ -34,27 +34,26 @@ const signUp = async () => {
     password.value === conPassword.value &&
     residence.value !== "Choose your residence"
   ) {
-
-
     const userResponse = await authClient.auth.getUser();
- 
+
     if (userResponse.data.user) {
-      newUser({
-      id: userResponse.data.user.id,
-      online: true,
-      email: email.value,
-      name: username.value,
-      subscription: "",
-      location: residence.value,
-    } as User);
       const u = {
-        id: userResponse.data.user.id,
+        user_id: userResponse.data.user.id,
         name: username.value,
         location: residence.value,
+        subscription: 0,
         online: true,
       };
+      newUser({
+        user_id: userResponse.data.user.id,
+        online: true,
+        name: username.value,
+        subscription: 0,
+        location: residence.value,
+      } as Student);
+
       await useAsyncData("User", async () => {
-        const { error } = await client.from("User").insert(u);
+        const { error } = await client.from("Student").insert(u);
         if (error === null) {
           navigateTo("/signup/subscription");
         }
@@ -65,8 +64,6 @@ const signUp = async () => {
     alert("Error: Fields are either empty or passwords does not match.");
   }
 };
-
-
 </script>
 
 <template>

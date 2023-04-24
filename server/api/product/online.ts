@@ -6,12 +6,12 @@ export default defineEventHandler(async (event) => {
   const serverUser = await serverSupabaseUser(event);
 
   const { data: userData } = await client
-    .from("User")
+    .from("Student")
     .select("*")
-    .eq("id", serverUser?.id)
+    .eq("user_id", serverUser?.id)
     .single();
   const { data: onlineNearMe } = await client
-    .from("User")
+    .from("Student")
     .select("*")
     .eq("location", userData?.location)
     .eq("online", true)
@@ -24,10 +24,10 @@ export default defineEventHandler(async (event) => {
     .select("*")
     .in("user_product", ids!);
 
-  const prodIds = products?.map((o) => o.user_product);
+  const prodIds = products?.map((o) => o.creator);
 
   const { data: users } = await client
-    .from("User")
+    .from("Student")
     .select("*")
     .in("id", prodIds!);
 

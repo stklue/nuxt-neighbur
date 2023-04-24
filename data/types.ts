@@ -10,23 +10,16 @@ export interface UserRequest {
   limit: number;
 }
 
-export interface User {
-  id: number | string;
+export interface Student {
+  id: number;
+  user_id: string;
   email?: string;
   name: string;
   location: string;
-  make?: UserRequest;
   online: boolean;
-  subscription: string;
-  requests?: UserRequest[];
+  subscription: number;
 }
 
-export interface Short {
-  s: string;
-}
-interface Food {}
-
-export type ProductType = Short | Food;
 export type FoodType = "left overs" | "fresh";
 export type Plate = 0.25 | 0.5 | 1 | 2 | 3;
 export type Confirmed = "confirmed" | "rejected" | "processing";
@@ -52,16 +45,14 @@ export interface Product {
   price: number | null;
   recurring: boolean | null;
   type: string | null;
-  user_product?: string | null;
+  creator?: string | null;
 }
 
-export const emptyUser = {
-  id: "-1",
-  avatar: "",
+export const emptyUser: Student = {
+  id: -1,
+  user_id: "-1",
   location: "",
-  email: "",
-  password: "",
-  subscription: "",
+  subscription: -1,
   name: "",
   online: false,
 };
@@ -76,6 +67,7 @@ export const emptyProduct: Product = {
   available: 0,
   image: "",
   pname: "",
+  creator: "",
 };
 
 export interface Cart {
@@ -85,13 +77,13 @@ export interface Cart {
 
 export interface OrderItem {
   id: number;
-  uid: string;
+  student_uid: string;
   quantity: number;
   total: number;
   rating: number;
   confirmed: string;
   reason: string;
-  order_user: string | null;
+  order_creator: string | null;
   order_product: number | null;
 }
 
@@ -101,13 +93,13 @@ export const emptyCart: Cart = {
 };
 export const emptyOrderItem: OrderItem = {
   id: -1,
-  uid: "",
+  student_uid: "",
   quantity: 0,
   total: 0,
   rating: 0,
   confirmed: "",
   reason: "",
-  order_user: "",
+  order_creator: "",
   order_product: -1,
 };
 export default function createRandId() {

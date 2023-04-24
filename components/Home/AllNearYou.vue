@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-import { User } from "~~/data/types";
+import { Student } from "~~/data/types";
 import { useUserStore } from "~~/stores/user";
 
 const { user } = useUserStore();
 const { data } = await useFetch(`/api/users?location=${user.location}`);
 
-const usersNearYou: Ref<User[]> = ref([]);
+const usersNearYou: Ref<Student[]> = ref([]);
 
 if (Array.isArray(data.value)) {
-  usersNearYou.value = data.value as unknown as User[];
+  usersNearYou.value = data.value as unknown as Student[];
 }
 </script>
 

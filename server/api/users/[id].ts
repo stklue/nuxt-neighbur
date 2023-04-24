@@ -2,12 +2,12 @@ import { serverSupabaseClient } from "#supabase/server";
 import { Database } from "~~/types/supabase";
 
 export default defineEventHandler(async (event) => {
-  const id = event.context.params!.id as string;
+  const id = Number.parseInt(event.context.params!.id) as number;
 
   const client = serverSupabaseClient<Database>(event);
 
   const { data: user } = await client
-    .from("User")
+    .from("Student")
     .select("*")
     .eq("id", id)
     .single();

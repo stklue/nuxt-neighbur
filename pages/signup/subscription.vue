@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { NuxtLink } from "~~/.nuxt/components";
-import { useUserStore } from "~~/stores/user";
 import { Database } from "~~/types/supabase";
 
 definePageMeta({
@@ -22,11 +20,11 @@ const checkSelection = async () => {
     return;
   }
 
-  await useAsyncData("User", async () => {
+  await useAsyncData("Student", async () => {
     const { error } = await client
-      .from("User")
+      .from("Student")
       .update({ subscription: subscriptionChoice.value })
-      .match({ id: user?.id });
+      .match({ user_id: user?.id });
     if (error === null) {
       navigateTo("/signup/payment");
     }
