@@ -6,12 +6,16 @@ import {
   emptyUser,
 } from "~~/data/types";
 import { useCart } from "~~/stores/cart";
+import { useUserStore } from "~~/stores/user";
 import { Database } from "~~/types/supabase";
 
 const { add, getCurrentOrder } = useCart();
 const route = useRoute();
 const quantity = ref(0);
 const client = useSupabaseClient<Database>();
+
+const { user  } = useUserStore()
+
 
 type ProductUser = Product & {
   Student: student;
@@ -44,7 +48,7 @@ type State = "loading" | "initial" | "done";
 const addNotification: Ref<State> = ref("initial");
 const addProduct = async () => {
   if (quantity.value > 0 && quantity.value <= productUser.value.available!) {
-    add(productUser.value, productUser.value.Student.id, quantity.value);
+    add(productUser.value, user().id, quantity.value);
     addNotification.value = "loading";
     await addToOrder();
     addNotification.value = "done";
@@ -152,8 +156,8 @@ const addProduct = async () => {
           v-if="addNotification === 'done'"
           class="w-full p-4 bg-green-500 my-3 text-white font-semibold rounded-lg"
         >
-          Added to cart. {{ productUser.Student.name }} just got the message. Click on your
-          cart to see the status of your order. Thank you.
+          Added to cart. {{ productUser.Student.name }} just got the message.
+          Click on your cart to see the status of your order. Thank you.
         </div>
         <div v-if="addNotification === 'loading'">
           <Spinner />
