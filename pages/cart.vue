@@ -32,18 +32,18 @@ if (orders.value.length > 0) {
 </script>
 
 <template>
-  <div class="lg:pt-20 min-h-screen bg-light-grey text-[#06113C]">
+  <div class="pt-20 min-h-screen bg-light-grey text-[#06113C]">
     <div
       v-if="getCartItems() === 0"
-      class="lg:pt-20 min-h-screen bg-light-grey text-[#06113C]"
+      class="pt-20 min-h-screen bg-light-grey text-[#06113C]"
     >
       <h1 class="pl-10 text-3xl font-semibold">Cart is empty</h1>
     </div>
     <div v-else>
       <div v-if="cartState === 'done'" class="bg-light-grey text-[#06113C]">
-        <div class="flex flex-col w-full shadow-md lg:flex-row lg:px-20">
+        <div class="flex flex-col w-full shadow-md md:justify-between  md:flex-row lg:px-20">
           <div class="lg:w-3/4 bg-white px-10 py-10">
-            <div class="flex justify-between border-b pb-5">
+            <div class="flex justify-between  border-b pb-5">
               <h1 class="font-semibold text-2xl">Cart</h1>
               <h2 class="font-semibold text-2xl">
                 {{ getCartItems() }} Item(s)

@@ -14,9 +14,9 @@ const props = defineProps<Props>();
 </script>
 
 <template>
-  <div class="flex items-center hover:bg-gray-100 mx-1 my-2 h-28 space-x-5">
+  <div class="flex items-start justify-start  h-40 md:h-32 hover:bg-gray-100 mx-1 my-2 lg:h-28 space-x-5">
     <!-- Image -->
-    <div class="flex h-full w-1/3 lg:w-1/6 p-2 rounded-lg">
+    <div class="flex h-full w-1/2 lg:w-1/6 p-2 rounded-lg">
       <img class="rounded-lg" :src="props.orderItem.Product?.image!" />
     </div>
 
@@ -29,15 +29,15 @@ const props = defineProps<Props>();
         }}</span>
         <!-- </router-link> -->
         <div class="flex space-x-5 lg:justify-start">
-          <span class="text-center font-semibold  text-gray-400"
+          <span class="md:text-center font-semibold  text-gray-400"
             >R{{ props.orderItem.total.toFixed(2) }}</span
           >
         </div>
-        <div class="flex space-x-5 justify-between w-full f">
-          <span class="text-center font-semibold text-base text-gray-400"
+        <div class="flex  flex-col lg:flex-row  md:justify-between w-full  items-start">
+          <span class="md:text-center font-semibold text-base text-gray-400"
             >Order Status</span
           >
-          <span class="text-center font-semibold text-base text-green-400">{{
+          <span class="md:text-center font-semibold text-base text-green-400">{{
             props.orderItem.confirmed.toUpperCase()
           }}</span>
         </div>
