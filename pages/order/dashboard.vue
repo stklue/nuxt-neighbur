@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { OrderItem, Product as p } from "~~/data/types";
-import type { RealtimeChannel } from "@supabase/supabase-js";
 import { Database } from "~~/types/supabase";
 import { useUserStore } from "~~/stores/user";
 definePageMeta({
@@ -14,14 +13,11 @@ type OrderProduct = OrderItem & {
 
 const client = useSupabaseClient<Database>();
 
-const userS = useSupabaseUser();
 const { user } = useUserStore();
 
 const ordersPending: Ref<OrderProduct[]> = ref([]);
 
 const { data: orderData } = await useFetch(`/api/order/all?id=${user().id}`);
-
-// console.log("Order Data: ");
 
 
 const success = ref(false);

@@ -35,9 +35,13 @@ export const useCart = defineStore("cart", () => {
 
   const getCurrentOrder = () => currentOrder.value;
 
+
   const getCartItems = () => cart.value.products.length;
   const updateCart = (c: Cart) => {
     cart.value = c;
+  };
+  const updateOrderItems = (o: OrderItem[]) => {
+    cart.value.products = o;
   };
 
   return {
@@ -47,6 +51,7 @@ export const useCart = defineStore("cart", () => {
     getCartItems,
     currentOrder,
     getCurrentOrder,
-    updateCart
+    updateCart,
+    updateOrderItems
   };
 });

@@ -1,12 +1,24 @@
 <script setup lang="ts">
+import { OrderItem, Product as p } from "~~/data/types";
 import { useCart } from "~~/stores/cart";
+import { useUserStore } from "~~/stores/user";
+import { Database } from "~~/types/supabase";
 definePageMeta({
   middleware: "auth",
   layout: "index",
 });
-const { cart, getCartItems } = useCart();
+const { cart, getCartItems, updateOrderItems } = useCart();
 
 
+const { user } = useUserStore();
+
+const orders: Ref<OrderItem[]> = ref([]);
+
+const { data: orderData } = await useFetch(`/api/order/${user().id}`);
+
+orders.value = orderData.value as unknown as OrderItem[];
+
+updateOrderItems(orders.value);
 </script>
 
 <template>
