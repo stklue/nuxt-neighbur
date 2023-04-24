@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
   const { data: ordersPending } = await client
     .from("Order")
     .select("*, Product(*)")
-    .eq("order_creator", id);
+    .eq("order_creator", id).order('created_at');
 
   return ordersPending;
 });

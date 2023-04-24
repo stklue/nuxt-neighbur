@@ -11,7 +11,7 @@
           </h2>
           <ul class="text-gray-500 dark:text-gray-400 font-medium">
             <NuxtLink to="/about" class="mb-4">
-              <a href="#" class="hover:underline">About</a>
+              <p class="hover:underline">About</p>
             </NuxtLink>
           </ul>
         </div>
@@ -23,10 +23,10 @@
           </h2>
           <ul class="text-gray-500 dark:text-gray-400 font-medium">
             <li class="mb-4">
-              <a href="#" class="hover:underline">Help Form</a>
+              <p class="hover:underline">Help Form</p>
             </li>
             <li class="mb-4">
-              <a href="#" class="hover:underline">Contact us on WhatsApp</a>
+              <p class="hover:underline">Contact us on WhatsApp</p>
             </li>
           </ul>
         </div>
@@ -38,10 +38,10 @@
           </h2>
           <ul class="text-gray-500 dark:text-gray-400 font-medium">
             <NuxtLink to="/privacy" class="mb-4">
-              <a href="#" class="hover:underline">Privacy Policy</a>
+              <p class="hover:underline">Privacy Policy</p>
             </NuxtLink>
             <NuxtLink to="/termsAndConditions" class="mb-4">
-              <a href="#" class="hover:underline">Terms &amp; Conditions</a>
+              <p class="hover:underline">Terms &amp; Conditions</p>
             </NuxtLink>
           </ul>
         </div>

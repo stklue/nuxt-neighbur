@@ -3,12 +3,12 @@ import createRandId, {
   Cart,
   OrderItem,
   Product as product,
-  emptyOrderItem
+  emptyOrderItem,
 } from "~~/data/types";
 
 type OrderProduct = OrderItem & {
-  Product?: product
-}
+  Product?: product;
+};
 export const emptyCart: Cart<OrderProduct> = {
   products: [],
   total: 0,
@@ -17,6 +17,7 @@ export const emptyCart: Cart<OrderProduct> = {
 export const useCart = defineStore("cart", () => {
   const cart: Ref<Cart<OrderProduct>> = ref(emptyCart);
   const currentOrder: Ref<OrderProduct> = ref(emptyOrderItem);
+  const currentOrderWithoutProduct: Ref<OrderProduct> = ref(emptyOrderItem);
   function add(p: product, id: number, q: number) {
     currentOrder.value = {
       id: createRandId(),
@@ -28,7 +29,18 @@ export const useCart = defineStore("cart", () => {
       reason: "",
       order_creator: p.creator!,
       order_product: p.id!,
-      Product: p
+      Product: p,
+    };
+    currentOrderWithoutProduct.value = {
+      id: createRandId(),
+      student_uid: id,
+      quantity: q,
+      total: q * p.price!,
+      rating: 4,
+      confirmed: "processing",
+      reason: "",
+      order_creator: p.creator!,
+      order_product: p.id!,
     };
     cart.value.products.push(currentOrder.value);
     cart.value.total = cart.value.products.reduce(
@@ -42,13 +54,12 @@ export const useCart = defineStore("cart", () => {
   }
 
   const getCurrentOrder = () => currentOrder.value;
-
+  const getOrderWithProduct = () => currentOrderWithoutProduct.value;
 
   const getCartItems = () => cart.value.products.length;
   const updateCart = (c: Cart<OrderProduct>) => {
     cart.value = c;
   };
-
 
   const updateOrderItems = (o: OrderItem[]) => {
     cart.value.products = o;
@@ -62,6 +73,7 @@ export const useCart = defineStore("cart", () => {
     currentOrder,
     getCurrentOrder,
     updateCart,
-    updateOrderItems, 
+    updateOrderItems,
+    getOrderWithProduct
   };
 });

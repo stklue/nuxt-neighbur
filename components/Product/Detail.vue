@@ -9,7 +9,7 @@ import { useCart } from "~~/stores/cart";
 import { useUserStore } from "~~/stores/user";
 import { Database } from "~~/types/supabase";
 
-const { add, getCurrentOrder } = useCart();
+const { add, getCurrentOrder, getOrderWithProduct } = useCart();
 const route = useRoute();
 const quantity = ref(0);
 const client = useSupabaseClient<Database>();
@@ -37,7 +37,7 @@ watch(
 );
 const addToOrder = async () => {
   await useAsyncData("Order", async () => {
-    const { error } = await client.from("Order").insert(getCurrentOrder());
+    const { error } = await client.from("Order").insert(getOrderWithProduct());
     if (error !== null) {
       return alert(error.message);
     }
