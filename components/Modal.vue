@@ -4,6 +4,7 @@ const emit = defineEmits(["showModal", "logout"]);
 
 <template>
   <div
+  @click="emit('showModal')"
     class="absolute top-0 right-0 w-full h-screen bg-[#06113C]/95 text-white"
   >
     <div class="bg-gray-900 justify-end">
@@ -24,6 +25,7 @@ const emit = defineEmits(["showModal", "logout"]);
 
     <div class="flex space-y-5 pt-5 pl-2 items-start flex-col h-full">
       <NuxtLink
+      @click="emit('showModal')"
         to="/order/dashboard"
         class="group transition-all duration-300 ease-in-out"
       >
@@ -34,6 +36,7 @@ const emit = defineEmits(["showModal", "logout"]);
         </span>
       </NuxtLink>
       <NuxtLink
+      @click="emit('showModal')"
         to="/order/create"
         class="group transition-all duration-300 ease-in-out"
       >
@@ -44,6 +47,7 @@ const emit = defineEmits(["showModal", "logout"]);
         </span>
       </NuxtLink>
       <NuxtLink
+      @click="emit('showModal')"
         to="/order/all"
         class="group transition-all duration-300 ease-in-out"
       >
