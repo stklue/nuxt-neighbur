@@ -24,6 +24,11 @@ const logout = async () => {
 
 const windowSize = useWindowSize();
 
+const open = ref(false);
+
+const showModal = () => {
+  open.value = !open.value;
+};
 </script>
 
 <template>
@@ -38,14 +43,18 @@ const windowSize = useWindowSize();
           >neighbur</NuxtLink
         >
       </div>
-      <div class="flex space-x-2  items-center" v-if="windowSize.width.value < 764">
+      <div
+        class="flex space-x-2 items-center"
+        v-if="windowSize.width.value < 764"
+      >
         <NuxtLink to="/cart">
           <div class="flex items-center bg-gray-200 rounded-3xl px-2 mx-2 py-1">
             <CartIcon />
             <p class="text-lg font-semibold">{{ getCartItems() }}</p>
           </div>
         </NuxtLink>
-        <HomeMenu />
+        <HomeMenu @click="showModal" />
+        <Modal @showModal="showModal" @logout="logout" v-if="open" />
       </div>
 
       <div
