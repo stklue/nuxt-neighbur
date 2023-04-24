@@ -77,13 +77,13 @@ export interface Cart {
 
 export interface OrderItem {
   id: number;
-  student_uid: string;
+  student_uid: number;
   quantity: number;
   total: number;
   rating: number;
   confirmed: string;
   reason: string;
-  order_creator: string | null;
+  order_creator: number | null;
   order_product: number | null;
 }
 
@@ -93,13 +93,13 @@ export const emptyCart: Cart = {
 };
 export const emptyOrderItem: OrderItem = {
   id: -1,
-  student_uid: "",
+  student_uid: -1,
   quantity: 0,
   total: 0,
   rating: 0,
   confirmed: "",
   reason: "",
-  order_creator: "",
+  order_creator: -1,
   order_product: -1,
 };
 export default function createRandId() {
