@@ -12,9 +12,7 @@ useHead({
   meta: [{ name: "description", content: "neighbur food" }],
 });
 
-const { updateUser } = useUserStore();
-const { data } = await useFetch("/api/user");
-updateUser(data.value as unknown as Student);
+
 </script>
 
 <template>

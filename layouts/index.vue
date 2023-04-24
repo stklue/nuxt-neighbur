@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Student, emptyUser } from "~~/data/types";
+import { Student } from "~~/data/types";
 import { useCart } from "~~/stores/cart";
 import { useUserStore } from "~~/stores/user";
 import { Database } from "~~/types/supabase";
@@ -8,8 +8,9 @@ const authClient = useSupabaseAuthClient<Database>();
 
 const { getCartItems } = useCart();
 
-
-const { user  } = useUserStore()
+const { updateUser, user } = useUserStore();
+const { data, pending } = await useFetch("/api/user");
+updateUser(data.value as unknown as Student);
 
 const logout = async () => {
   const { error } = await authClient.auth.signOut();
@@ -34,6 +35,7 @@ const logout = async () => {
       </div>
 
       <div
+        v-if="!pending"
         class="flex space-x-2 justify-center self-center h-full items-center"
       >
         <p>welcome</p>
