@@ -12,13 +12,17 @@ productUsers.value = data.value as unknown as ProductUser[];
 </script>
 
 <template>
-  <section class="flex flex-col w-full pt-5 px-12 space-x-4 text-[#06113C]">
+  <section
+    class="flex flex-col w-full pt-5 px-6 lg:px-12 space-x-4 text-[#06113C]"
+  >
     <div class="ml-4 mt-4 inline-flex space-x-4">
-      <h1 class="text-2xl font-semibold">Currently cooking near you</h1>
+      <h1 class="text-lg lg:text-2xl font-semibold">
+        Currently cooking near you
+      </h1>
       <img class="w-10 h-10" src="~~/cooking.gif" />
     </div>
     <div v-if="pending">Loading</div>
-    <div v-else class="flex mb-6">
+    <div v-else class="flex flex-col lg:flex-row mb-6">
       <div
         class="w-52 m-4 flex-wrap"
         v-for="productUser in productUsers"
