@@ -38,14 +38,14 @@ export interface Product {
   created_at?: string | null;
   description: string | null;
   expire_at?: string | null;
-  id: number;
+  id?: number;
   image: string | null;
   pname: string | null;
   plate: number | null;
   price: number | null;
   recurring: boolean | null;
   type: string | null;
-  creator?: string | null;
+  creator?: number | null;
 }
 
 export const emptyUser: Student = {
@@ -67,7 +67,7 @@ export const emptyProduct: Product = {
   available: 0,
   image: "",
   pname: "",
-  creator: "",
+  creator: -1,
 };
 
 export interface Cart {

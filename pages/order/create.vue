@@ -7,7 +7,7 @@ definePageMeta({
   middleware: "auth",
   layout: "index",
 });
-const user  = useSupabaseUser();
+const { user } = useUserStore();
 
 const client = useSupabaseClient<Database>();
 
@@ -30,10 +30,14 @@ const selectedFile = () => {
 const saveImage = async () => {
   const { data: dataPath, error } = await client.storage
     .from("product")
-    .upload(`${user.value?.id}/${dropzoneFile.value?.name}`, dropzoneFile.value!, {
-      cacheControl: "3600",
-      upsert: true,
-    });
+    .upload(
+      `${user().id}/${dropzoneFile.value?.name}`,
+      dropzoneFile.value!,
+      {
+        cacheControl: "3600",
+        upsert: true,
+      }
+    );
 
   if (error) {
     return alert("Storage upload: " + error.message);
@@ -55,13 +59,24 @@ const validateFields = (): boolean => {
   return false;
 };
 
+const insert = async (product: Product) => {
+  await useAsyncData("Product", async () => {
+    const { error } = await client.from("Product").insert(product);
+    if (error) {
+      return alert("Product insert: " + error.message);
+    }
+    alert("Product created successfully");
+    navigateTo("/order/dashboard");
+  });
+};
+
 const saveProduct = async () => {
   if (validateFields()) {
     const imagePath = await saveImage();
     if (imagePath) {
       image.value = imagePath;
-      const product = {
-        name: productName.value,
+      const product: Product = {
+        pname: productName.value,
         available: available.value,
         plate: plate.value,
         description: description.value,
@@ -69,16 +84,9 @@ const saveProduct = async () => {
         type: type.value,
         image: image.value,
         price: price.value,
-        user_product: user.value?.id
+        creator: user().id,
       };
-      await useAsyncData("Product", async () => {
-        const { error } = await client.from("Product").insert(product);
-        if (error) {
-          return alert("DB insert: " + error.message);
-        }
-        alert("Product created successfully");
-        navigateTo("/order/dashboard");
-      });
+      await insert(product);
     }
     return;
   }

@@ -1,22 +1,25 @@
-import { defineStore, createPinia , Pinia } from "pinia";
+import { defineStore } from "pinia";
 import { Student, emptyUser } from "~~/data/types";
 
-
-
-
 export const useUserStore = defineStore("user", () => {
-  const user: Ref<Student> = ref(emptyUser);
+  const _user: Ref<Student> = ref(emptyUser);
 
   const newUser = (u: Student) => {
-    user.value.user_id = u.id;
-    user.value.location = u.location;
-    user.value.online = u.online;
-    user.value.name = u.name;
-    localStorage.setItem("currentUser", JSON.stringify(user.value));
+    _user.value.id = u.id;
+    _user.value.user_id = u.user_id;
+    _user.value.location = u.location;
+    _user.value.online = u.online;
+    _user.value.name = u.name;
   };
 
   const updateEmail = (email: string) => {
-    user.value.email = email;
+    _user.value.email = email;
   };
-  return { user, newUser, updateEmail };
+
+  const user = () => _user.value;
+
+  function updateUser(u: Student) {
+    _user.value = u;
+  }
+  return { user, newUser, updateEmail, updateUser };
 });

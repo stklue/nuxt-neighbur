@@ -1,24 +1,15 @@
 <script lang="ts" setup>
-import { User, emptyUser } from "~~/data/types";
+import { Student, emptyUser } from "~~/data/types";
 import { useCart } from "~~/stores/cart";
+import { useUserStore } from "~~/stores/user";
 import { Database } from "~~/types/supabase";
 
 const authClient = useSupabaseAuthClient<Database>();
 
-const user: Ref<User> = ref(emptyUser);
 const { getCartItems } = useCart();
 
-const userS = useSupabaseUser();
-const _id = userS.value?.id;
-watch(
-  () => useRoute(),
-  async () => {
-    const { data } = await useFetch(`/api/users/${_id}`);
-    user.value = data.value as unknown as User;
-  },
-  { deep: true, immediate: true }
-);
-onMounted(async () => {});
+
+const { user  } = useUserStore()
 
 const logout = async () => {
   const { error } = await authClient.auth.signOut();
@@ -47,7 +38,7 @@ const logout = async () => {
       >
         <p>welcome</p>
         <p></p>
-        {{ user.name }}
+        {{ user().name }}
       </div>
 
       <div
