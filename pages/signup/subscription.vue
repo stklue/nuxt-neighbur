@@ -7,7 +7,7 @@ definePageMeta({
 
 const client = useSupabaseClient<Database>();
 const authClient = useSupabaseAuthClient<Database>();
-const user = (await authClient.auth.getUser()).data.user
+const user = (await authClient.auth.getUser()).data.user;
 
 const subscriptionChoice = ref(-1);
 const onSubSelect = (i: number) => {
@@ -26,9 +26,9 @@ const checkSelection = async () => {
       .update({ subscription: subscriptionChoice.value })
       .match({ user_id: user?.id });
     if (error === null) {
-       navigateTo("/signup/payment");
+      navigateTo("/signup/payment");
     }
-    return alert(error?.message)
+    return alert(error?.message);
   });
 };
 </script>
@@ -40,19 +40,19 @@ const checkSelection = async () => {
         <p class="text-[#06113C] text-base">STEP 2 OF 3</p>
       </div>
       <div
-        class="flex flex-col lg:flex-row md:flex-row space-x-5 text-[#eeeeee] w-full justify-center"
+        class="flex items-center py-5 space-y-4 h-full flex-col lg:flex-row md:flex-row space-x-5 text-[#eeeeee] w-full justify-center"
       >
-        <div
-          class="flex flex-col flex-wrap flex-1 shadow-md h-full bg-[#06113C] hover:scale-105 hover:shadow-lg transition-all ease-in-out duration-500 rounded-lg"
+      <div
+          class="flex ml-4 mt-3 flex-col flex-wrap flex-1 shadow-md h-full bg-[#06113C] hover:scale-105 hover:shadow-lg transition-all ease-in-out duration-500 rounded-lg"
         >
           <p
             v-if="subscriptionChoice === 1"
             class="text-lg pl-8 pt-4 text-[#FF8C32] font-semibold"
           >
-            FREE ✅
+            1 month ✅
           </p>
           <p v-else class="text-lg pl-8 pt-4 text-[#FF8C32] font-semibold">
-            FREE
+            1 month
           </p>
           <p class="text-md pl-8 font-light">Get the first month free</p>
           <div class="p-8">
@@ -64,8 +64,10 @@ const checkSelection = async () => {
               class="w-48 h-1 mx-auto my-2 bg-gray-100 border-0 rounded md:my-5 dark:bg-gray-700"
             />
             <div>
-              <li class="text-[10px] tracking-tight">
-                Only get access to for locations within 1km
+              <li class="text-sm  tracking-tight">No order requests</li>
+              <div class="h-5 w-full"></div>
+              <li class="text-sm  tracking-tight">
+                Only access to your location
               </li>
             </div>
           </div>
@@ -101,8 +103,9 @@ const checkSelection = async () => {
               class="w-48 h-1 mx-auto my-2 bg-gray-100 border-0 rounded md:my-5 dark:bg-gray-700"
             />
             <div>
-              <li class="text-[10px] tracking-tight">
-                Only get access to for locations within 1km
+              <li class="text-sm  tracking-tight">Get 5 order request</li>
+              <li class="text-sm  tracking-tight">
+                Get access to 2 other locations
               </li>
             </div>
           </div>
@@ -138,8 +141,11 @@ const checkSelection = async () => {
               class="w-48 h-1 mx-auto my-2 bg-gray-100 border-0 rounded md:my-5 dark:bg-gray-700"
             />
             <div>
-              <li class="text-[10px] tracking-tight">
-                Only get access to for locations within 1km
+              <li class="text-sm tracking-tight">
+                Get unlimited order requests
+              </li>
+              <li class="text-sm  tracking-tight">
+                Get access to 5 other locations
               </li>
             </div>
           </div>
