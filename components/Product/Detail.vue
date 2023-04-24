@@ -157,7 +157,7 @@ const addProduct = async () => {
           class="w-full p-4 bg-green-500 my-3 text-white font-semibold rounded-lg"
         >
           Added to cart. {{ productUser.Student.name }} just got the message.
-          Click on your cart to see the status of your order. Thank you.
+          Click on your orders ontop to see the status of your order. Thank you.
         </div>
         <div v-if="addNotification === 'loading'">
           <Spinner />

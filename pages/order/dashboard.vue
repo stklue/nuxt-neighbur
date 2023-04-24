@@ -19,7 +19,6 @@ const ordersPending: Ref<OrderProduct[]> = ref([]);
 
 const { data: orderData } = await useFetch(`/api/order/all?id=${user().id}`);
 
-
 const success = ref(false);
 
 ordersPending.value = orderData.value as unknown as OrderProduct[];
@@ -33,6 +32,8 @@ const reject = async (id: number, confirm: string) => {
     if (error) {
       return alert(error.message);
     }
+
+    success.value = true;
   }
 };
 
@@ -55,6 +56,8 @@ const confirm = async (id: number, confirm: string) => {
     if (err) {
       return alert(err.message);
     }
+
+    success.value = true;
   }
 };
 </script>

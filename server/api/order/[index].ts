@@ -9,8 +9,8 @@ export default defineEventHandler(async (event) => {
   const { data: orders } = await client
     .from("Order")
     .select("*, Product(*)")
-    .eq("student_uid", id);
-    
+    .eq("student_uid", id)
+    .order("created_at", { ascending: false });
 
   return orders;
 });
