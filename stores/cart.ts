@@ -3,7 +3,6 @@ import createRandId, {
   Cart,
   OrderItem,
   Product,
-  Student,
   emptyCart,
   emptyOrderItem,
 } from "~~/data/types";
@@ -11,7 +10,7 @@ import createRandId, {
 export const useCart = defineStore("cart", () => {
   const cart = ref(emptyCart);
   const currentOrder: Ref<OrderItem> = ref(emptyOrderItem);
-  function add(p: Product, id: string, q: number) {
+  function add(p: Product, id: number, q: number) {
     currentOrder.value = {
       id: createRandId(),
       student_uid: id,
@@ -20,20 +19,18 @@ export const useCart = defineStore("cart", () => {
       rating: 4,
       confirmed: "processing",
       reason: "",
-      creator: p.creator!,
-      order_product: p.id,
+      order_creator: p.creator!,
+      order_product: p.id!,
     };
     cart.value.products.push(currentOrder.value);
     cart.value.total = cart.value.products.reduce(
       (accumulator, product) => accumulator + product.total,
       0
     );
-    localStorage.setItem("cart", JSON.stringify(cart));
   }
   function remove(o: OrderItem) {
     cart.value.products = cart.value.products.filter((x) => x.id !== o.id);
     cart.value.total = cart.value.total - o.total;
-    localStorage.setItem("cart", JSON.stringify(cart));
   }
 
   const getCurrentOrder = () => currentOrder.value;
