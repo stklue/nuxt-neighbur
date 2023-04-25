@@ -13,6 +13,10 @@ dataState.value = "loading";
 const { data, pending } = await useFetch(`/api/product/online`);
 dataState.value = "done";
 productUsers.value = data.value as unknown as ProductUser[];
+
+const f = (date: string) => {
+  return useDateFormat(date, 'YYYY-MM-DD HH:mm:ss').value.toString();
+};
 </script>
 
 <template>
@@ -52,7 +56,7 @@ productUsers.value = data.value as unknown as ProductUser[];
               <h2 class="font-light">{{ productUser.Student.location }}</h2>
             </div>
             <div>
-              <h2 class="font-normal text-sm">{{ productUser.created_at }}</h2>
+              <h2 class="font-normal text-sm">{{ f(productUser.created_at!) }}</h2>
             </div>
             <div class="py-2">
               <div class="w-full h-full rounded-lg bg-gray-100 p-2">
