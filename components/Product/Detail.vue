@@ -57,6 +57,10 @@ const addProduct = async () => {
     alert("You have to select how many you want. Can't be zero.");
   }
 };
+
+const f = (date: string) => {
+  return useDateFormat(date, 'YYYY-MM-DD HH:mm:ss').value.toString();
+};
 </script>
 
 <template>
@@ -121,7 +125,7 @@ const addProduct = async () => {
           class="flex flex-col   md:flex-row md:justify-between pt-5 space-x-3"
         >
           <p>Prepared at</p>
-          <p>{{ productUser.created_at }}</p>
+          <p>{{ f(productUser.created_at!) }}</p>
         </div>
         <div class="flex justify-between items-center text-center">
           <p class="text-lg">Available</p>
