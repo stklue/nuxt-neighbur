@@ -20,48 +20,63 @@ const ordersPending: Ref<OrderProduct[]> = ref([]);
 const { data: orderData } = await useFetch(`/api/order/all?id=${user().id}`);
 
 const success = ref(false);
+const successPay = ref(false);
+
+const isConfirmed = ref("confirmed");
 
 ordersPending.value = orderData.value as unknown as OrderProduct[];
-const reject = async (id: number, confirm: string) => {
-  if (confirm === "processing" || confirm === "PROCESSING") {
-    const { error } = await client
-      .from("Order")
-      .update({ confirmed: "rejected" })
-      .eq("id", id);
+const reject = async (id: number) => {
+  const { error } = await client
+    .from("Order")
+    .update({ confirmed: "rejected" })
+    .eq("id", id);
 
-    if (error) {
-      return alert(error.message);
-    }
-
-    success.value = true;
-    setInterval(() => {
-      success.value = false;
-    }, 2000);
+  if (error) {
+    return alert(error.message);
   }
+
+  success.value = true;
+  setInterval(() => {
+    success.value = false;
+  }, 2000);
 };
 
 const confirm = async (id: number, confirm: string) => {
-  if (confirm === "processing" || confirm === "PROCESSING") {
+  const { error } = await client
+    .from("Order")
+    .update({ confirmed: "confirmed" })
+    .eq("id", id);
+
+  if (error) {
+    return alert(error.message);
+  }
+
+  const { error: err } = await client
+    .from("Order")
+    .update({ confirmed: "rejected" })
+    .neq("id", id);
+
+  if (err) {
+    return alert(err.message);
+  }
+  success.value = true;
+  setInterval(() => {
+    success.value = false;
+  }, 2000);
+};
+const payed = async (id: number, confirm: string) => {
+  if (confirm === "confirmed" || confirm === "CONFIRMED") {
     const { error } = await client
       .from("Order")
-      .update({ confirmed: "confirmed" })
+      .update({ confirmed: "payed" })
       .eq("id", id);
 
     if (error) {
       return alert(error.message);
     }
-
-    const { error: err } = await client
-      .from("Order")
-      .update({ confirmed: "rejected" })
-      .neq("id", id);
-
-    if (err) {
-      return alert(err.message);
-    }
-    success.value = true;
+    successPay.value = true;
     setInterval(() => {
-      success.value = false;
+      successPay.value = false;
     }, 2000);
   }
 };
@@ -74,6 +89,9 @@ const windowSize = useWindowSize();
     <div class="flex flex-col bg-gray-100 w-full h-1/3 p-5">
       <h1 class="text-2xl font-semibold">Accepted Products</h1>
       <div v-if="success" class="p-3 w-full bg-green-500 text-white">
+        Refresh to see changes
+      </div>
+      <div v-if="successPay" class="p-3 w-full bg-green-500 text-white">
         Refresh to see changes
       </div>
       <div v-for="order in ordersPending">
@@ -96,15 +114,19 @@ const windowSize = useWindowSize();
               <p class="text-base font-bold">Product name</p>
               <p>{{ order.Product.pname }}</p>
             </div>
-            <div>
+            <div v-if="isConfirmed === order.confirmed">
               <p class="text-base font-bold">Status</p>
               <p>{{ order.confirmed.toUpperCase() }}</p>
             </div>
-            <div>
+            <div v-else>
+              <p class="text-base font-bold">Status</p>
+              <p>{{ order.confirmed.toUpperCase() }}</p>
+            </div>
+            <div v-if="order.confirmed === 'processing'">
               <p class="text-base font-bold">Actions</p>
               <div class="flex space-x-2 divide-x-2 divide-gray-300">
                 <p
-                  @click="reject(order.id, order.confirmed)"
+                  @click="reject(order.id)"
                   class="pr-2 cursor-pointer hover:text-red-500 hover:font-semibold"
                 >
                   REJECT
@@ -117,6 +139,28 @@ const windowSize = useWindowSize();
                 </p>
               </div>
             </div>
+            <div v-else-if="order.confirmed === 'confirmed'">
+              <p class="text-base font-bold">Actions</p>
+              <div class="flex space-x-2 divide-x-2 divide-gray-300">
+                <p
+                  @click="reject(order.id)"
+                  class="pr-2 cursor-pointer hover:text-red-500 hover:font-semibold"
+                >
+                  REJECT
+                </p>
+                <p
+                  @click="payed(order.id, order.confirmed)"
+                  class="pl-2 cursor-pointer hover:text-green-500 hover:font-semibold"
+                >
+                  PAYED
+                </p>
+              </div>
+            </div>
+            <div
+              v-else-if="
+                order.confirmed === 'rejected' || order.confirmed === 'payed'
+              "
+            ></div>
           </div>
         </div>
       </div>

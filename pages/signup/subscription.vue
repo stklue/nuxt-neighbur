@@ -9,7 +9,6 @@ const client = useSupabaseClient<Database>();
 const authClient = useSupabaseAuthClient<Database>();
 const user = (await authClient.auth.getUser()).data.user;
 
-console.log("This is the user :", user);
 
 const subscriptionChoice = ref(-1);
 const onSubSelect = (i: number) => {
@@ -21,7 +20,6 @@ const checkSelection = async () => {
     alert("Please choose a subscription option");
     return;
   }
-  console.log(subscriptionChoice.value);
 
   await useAsyncData("Student", async () => {
     const { error } = await client
