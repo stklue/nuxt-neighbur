@@ -9,6 +9,8 @@ const client = useSupabaseClient<Database>();
 const authClient = useSupabaseAuthClient<Database>();
 const user = (await authClient.auth.getUser()).data.user;
 
+console.log("This is the user :", user);
+
 const subscriptionChoice = ref(-1);
 const onSubSelect = (i: number) => {
   subscriptionChoice.value = i;
@@ -19,16 +21,17 @@ const checkSelection = async () => {
     alert("Please choose a subscription option");
     return;
   }
+  console.log(subscriptionChoice.value);
 
   await useAsyncData("Student", async () => {
     const { error } = await client
       .from("Student")
       .update({ subscription: subscriptionChoice.value })
       .match({ user_id: user?.id });
-    if (error === null) {
-      navigateTo("/signup/payment");
+    if (error !== null) {
+      return alert(error?.message);
     }
-    return alert(error?.message);
+    navigateTo("/signup/payment");
   });
 };
 </script>
@@ -42,7 +45,7 @@ const checkSelection = async () => {
       <div
         class="flex items-center py-5 space-y-4 h-full flex-col lg:flex-row md:flex-row space-x-5 text-[#eeeeee] w-full justify-center"
       >
-      <div
+        <div
           class="flex ml-4 mt-3 flex-col flex-wrap flex-1 shadow-md h-full bg-[#06113C] hover:scale-105 hover:shadow-lg transition-all ease-in-out duration-500 rounded-lg"
         >
           <p
@@ -64,9 +67,9 @@ const checkSelection = async () => {
               class="w-48 h-1 mx-auto my-2 bg-gray-100 border-0 rounded md:my-5 dark:bg-gray-700"
             />
             <div>
-              <li class="text-sm  tracking-tight">No order requests</li>
+              <li class="text-sm tracking-tight">No order requests</li>
               <div class="h-5 w-full"></div>
-              <li class="text-sm  tracking-tight">
+              <li class="text-sm tracking-tight">
                 Only access to your location
               </li>
             </div>
@@ -103,8 +106,8 @@ const checkSelection = async () => {
               class="w-48 h-1 mx-auto my-2 bg-gray-100 border-0 rounded md:my-5 dark:bg-gray-700"
             />
             <div>
-              <li class="text-sm  tracking-tight">Get 5 order request</li>
-              <li class="text-sm  tracking-tight">
+              <li class="text-sm tracking-tight">Get 5 order request</li>
+              <li class="text-sm tracking-tight">
                 Get access to 2 other locations
               </li>
             </div>
@@ -144,7 +147,7 @@ const checkSelection = async () => {
               <li class="text-sm tracking-tight">
                 Get unlimited order requests
               </li>
-              <li class="text-sm  tracking-tight">
+              <li class="text-sm tracking-tight">
                 Get access to 5 other locations
               </li>
             </div>
