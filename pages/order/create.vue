@@ -113,10 +113,7 @@ const type = ref("");
       <div class="space-y-12">
         <div class="border-b border-gray-900/10 pb-12">
           <h2 class="text-2xl font-semibold leading-7">Create new order</h2>
-          <p class="mt-1 text-sm leading-6 text-gray-600">
-            This information will be displayed publicly so be careful what you
-            share.
-          </p>
+          
 
           <div class="flex flex-col mt-10 space-y-4">
             <div class="sm:col-span-4">
