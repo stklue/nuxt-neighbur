@@ -79,7 +79,7 @@ export interface Database {
           available?: number | null;
           created_at?: string | null;
           description?: string | null;
-          expire_at?: string | null;
+          expire_at?: string | null | Date;
           id?: number;
           image?: string | null;
           name?: string | null;

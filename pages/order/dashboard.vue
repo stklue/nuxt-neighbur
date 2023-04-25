@@ -25,6 +25,7 @@ const successPay = ref(false);
 const isConfirmed = ref("confirmed");
 
 ordersPending.value = orderData.value as unknown as OrderProduct[];
+const ordersDates = ordersPending.value.map((o) => o.Product.created_at);
 const reject = async (id: number) => {
   const { error } = await client
     .from("Order")
@@ -51,28 +52,36 @@ const confirm = async (id: number, confirm: string) => {
     return alert(error.message);
   }
 
-  const { error: err } = await client
-    .from("Order")
-    .update({ confirmed: "rejected" })
-    .neq("id", id);
+  // const { error: err } = await client
+  //   .from("Order")
+  //   .update({ confirmed: "rejected" })
+  //   .neq("id", id);
 
-  if (err) {
-    return alert(err.message);
-  }
+  // if (err) {
+  //   return alert(err.message);
+  // }
   success.value = true;
   setInterval(() => {
     success.value = false;
   }, 2000);
 };
-const payed = async (id: number, confirm: string) => {
-  if (confirm === "confirmed" || confirm === "CONFIRMED") {
+const payed = async (o: OrderProduct) => {
+  if (o.confirmed === "confirmed" || o.confirmed === "CONFIRMED") {
     const { error } = await client
       .from("Order")
       .update({ confirmed: "payed" })
-      .eq("id", id);
+      .eq("id", o.id);
+
+    const { error: pErr } = await client
+      .from("Product")
+      .update({ expire_at: new Date() })
+      .eq("id", o.Product.id);
 
     if (error) {
       return alert(error.message);
+    }
+    if (pErr) {
+      return alert(pErr.message);
     }
     successPay.value = true;
     setInterval(() => {
@@ -149,7 +158,7 @@ const windowSize = useWindowSize();
                   REJECT
                 </p>
                 <p
-                  @click="payed(order.id, order.confirmed)"
+                  @click="payed(order)"
                   class="pl-2 cursor-pointer hover:text-green-500 hover:font-semibold"
                 >
                   PAYED
