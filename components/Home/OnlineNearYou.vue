@@ -17,24 +17,24 @@ const productUsers: Ref<ProductUser[]> = ref([]);
 type State = "initial" | "loading" | "done";
 const dataState: Ref<State> = ref("initial");
 
-dataState.value = "loading";
-const { data, pending } = await useFetch(`/api/product/online?id=${user().id}`);
-dataState.value = "done";
-productUsers.value = data.value as unknown as ProductUser[];
-
 const f = (date: string) => {
   return useDateFormat(date, "YYYY-MM-DD HH:mm:ss").value.toString();
 };
 
-const { data: students, refresh: refreshStudents } = await useAsyncData(
-  "Student",
+const { data: students, pending } = await useAsyncData(
+  "ProductStudent",
   async () => {
-    const { data } = await client.from("Student").select("online");
-    return data;
+    dataState.value = "loading";
+    const { data: products } = await client
+      .from("Product")
+      .select("*, Student(*)")
+      .neq("creator", user().id)
+      .eq("Student.online", true);
+    dataState.value = "done";
+    return products as ProductUser[];
   }
 );
-
-console.log("Realtime: students: ", students.value);
+productUsers.value = students.value?.filter((x) => x.Student) ?? [];
 
 // Once page is mounted, listen to changes on the `Student` table and refresh students when receiving event
 onMounted(() => {
@@ -44,14 +44,18 @@ onMounted(() => {
     .on(
       "postgres_changes",
       { event: "*", schema: "public", table: "Student" },
-      (payload) => {
-        console.log("DATA CHANGED: ", payload.new as student);
-
-        // refreshStudents();
+      async () => {
+        dataState.value = "loading";
+        const { data, pending } = await useFetch(
+          `/api/product/online?id=${user().id}`
+        );
+        dataState.value = "done";
+        productUsers.value = data.value?.filter((x) => x.Student) ?? [];
       }
     );
   realtimeChannel.subscribe();
 });
+
 // Don't forget to unsubscribe when user left the page
 onUnmounted(() => {
   client.removeChannel(realtimeChannel);
@@ -60,7 +64,7 @@ onUnmounted(() => {
 
 <template>
   <section
-    class="flex flex-col w-full pt-5 px-6 lg:px-12 space-x-4 text-[#06113C]"
+    class="flex min-h-screen flex-col w-full pt-5 px-6 lg:px-12 space-x-4 text-[#06113C]"
   >
     <div class="ml-4 mt-4 inline-flex space-x-4">
       <h1 class="text-lg lg:text-2xl font-semibold">
@@ -68,44 +72,46 @@ onUnmounted(() => {
       </h1>
       <img class="w-10 h-10" src="~~/cooking.gif" />
     </div>
-    <div v-if="pending">Loading</div>
-    <div v-if="dataState === 'done'" class="flex flex-col lg:flex-row mb-6">
-      <div
-        class="w-52 m-4 flex-wrap"
-        v-for="productUser in productUsers"
-        :id="String(productUser.Student.id)"
-      >
-        <NuxtLink :to="'product/' + productUser.id">
-          <div
-            class="bg-orange-200 flex flex-wrap flex-col w-full h-full p-4 rounded-lg hover:scale-110 hover:shadow-lg transition-all ease-in-out duration-500 cursor-pointer"
-          >
-            <div class="flex space-x-2 mb-2">
-              <div class="h-10 w-10 rounded-md">
-                <HomeChefIcon />
+    <div v-if="productUsers.length > 0">
+      <div v-if="dataState === 'loading'">Loading</div>
+      <div v-if="dataState === 'done'" class="flex flex-col lg:flex-row mb-6">
+        <div
+          class="w-52 m-4 flex-wrap"
+          v-for="productUser in productUsers"
+          :id="String(productUser.Student.id)"
+        >
+          <NuxtLink :to="'product/' + productUser.id">
+            <div
+              class="bg-orange-200 flex flex-wrap flex-col w-full h-full p-4 rounded-lg hover:scale-110 hover:shadow-lg transition-all ease-in-out duration-500 cursor-pointer"
+            >
+              <div class="flex space-x-2 mb-2">
+                <div class="h-10 w-10 rounded-md">
+                  <HomeChefIcon />
+                </div>
+                <div class="inline-flex justify-between w-full space-x-4">
+                  <h2>{{ productUser.Student.name }}</h2>
+                  <OrderOnlineGlow :online="productUser.Student.online" />
+                </div>
               </div>
-              <div class="inline-flex justify-between w-full space-x-4">
-                <h2>{{ productUser.Student.name }}</h2>
-                <OrderOnlineGlow :online="productUser.Student.online" />
+              <div>
+                <h2 class="font-semibold">R{{ productUser.price }}</h2>
+              </div>
+              <div>
+                <h2 class="font-light">{{ productUser.Student.location }}</h2>
+              </div>
+              <div>
+                <h2 class="font-normal text-sm">
+                  {{ f(productUser.created_at!) }}
+                </h2>
+              </div>
+              <div class="py-2">
+                <div class="w-full h-full rounded-lg bg-gray-100 p-2">
+                  {{ productUser.description }}
+                </div>
               </div>
             </div>
-            <div>
-              <h2 class="font-semibold">R{{ productUser.price }}</h2>
-            </div>
-            <div>
-              <h2 class="font-light">{{ productUser.Student.location }}</h2>
-            </div>
-            <div>
-              <h2 class="font-normal text-sm">
-                {{ f(productUser.created_at!) }}
-              </h2>
-            </div>
-            <div class="py-2">
-              <div class="w-full h-full rounded-lg bg-gray-100 p-2">
-                {{ productUser.description }}
-              </div>
-            </div>
-          </div>
-        </NuxtLink>
+          </NuxtLink>
+        </div>
       </div>
     </div>
   </section>

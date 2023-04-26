@@ -126,6 +126,8 @@ const showModal = () => {
       </div>
     </nav>
   </header>
-  <slot />
+  <div class="w-full min-h-screen">
+    <slot />
+  </div>
   <Footer />
 </template>
