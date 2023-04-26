@@ -1,5 +1,13 @@
 <script lang="ts" setup>
 import { Product, Student as student } from "~~/data/types";
+import type { RealtimeChannel } from "@supabase/supabase-js";
+import { useUserStore } from "~~/stores/user";
+
+const client = useSupabaseClient();
+let realtimeChannel: RealtimeChannel;
+// Fetch collaborators and get the refresh method provided by useAsyncData
+
+const { user } = useUserStore();
 
 type ProductUser = Product & {
   Student: student;
@@ -10,13 +18,44 @@ type State = "initial" | "loading" | "done";
 const dataState: Ref<State> = ref("initial");
 
 dataState.value = "loading";
-const { data, pending } = await useFetch(`/api/product/online`);
+const { data, pending } = await useFetch(`/api/product/online?id=${user().id}`);
 dataState.value = "done";
 productUsers.value = data.value as unknown as ProductUser[];
 
 const f = (date: string) => {
-  return useDateFormat(date, 'YYYY-MM-DD HH:mm:ss').value.toString();
+  return useDateFormat(date, "YYYY-MM-DD HH:mm:ss").value.toString();
 };
+
+const { data: students, refresh: refreshStudents } = await useAsyncData(
+  "Student",
+  async () => {
+    const { data } = await client.from("Student").select("online");
+    return data;
+  }
+);
+
+console.log("Realtime: students: ", students.value);
+
+// Once page is mounted, listen to changes on the `Student` table and refresh students when receiving event
+onMounted(() => {
+  // Real time listener for new workouts
+  realtimeChannel = client
+    .channel("public:Student")
+    .on(
+      "postgres_changes",
+      { event: "*", schema: "public", table: "Student" },
+      (payload) => {
+        console.log("DATA CHANGED: ", payload.new as student);
+
+        // refreshStudents();
+      }
+    );
+  realtimeChannel.subscribe();
+});
+// Don't forget to unsubscribe when user left the page
+onUnmounted(() => {
+  client.removeChannel(realtimeChannel);
+});
 </script>
 
 <template>
@@ -56,7 +95,9 @@ const f = (date: string) => {
               <h2 class="font-light">{{ productUser.Student.location }}</h2>
             </div>
             <div>
-              <h2 class="font-normal text-sm">{{ f(productUser.created_at!) }}</h2>
+              <h2 class="font-normal text-sm">
+                {{ f(productUser.created_at!) }}
+              </h2>
             </div>
             <div class="py-2">
               <div class="w-full h-full rounded-lg bg-gray-100 p-2">

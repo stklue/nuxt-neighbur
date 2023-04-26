@@ -1,36 +1,24 @@
 import { serverSupabaseClient, serverSupabaseUser } from "#supabase/server";
-import { Student } from "~~/data/types";
+import { Student as student, Product } from "~~/data/types";
 import { useUserStore } from "~~/stores/user";
 import { Database } from "~~/types/supabase";
 
 export default defineEventHandler(async (event) => {
   const client = serverSupabaseClient<Database>(event);
-  const serverUser = await serverSupabaseUser(event);
+  const q = getQuery(event);
+  const id = Number.parseInt(q.id as string);
 
-  // Get the users Student data
-  const { data: userData } = await client
-    .from("Student")
-    .select("*")
-    .eq("user_id", serverUser?.id)
-    .single();
-
-  const currentUser: Student = userData as unknown as Student;
-
-  const { data: onlineNearMe } = await client
-    .from("Student")
-    .select("*")
-    .eq("location", userData?.location)
-    .eq("online", true)
-    .neq("id", currentUser.id);
-
-  const onlineUsers: Student[] = onlineNearMe as unknown as Student[];
-
-  const ids = onlineUsers.map((o) => o.id);
+  type ProductStudent = Product & {
+    Student: student;
+  };
 
   const { data: products } = await client
     .from("Product")
     .select("*, Student(*)")
-    .in("creator", ids);
+    .neq("creator", id)
+    .eq("Student.online", true);
 
-  return products;
+  const p: ProductStudent[] = products as unknown as ProductStudent[];
+
+  return p.filter(xx => xx.Student);
 });
