@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { OrderItem, Product as product } from "~~/data/types";
-import { useCart } from "~~/stores/cart";
 import { useUserStore } from "~~/stores/user";
+import { Database } from "~~/types/supabase";
+import type { RealtimeChannel } from "@supabase/supabase-js";
+
 definePageMeta({
   middleware: "auth",
   layout: "index",
 });
-const { updateOrderItems } = useCart();
-
-type State = "initial" | "loading" | "done";
-const cartState: Ref<State> = ref("initial");
+let realtimeChannel: RealtimeChannel;
+const client = useSupabaseClient<Database>();
 
 const { user } = useUserStore();
 
@@ -19,19 +19,42 @@ type OrderProduct = OrderItem & {
 
 const orders: Ref<OrderProduct[]> = ref([]);
 
-cartState.value = "loading";
-const { data: orderData } = await useFetch(`/api/order/${user().id}`);
-cartState.value = "done";
+const { data: ordersData, pending } = await useAsyncData(
+  "OrderProduct",
+  async () => {
+    const { data: orderData } = await useFetch(`/api/order/${user().id}`);
+    return orderData.value as OrderProduct[];
+  }
+);
+orders.value = ordersData.value ?? [];
 
-orders.value = orderData.value as unknown as OrderProduct[];
+// Once page is mounted, listen to changes on the `Student` table and refresh students when receiving event
+onMounted(() => {
+  // Real time listener for new workouts
+  realtimeChannel = client
+    .channel("public:Order")
+    .on(
+      "postgres_changes",
+      { event: "*", schema: "public", table: "Order" },
+      async () => {
+        const { data: orderData } = await useFetch(`/api/order/${user().id}`);
+        orders.value = (orderData.value as OrderProduct[]) ?? [];
+      }
+    );
+  realtimeChannel.subscribe();
+});
 
-
+// Don't forget to unsubscribe when user left the page
+onUnmounted(() => {
+  client.removeChannel(realtimeChannel);
+});
 </script>
 
 <template>
   <div class="min-h-screen flex flex-col pt-16 px-10 text-[#06113C]">
     <h1 class="py-5 text-3xl">Orders</h1>
-    <div class="min-h-screen flex flex-col space-y-5">
+    <div v-if="orders.length === 0" class="py-5">No orders made yet.</div>
+    <div v-if="!pending" class="min-h-screen flex flex-col space-y-5">
       <div
         class="flex space-y-3 bg-gray-200 pr-5 py-3"
         v-for="orderItem in orders"
@@ -45,11 +68,9 @@ orders.value = orderData.value as unknown as OrderProduct[];
         <!-- Product details -->
         <div class="flex h-full w-2/3 lg:w-full flex-col justify-between">
           <div class="flex flex-col justify-between">
-            <!-- <router-link :to="`/brand/${item.cat}/${item.id}`"> -->
             <span class="font-bold text-lg">{{
               orderItem.Product?.pname
             }}</span>
-            <!-- </router-link> -->
             <div class="flex space-x-5 lg:justify-start">
               <span class="text-center font-semibold text-gray-400"
                 >R{{ orderItem.total.toFixed(2) }}</span
@@ -72,13 +93,6 @@ orders.value = orderData.value as unknown as OrderProduct[];
               <p class="text-center w-8">Plate:</p>
               <p class="text-center w-8">{{ orderItem.quantity }}</p>
             </div>
-            <!-- <div>
-          <a
-            @click="remove(orderItem)"
-            class="delete font-semibold hover:text-red-500 text-gray-500 text-xs cursor-pointer"
-            >Remove</a
-          >
-        </div> -->
           </div>
         </div>
       </div>
