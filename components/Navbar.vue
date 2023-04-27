@@ -4,7 +4,7 @@
 </script>
 <template>
 
-    <nav class="flex justify-between items-center my-4 px-14 cursor-pointer text-sm text-[#DDDDDD] h-12 ">
+    <nav class="flex justify-between items-center py-10 px-14 cursor-pointer bg-[#06113C] text-sm text-[#DDDDDD] h-12 ">
         <NuxtLink class="text-2xl font-bold" to="/">neighbur</NuxtLink>
         <NuxtLink to="/login" class='group transition-all duration-300 ease-in-out'>
             <span v-if="true"
