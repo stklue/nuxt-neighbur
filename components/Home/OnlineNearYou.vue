@@ -14,8 +14,7 @@ type ProductUser = Product & {
 };
 
 const productUsers: Ref<ProductUser[]> = ref([]);
-type State = "initial" | "loading" | "done";
-const dataState: Ref<State> = ref("initial");
+
 
 const f = (date: string) => {
   return useDateFormat(date, "YYYY-MM-DD HH:mm:ss").value.toString();
@@ -24,13 +23,11 @@ const f = (date: string) => {
 const { data: students, pending } = await useAsyncData(
   "ProductStudent",
   async () => {
-    dataState.value = "loading";
     const { data: products } = await client
       .from("Product")
       .select("*, Student(*)")
       .neq("creator", user().id)
       .eq("Student.online", true);
-    dataState.value = "done";
     return products as ProductUser[];
   }
 );
@@ -45,11 +42,9 @@ onMounted(() => {
       "postgres_changes",
       { event: "*", schema: "public", table: "Student" },
       async () => {
-        dataState.value = "loading";
         const { data, pending } = await useFetch(
           `/api/product/online?id=${user().id}`
         );
-        dataState.value = "done";
         productUsers.value = data.value?.filter((x) => x.Student) ?? [];
       }
     );
@@ -73,8 +68,8 @@ onUnmounted(() => {
       <img class="w-10 h-10" src="~~/cooking.gif" />
     </div>
     <div v-if="productUsers.length > 0">
-      <div v-if="dataState === 'loading'">Loading</div>
-      <div v-if="dataState === 'done'" class="flex flex-col lg:flex-row mb-6">
+      <div v-if="pending">Loading</div>
+      <div v-else class="flex flex-col lg:flex-row mb-6">
         <div
           class="w-52 m-4 flex-wrap"
           v-for="productUser in productUsers"
