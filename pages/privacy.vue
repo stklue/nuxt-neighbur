@@ -3,9 +3,12 @@ definePageMeta({
   middleware: "auth",
   layout: "index",
 });
-
 </script>
 
 <template>
-  <div class="flex justify-center items-center min-h-screen p-20">Privacy Policies</div>
+  <div class="min-h-screen w-full pt-20">
+    <div class="flex justify-center items-center min-h-screen p-10">
+      Privacy Policies
+    </div>
+  </div>
 </template>

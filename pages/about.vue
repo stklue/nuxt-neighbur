@@ -6,5 +6,9 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="flex justify-center items-center min-h-screen p-20">About us</div>
+  <div class="min-h-screen w-full pt-20">
+    <div class="flex justify-center items-center min-h-screen p-10">
+      About us
+    </div>
+  </div>
 </template>
