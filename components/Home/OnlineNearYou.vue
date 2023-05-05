@@ -15,7 +15,6 @@ type ProductUser = Product & {
 
 const productUsers: Ref<ProductUser[]> = ref([]);
 
-
 const f = (date: string) => {
   return useDateFormat(date, "YYYY-MM-DD HH:mm:ss").value.toString();
 };
@@ -23,15 +22,20 @@ const f = (date: string) => {
 const { data: students, pending } = await useAsyncData(
   "ProductStudent",
   async () => {
+    console.log("Student location: ", user().location);
+    
     const { data: products } = await client
       .from("Product")
       .select("*, Student(*)")
       .neq("creator", user().id)
-      .eq("Student.online", true);
+      .eq("Student.online", true)
+      .eq("Student.location", user().location);
     return products as ProductUser[];
   }
 );
 productUsers.value = students.value?.filter((x) => x.Student) ?? [];
+
+
 
 // Once page is mounted, listen to changes on the `Student` table and refresh students when receiving event
 onMounted(() => {
@@ -42,10 +46,19 @@ onMounted(() => {
       "postgres_changes",
       { event: "*", schema: "public", table: "Student" },
       async () => {
-        const { data, pending } = await useFetch(
-          `/api/product/online?id=${user().id}`
+        const { data: students, pending } = await useAsyncData(
+          "ProductStudent",
+          async () => {
+            const { data: products } = await client
+              .from("Product")
+              .select("*, Student(*)")
+              .neq("creator", user().id)
+              .eq("Student.online", true)
+              .eq("Student.location", user().location);
+            return products as ProductUser[];
+          }
         );
-        productUsers.value = data.value?.filter((x) => x.Student) ?? [];
+        productUsers.value = students.value?.filter((x) => x.Student) ?? [];
       }
     );
   realtimeChannel.subscribe();

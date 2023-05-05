@@ -23,6 +23,4 @@ const marker = defineMapboxMarker(props.markerId, props.options, markerRef, (m) 
             " />
 </template> -->
 
-<template>
-    Marker
-</template>
+<template>Marker</template>
